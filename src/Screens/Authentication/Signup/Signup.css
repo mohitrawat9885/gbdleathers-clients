@@ -1,0 +1,107 @@
+.signup-body {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.signup-body p {
+  font-family: Cambria, Cochin, Times, "Times New Roman", serif !important;
+}
+.signup-body span {
+  font-family: Cambria, Cochin, Times, "Times New Roman", serif !important;
+}
+.signup-body input {
+  font-family: Cambria, Cochin, Times, "Times New Roman", serif !important;
+}
+.signup-body button {
+  font-family: Cambria, Cochin, Times, "Times New Roman", serif !important;
+}
+.signup-div {
+  width: 22rem;
+  /* height: 15rem; */
+  margin-top: 2.8rem;
+  margin-bottom: 3rem;
+  /* border: 1px solid; */
+}
+@media only screen and (max-width: 400px) {
+  .signup-div {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 2.8rem;
+    margin-bottom: 3rem;
+  }
+}
+.signup-heading {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3%;
+}
+.signup-heading p {
+  font-size: 2.2rem;
+  font-weight: bolder;
+  text-align: center;
+}
+.signup-detail {
+  width: 100%;
+  /* border: 1px solid; */
+}
+.signup-detail p {
+  font-size: medium;
+  letter-spacing: 0.2rem;
+  margin-bottom: 0.5rem;
+  color: rgb(53, 52, 52);
+  /* border: 1px solid red; */
+}
+.signup-detail-password {
+  display: flex;
+  justify-content: space-between;
+}
+.signup-detail-password a {
+  color: rgb(0, 0, 0);
+}
+.signup-detail-password a:hover {
+  color: rgb(119, 0, 0);
+}
+
+.signup-detail input {
+  width: 100%;
+  height: 2rem;
+  font-size: 19px;
+  padding: 1.2rem;
+  padding-left: 0.3rem;
+  margin-bottom: 1.3rem;
+}
+
+.signup-detail button {
+  width: 100%;
+  font-size: medium;
+  letter-spacing: 0.2rem;
+  color: rgb(0, 0, 0);
+  border-radius: 0%;
+  border: 1px solid black;
+  /* background-color: rgb(161, 64, 64); */
+}
+.signup-detail button:hover {
+  background-color: rgb(98, 98, 98);
+  border: 1px solid rgb(98, 98, 98);
+  color: white;
+}
+
+.signup-detail-have-account a button {
+  width: 100%;
+  margin-top: 1rem;
+  font-size: medium;
+  letter-spacing: 0.2rem;
+  color: rgb(0, 0, 0);
+  border-radius: 0%;
+  border: 1px solid transparent;
+  /* background-color: rgb(161, 64, 64); */
+}
+.signup-detail-have-account a button:hover {
+  background-color: rgb(98, 98, 98);
+  border: 1px solid rgb(98, 98, 98);
+  color: rgb(255, 255, 255);
+}

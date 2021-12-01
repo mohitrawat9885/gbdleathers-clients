@@ -1,0 +1,123 @@
+.login-body {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+.signup-body p {
+  font-family: Cambria, Cochin, Times, "Times New Roman", serif !important;
+}
+.signup-body span {
+  font-family: Cambria, Cochin, Times, "Times New Roman", serif !important;
+}
+.signup-body input {
+  font-family: Cambria, Cochin, Times, "Times New Roman", serif !important;
+}
+.signup-body button {
+  font-family: Cambria, Cochin, Times, "Times New Roman", serif !important;
+}
+.login-div {
+  width: 22rem;
+  /* height: 15rem; */
+  margin-top: 2.8rem;
+  margin-bottom: 3rem;
+  /* border: 1px solid; */
+}
+@media only screen and (max-width: 400px) {
+  .login-div {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 2.8rem;
+    margin-bottom: 3rem;
+  }
+}
+.login-heading {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3%;
+}
+.login-heading p {
+  font-size: 2.2rem;
+  font-weight: bolder;
+  text-align: center;
+}
+.login-detail {
+  width: 100%;
+  /* border: 1px solid; */
+}
+.login-detail p {
+  font-size: medium;
+  letter-spacing: 0.2rem;
+  margin-bottom: 0.5rem;
+  color: rgb(53, 52, 52);
+  /* border: 1px solid red; */
+}
+.login-detail-password {
+  display: flex;
+  justify-content: space-between;
+}
+.login-detail-password a {
+  color: rgb(0, 0, 0);
+}
+.login-detail-password a:hover {
+  color: rgb(83, 82, 82);
+}
+
+.login-detail input {
+  width: 100%;
+  height: 2rem;
+  font-weight: 100;
+  font-size: 18px;
+  padding: 1.2rem;
+  padding-left: 0.3rem;
+  margin-bottom: 1.3rem;
+}
+
+.login-detail-signin button {
+  width: 100%;
+  font-size: medium;
+  letter-spacing: 0.2rem;
+  color: rgb(0, 0, 0);
+  border: 1px solid black;
+  border-radius: 0%;
+  font-family: Arial, Helvetica, sans-serif !important;
+  /* background-color: rgb(158, 158, 158); */
+}
+.login-detail-signin button:hover {
+  background-color: rgb(98, 98, 98);
+  border: 1px solid rgb(98, 98, 98);
+  color: white;
+}
+
+.login-detail-create-account {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  /* padding: 1rem; */
+}
+.login-detail-create-account a {
+  width: 100%;
+  letter-spacing: 0.2rem;
+  font-size: medium;
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
+.login-detail-create-account a button {
+  width: 100%;
+  font-size: medium;
+  letter-spacing: 0.2rem;
+  color: rgb(0, 0, 0);
+  border: 1px solid transparent;
+  border-radius: 0%;
+  font-family: Arial, Helvetica, sans-serif !important;
+  /* background-color: rgb(161, 64, 64); */
+}
+.login-detail-create-account a button:hover {
+  background-color: rgb(98, 98, 98);
+  border: 1px solid rgb(98, 98, 98);
+  color: rgb(255, 255, 255);
+}

@@ -1,0 +1,72 @@
+$background: lightcoral;
+$easing: cubic-bezier(0.25, 1.7, 0.35, 0.8);
+$duration: 0.5s;
+
+.arrow-icon {
+  height: 2.2rem;
+  width: 6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.left-bar {
+  position: absolute;
+  background-color: transparent;
+  //   top: 0;
+  //   left: 0;
+  //   width: 10px;
+  //   height: 10px;
+  //   display: block;
+  transform: rotate(35deg);
+  //   float: right;
+  //   border-radius: 2px;
+  &:after {
+    content: "";
+    background-color: rgb(0, 0, 0);
+    width: 20px;
+    height: 3px;
+    display: block;
+    // float: right;
+    border-radius: 20px 0px 0px 20px;
+    transition: all $duration $easing;
+    z-index: -1;
+  }
+}
+
+.right-bar {
+  position: absolute;
+  background-color: transparent;
+  // top: 0px;
+  left: 16px;
+  //   width: 40px;
+  //   height: 10px;
+  //   display: block;
+  transform: rotate(-35deg);
+  //   float: right;
+  border-radius: 2px;
+  &:after {
+    content: "";
+    background-color: rgb(0, 0, 0);
+    width: 20px;
+    height: 3px;
+    // display: block;
+    float: right;
+    border-radius: 0px 20px 20px 0px;
+    transition: all $duration $easing;
+    z-index: -1;
+  }
+}
+
+.open {
+  .left-bar:after {
+    transform-origin: center center;
+    transform: rotate(-70deg);
+  }
+  .right-bar:after {
+    transform-origin: center center;
+    transform: rotate(70deg);
+  }
+}
