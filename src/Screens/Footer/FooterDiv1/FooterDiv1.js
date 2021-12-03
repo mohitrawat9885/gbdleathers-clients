@@ -1,206 +1,113 @@
-import React from "react";
+import React, { useState } from "react";
 import "./FooterDiv1.css";
-export default function Footer() {
+
+import CallRoundedIcon from "@mui/icons-material/CallRounded";
+import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
+import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
+
+import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
+import SendRoundedIcon from "@mui/icons-material/SendRounded";
+import { Link } from "react-router-dom";
+export default function FooterDiv1() {
+  const [footerMenu1, setFooterMenu1] = useState("down");
+  const footerDivDropdownMenu1 = () => {
+    if (footerMenu1 == "up") {
+      document.getElementById("footer-div-1-2-nav-1-open").style.height = "0vh";
+      setFooterMenu1("down");
+    } else {
+      document.getElementById("footer-div-1-2-nav-1-open").style.height =
+        "26vh";
+      setFooterMenu1("up");
+    }
+  };
   return (
     <>
-      <div className="footer-body">
-        <div className="footer-div">
-          <div className="footer-child">
-            <ul>
-              <li>
-                <div className="footer-child-menu">
-                  <span>SHOP</span>
-                </div>
-              </li>
+      <div className="footer-div-1">
+        <div className="footer-div-1-1">
+          <ul>
+            <li>
+              <CallRoundedIcon className="footer-div-1-1-icon" />
+              <p>+91-XXXX-XXXX-XX</p>
+            </li>
+            <li>
+              <EmailRoundedIcon className="footer-div-1-1-icon" />
+              <p>gbdleathers@gmail.com</p>
+            </li>
+            <li>
+              <LocationOnRoundedIcon className="footer-div-1-1-icon" />
+              <p>Mathar Khadeem</p>
+              <p>Doha, 5325 Qatar</p>
+            </li>
+          </ul>
+        </div>
 
+        <div className="footer-div-1-2">
+          <ul>
+            <li
+              className="footer-div-1-2-heading"
+              onClick={() => footerDivDropdownMenu1()}
+            >
+              SHOP
+              <KeyboardArrowDownRoundedIcon className="footer-div-1-2-shop-down" />
+            </li>
+            <nav
+              id="footer-div-1-2-nav-1-open"
+              className="footer-div-1-2-nav-1"
+            >
               <li>
-                <a href="#">
-                  <span>Wallets</span>
-                </a>
+                <Link to="#">Wallets</Link>
               </li>
               <li>
-                <a href="#">
-                  <span>Belts</span>
-                </a>
+                <Link to="#">Belts</Link>
               </li>
               <li>
-                <a href="#">
-                  <span>DIY Kits</span>
-                </a>
+                <Link to="#">Tech</Link>
               </li>
               <li>
-                <a href="#">
-                  <span>Watch Straps</span>
-                </a>
+                <Link to="#">Diy Kits</Link>
               </li>
               <li>
-                <a href="#">
-                  <span>Notebook Covers</span>
-                </a>
+                <Link to="#">Watch Straps</Link>
               </li>
               <li>
-                <a href="#">
-                  <span>Everything Else</span>
-                </a>
+                <Link to="#">Notebook Cover</Link>
               </li>
-            </ul>
-          </div>
-          <div className="footer-child">
-            <ul>
               <li>
-                <div className="footer-child-menu">
-                  <span>HELP</span>
-                </div>
+                <Link to="#">Everythings Else</Link>
               </li>
+              <li>
+                <Link to="#">Gift Card</Link>
+              </li>
+            </nav>
+          </ul>
 
-              <li>
-                <a href="#">
-                  <span>Help & FAQs</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span>Contact Us</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span>Order Status Lookup</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span>Returns</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span>Privacy Policy</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span>Terms of Service</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div className="footer-child">
-            <ul>
-              <li>
-                <div className="footer-child-menu">
-                  <span>BRAND</span>
-                </div>
-              </li>
+          <ul>
+            <li className="footer-div-1-2-heading">RESOURCES</li>
+            <li>
+              <Link to="#">Blogs</Link>
+            </li>
+            <li>
+              <Link to="#">News & Feeds</Link>
+            </li>
+            <li>
+              <Link to="#">Privacy Policy</Link>
+            </li>
+          </ul>
 
-              <li>
-                <a href="#">
-                  <span>Our Story</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span>Reviews</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span>Earn Rewards</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span>Quize</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span>Blog</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span>Submit an Idea</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span>Horween Leather</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span>Careers</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span>Become an Affiliate</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div className="footer-child">
-            <ul>
-              <li>
-                <div className="footer-child-menu">
-                  <span>OUR PROMISE</span>
-                </div>
-              </li>
-
-              <li>
-                <div className="footer-text">
-                  <p>
-                    We pride ourselves on making high-quality leather goods.
-                  </p>
-                </div>
-              </li>
-
-              <li>
-                <div className="footer-text">
-                  <p>
-                    We believe in honest work and making leather goods that are
-                    guaranteed to last a lifetime.
-                  </p>
-                </div>
-              </li>
-
-              <li>
-                <div className="footer-learn-more footer-text">
-                  <a href="#">Learn more.</a>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div className="footer-child">
-            <ul>
-              <li>
-                <div className="footer-child-menu">
-                  <span>GET 10% OFF YOUR FIRST ORDER</span>
-                </div>
-              </li>
-
-              <li>
-                <div className="footer-text">
-                  <p>
-                    Subscribe to get special offers, free giveaways, and
-                    once-in-a-lifetime deals.
-                  </p>
-                </div>
-              </li>
-              <li>
-                <div className="footer-text">
-                  <label for="footer-subscribe"> Subscribe Us</label>
-                  <br />
-                  <input
-                    type="text"
-                    id="footer-subscribe"
-                    name="footer-subscribe"
-                  />
-                </div>
-              </li>
-            </ul>
-          </div>
+          <ul className="footer-subscribe-div">
+            <li className="footer-div-1-2-heading">SUBSCRIBE</li>
+            <li className="footer-subscribe">
+              <p>Email</p>
+              <div className="footer-subscribe-box">
+                <input type="text" />
+                <SendRoundedIcon
+                  style={{
+                    fontSize: "30px",
+                  }}
+                />
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
     </>
