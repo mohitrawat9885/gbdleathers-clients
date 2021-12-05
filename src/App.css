@@ -10,7 +10,9 @@ html * {
 /* body {
   background-color: aqua !important;
 } */
-
+body {
+  width: 100%;
+}
 body::-webkit-scrollbar {
   width: 6px;
 }

@@ -1,32 +1,10 @@
 import React from "react";
 import "./Login.css";
-// import { TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
-// const useStyles = makeStyles(() => ({
-//   loginBtn: {
-//     "& > *": {
-//       width: "100%",
-//       height: "auto",
-//       display: "flex",
-//       justifyContent: "center",
-//       alignItems: "center",
-//       color: "white",
-//     },
-//   },
-//   signupBtn: {
-//     "& > *": {
-//       width: "100%",
-//       height: "auto",
-//       display: "flex",
-//       justifyContent: "center",
-//       alignItems: "center",
-//     },
-//   },
-// }));
+
 export default function Login() {
-  // const classes = useStyles();
   return (
     <>
       <div className="login-body">

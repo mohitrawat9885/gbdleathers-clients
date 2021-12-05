@@ -12,11 +12,14 @@ export default function FooterDiv1() {
   const [footerMenu1, setFooterMenu1] = useState("down");
   const footerDivDropdownMenu1 = () => {
     if (footerMenu1 == "up") {
-      document.getElementById("footer-div-1-2-nav-1-open").style.height = "0vh";
+      document
+        .getElementById("footer-div-1-2-nav-1-open")
+        .classList.remove("footer-div-1-2-nav-1-open-active");
       setFooterMenu1("down");
     } else {
-      document.getElementById("footer-div-1-2-nav-1-open").style.height =
-        "26vh";
+      document
+        .getElementById("footer-div-1-2-nav-1-open")
+        .classList.add("footer-div-1-2-nav-1-open-active");
       setFooterMenu1("up");
     }
   };
