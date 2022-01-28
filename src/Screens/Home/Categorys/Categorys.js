@@ -80,7 +80,6 @@ export default function Categorys() {
                     className="hover-zoom"
                   />
                 </div>
-
                 <div className="home-category-name">
                   <p>{category.name}</p>
                 </div>

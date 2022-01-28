@@ -21,7 +21,7 @@ import {
 import Shop from './Screens/Shop/Shop';
 
 global.api = 'http://192.168.43.14:8000/api/v1/gbdleathers';
-global.image_path = '/images/';
+global.image_path = 'http://192.168.43.14:8000/images/';
 
 function App() {
   return (

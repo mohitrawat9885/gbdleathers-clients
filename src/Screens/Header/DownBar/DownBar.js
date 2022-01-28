@@ -40,7 +40,7 @@ const DownBar = () => {
     setLoading(false);
   };
   if (loading) {
-    getAllCategorys('?page=1&limit=7');
+    getAllCategorys('?page=1&limit=6');
 
     setLoading(false);
   }
