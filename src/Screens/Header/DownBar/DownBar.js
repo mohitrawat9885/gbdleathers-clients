@@ -1,42 +1,81 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import UpDownKey from "./UpDownKey/UpDownKey";
-import "./DownBar.css";
-import "./DownBarMobile.css";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import UpDownKey from './UpDownKey/UpDownKey';
+import './DownBar.css';
+import './DownBarMobile.css';
 
 const data = [
-  "WALLETS",
-  "BELTS",
-  "TECH",
-  "DIY KITS",
-  "WATCH STRAPS",
-  "NOTEBOOK COVERS",
-  "EVERYTHINGS ELSE",
-  "GIFT CARD",
+  'WALLETS',
+  'BELTS',
+  'TECH',
+  'DIY KITS',
+  'WATCH STRAPS',
+  'NOTEBOOK COVERS',
+  'EVERYTHINGS ELSE',
+  'GIFT CARD',
 ];
 
 const DownBar = () => {
+  const [loading, setLoading] = useState(true);
+  const [categoryList, setCategoryList] = useState([]);
+
+  const getAllCategorys = async (quaryString) => {
+    try {
+      const response = await fetch(
+        `${global.api}/client/category?${quaryString}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      const res = JSON.parse(await response.text());
+      if (res.status === 'success') {
+        setCategoryList(res.data);
+      }
+    } catch (error) {
+      setCategoryList([]);
+    }
+    setLoading(false);
+  };
+  if (loading) {
+    getAllCategorys('?page=1&limit=7');
+
+    setLoading(false);
+  }
+
   // alert(data.length);
-  const [keyStatus, setKeyStatus] = useState("down");
+  const [keyStatus, setKeyStatus] = useState('down');
   const TonggleKeyStatus = () => {
-    if (keyStatus == "up") {
-      document.getElementById("downBar-mobile-id").style.height = "0px";
-      setKeyStatus("down");
+    if (keyStatus == 'up') {
+      document.getElementById('downBar-mobile-id').style.height = '0px';
+      setKeyStatus('down');
     } else {
-      document.getElementById("downBar-mobile-id").style.height =
-        data.length * 3.5 + "rem";
-      setKeyStatus("up");
+      document.getElementById('downBar-mobile-id').style.height =
+        data.length * 3.5 + 'rem';
+      setKeyStatus('up');
     }
   };
+  function refreshPage() {
+    setTimeout(() => {
+      window.location.reload(false);
+    }, 400);
+  }
+
   return (
     <>
       <div className="downDiv">
         <nav className="downBar">
           <ul>
-            {data.map((d) => (
-              <Link to={`/category/${d}`}>
+            {categoryList.map((category, index) => (
+              <Link
+                onClick={refreshPage}
+                to={`/category/${category._id}`}
+                key={index}
+              >
                 <li className="down-text">
-                  <p>{d}</p>
+                  <p>{category.name.toUpperCase()}</p>
                 </li>
               </Link>
             ))}
@@ -53,10 +92,16 @@ const DownBar = () => {
         </div>
         <nav id="downBar-mobile-id" className="downBar-mobile">
           <ul id="downBar-mobile-ul-id" className="downBar-mobile-ul">
-            {data.map((d) => (
-              <Link to={`/category/${d}`} onClick={() => TonggleKeyStatus()}>
+            {categoryList.map((category, index) => (
+              <Link
+                to={`/category/${category._id}`}
+                onClick={() => {
+                  refreshPage();
+                  // TonggleKeyStatus();
+                }}
+              >
                 <li className="down-text-mobile">
-                  <p>{d}</p>
+                  <p>{category.name.toUpperCase()}</p>
                 </li>
               </Link>
             ))}

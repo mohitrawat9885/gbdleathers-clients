@@ -19,7 +19,7 @@
   font-size: 2rem;
   font-weight: bold;
   letter-spacing: 0.1rem;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: 'Times New Roman', Times, serif !important;
 }
 
 .category-page-body {
@@ -47,8 +47,8 @@
 .category-page-holder {
   width: 100%;
   /* border: 1px solid; */
-  padding: 0.4rem;
-  margin-bottom: 3.2rem;
+  padding: 0.8rem;
+  margin-bottom: 6rem;
 }
 
 .category-page-img {

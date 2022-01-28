@@ -1,10 +1,10 @@
-import Menu from "./Menus/Menu";
-import "./MainBar.css";
-import { Link } from "react-router-dom";
-import CartMenu from "./CartMenu/CartMenu";
-import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
+import Menu from './Menus/Menu';
+import './MainBar.css';
+import { Link } from 'react-router-dom';
+import CartMenu from './CartMenu/CartMenu';
+import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
 
-import logo from "./logo.jpeg";
+import logo from './logo.jpeg';
 const MainBar = () => {
   return (
     <>
@@ -24,7 +24,7 @@ const MainBar = () => {
           <div className="rightMenus">
             <div className="rightMenuHolder">
               <div className="login">
-                <Link to="login">
+                <Link to="/login">
                   <PermIdentityOutlinedIcon style={{ fontSize: 28 }} />
                 </Link>
               </div>

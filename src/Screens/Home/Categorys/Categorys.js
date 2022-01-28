@@ -1,112 +1,64 @@
-import React from "react";
-import "./Categorys.css";
+import React, { useState } from 'react';
+import './Categorys.css';
 
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
-const data1 = [
-  {
-    _id: 1,
-    name: "SHOP BELTS",
-    image: "c1.jpg",
-  },
-  {
-    _id: 2,
-    name: "SHOP WATCHES",
-    image: "c2.jpg",
-  },
-  {
-    _id: 3,
-    name: "COLOR THREADS",
-    image: "c3.jpg",
-  },
-  {
-    _id: 4,
-    name: "THE CLOTH COLLECTION",
-    image: "c4.jpg",
-  },
-  {
-    _id: 5,
-    name: "LEATHER CARE",
-    image: "c5.jpg",
-  },
-  {
-    _id: 6,
-    name: "Wallets",
-    image: "c6.jpg",
-  },
-];
+export default function Categorys() {
+  const [loading, setLoading] = useState(true);
+  const [categoryList1, setCategoryList1] = useState([]);
+  const [categoryList2, setCategoryList2] = useState([]);
 
-const data2 = [
-  {
-    _id: 7,
-    name: "SHOP WALLETS",
-    image: "cr1.jpg",
-  },
-  {
-    _id: 8,
-    name: "SHOP BELTS",
-    image: "cr2.jpg",
-  },
-  {
-    _id: 9,
-    name: "POCKET PROFILE",
-    image: "cr3.jpg",
-  },
-  {
-    _id: 10,
-    name: "THE TECH COLLECTION",
-    image: "cr4.jpg",
-  },
-  {
-    _id: 11,
-    name: "LEATHER CARE",
-    image: "cr5.jpg",
-  },
-  {
-    _id: 12,
-    name: "Wallets",
-    image: "cr6.jpg",
-  },
-  {
-    _id: 13,
-    name: "POCKET PROFILE",
-    image: "cr7.jpg",
-  },
-  {
-    _id: 14,
-    name: "THE TECH COLLECTION",
-    image: "cr8.jpg",
-  },
-  {
-    _id: 15,
-    name: "LEATHER CARE",
-    image: "cr9.jpg",
-  },
-  {
-    _id: 16,
-    name: "Wallets",
-    image: "cr10.jpg",
-  },
-];
-
-const Categorys = () => {
+  const getAllCategorys = async (quaryString, list) => {
+    try {
+      const response = await fetch(
+        `${global.api}/client/category?${quaryString}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      const res = JSON.parse(await response.text());
+      if (res.status === 'success') {
+        if (list === 1) {
+          setCategoryList1(res.data);
+        } else {
+          setCategoryList2(res.data);
+        }
+      }
+    } catch (error) {
+      setCategoryList1([]);
+      setCategoryList2([]);
+    }
+    setLoading(false);
+  };
+  if (loading) {
+    getAllCategorys('page=1&limit=6', 1);
+    getAllCategorys('skip=6', 2);
+    setLoading(false);
+  }
+  // React.useEffect(() => {
+  //   getAllCategorys();
+  // });
   return (
     <>
-      <div className="categoryBody">
+      <div className="home-categoryBody">
         {/* <div className="categoryDiv"> */}
-        <div className="category-section-1">
+        <div className="home-category-section-1">
           {/*  */}
-          {data1.map((d) => (
-            <div className="category-holder">
-              <Link
-                to={`category/${d.name}`}
-                style={{ textDecoration: "none" }}
-              >
-                <div className="category-img">
-                  <img src={`assets/categorys/${d.image}`} alt="" />
+          {categoryList1.map((d) => (
+            <div className="home-category-holder">
+              <Link to={`category/${d._id}`} style={{ textDecoration: 'none' }}>
+                <div className="home-category-img img-wrapper">
+                  <img
+                    src={`${global.image_path}${d.image}`}
+                    alt=""
+                    className="hover-zoom"
+                  />
                 </div>
 
-                <div className="category-btn">
+                <div className="home-category-btn">
                   <span>{d.name}</span>
                 </div>
               </Link>
@@ -114,19 +66,23 @@ const Categorys = () => {
           ))}
         </div>
 
-        <div className="category-section-2">
-          {data2.map((d) => (
-            <div className="category-holder-2">
+        <div className="home-category-section-2">
+          {categoryList2.map((category, index) => (
+            <div className="home-category-holder-2" key={index}>
               <Link
-                to={`category/${d.name}`}
-                style={{ textDecoration: "none" }}
+                to={`category/${category._id}`}
+                style={{ textDecoration: 'none' }}
               >
-                <div className="category-img-2">
-                  <img src={`assets/categorys/${d.image}`} alt="" />
+                <div className="home-category-img-2 img-wrapper">
+                  <img
+                    src={`${global.image_path}${category.image}`}
+                    alt=""
+                    className="hover-zoom"
+                  />
                 </div>
 
-                <div className="category-name">
-                  <p>{d.name}</p>
+                <div className="home-category-name">
+                  <p>{category.name}</p>
                 </div>
               </Link>
             </div>
@@ -135,6 +91,4 @@ const Categorys = () => {
       </div>
     </>
   );
-};
-
-export default Categorys;
+}

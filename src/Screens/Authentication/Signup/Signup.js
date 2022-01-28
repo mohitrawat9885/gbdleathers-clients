@@ -1,9 +1,11 @@
-import React from "react";
-import "./Signup.css";
+import React, { useEffect } from 'react';
+import './Signup.css';
 // import { TextField } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import { makeStyles } from '@mui/styles';
+import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
+import Header from '../../Header/Header';
+import Footer from '../../Footer/Footer';
 // const useStyles = makeStyles(() => ({
 //   loginBtn: {
 //     "& > *": {
@@ -26,9 +28,13 @@ import { Link } from "react-router-dom";
 //   },
 // }));
 export default function Signup() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   // const classes = useStyles();
   return (
     <>
+      <Header />
       <div className="signup-body">
         <div className="signup-div">
           <div className="signup-heading">
@@ -74,7 +80,7 @@ export default function Signup() {
             />
           </div>
           <div className="signup-detail">
-            <Button variant="outlined">Sign In</Button>
+            <Button variant="outlined">Sign Up</Button>
           </div>
           <div className="signup-detail-have-account">
             <Link to="/login">
@@ -83,6 +89,7 @@ export default function Signup() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

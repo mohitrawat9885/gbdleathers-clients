@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import "./ContactUs.css";
-import { TextField } from "@mui/material";
-import Button from "@mui/material/Button";
+import React, { useState, useEffect } from 'react';
+import './ContactUs.css';
+import { TextField } from '@mui/material';
+import Button from '@mui/material/Button';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 // import MuiPhoneNumber from "material-ui-phone-number";
 
 // import {
@@ -11,8 +13,12 @@ import Button from "@mui/material/Button";
 // import "react-notifications/lib/notifications.css";
 
 function ContactUs() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
+      <Header />
       <div className="contactus-div">
         <div className="contactus-form">
           <div className="contactus-heading">
@@ -73,8 +79,8 @@ function ContactUs() {
           </div>
         </div>
       </div>
-      {/* <NotificationContainer />
-      <Footer /> */}
+
+      <Footer />
     </>
   );
 }
