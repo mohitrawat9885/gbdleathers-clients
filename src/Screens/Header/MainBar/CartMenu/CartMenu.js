@@ -20,7 +20,7 @@ export default function CartMenu() {
   const [cartList, setCartList] = useState([]);
 
   // const [total, setTotal] = useState(0);
-  let total = 0;
+
   const HandleMenu = (toggled) => {
     if (toggled) {
       getCartProducts();
@@ -41,7 +41,6 @@ export default function CartMenu() {
       });
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
-        total = 0;
         setCartList(res.data);
 
         // console.log(res.data);

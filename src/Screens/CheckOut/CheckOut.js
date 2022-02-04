@@ -10,7 +10,6 @@ export default function CheckOut() {
 
   const [loadingCart, setLoadingCart] = useState(true);
   const [cartList, setCartList] = useState([]);
-  let total = 0;
 
   const [addressList, setAddressList] = useState([]);
   const [addressListFetched, setAddressListFetched] = useState(false);
@@ -225,7 +224,6 @@ export default function CheckOut() {
       });
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
-        total = 0;
         setCartList(res.data);
 
         // console.log(res.data);

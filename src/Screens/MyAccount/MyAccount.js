@@ -8,11 +8,11 @@ import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import SettingsApplicationsOutlinedIcon from '@mui/icons-material/SettingsApplicationsOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
 
-import AddIcon from '@mui/icons-material/Add';
+// import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import './MyAccount.css';
-import { Phone } from '@mui/icons-material';
+// import { Phone } from '@mui/icons-material';
 export default function MyAccount() {
   let navigate = useNavigate();
 
