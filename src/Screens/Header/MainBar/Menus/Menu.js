@@ -1,31 +1,88 @@
-import React, { useState } from "react";
-import "./Menu.css";
-import { Link } from "react-router-dom";
-import ClearIcon from "@mui/icons-material/Clear";
-import MenuIcon from "@mui/icons-material/Menu";
+import React, { useState } from 'react';
+import './Menu.css';
+import { Link } from 'react-router-dom';
+import ClearIcon from '@mui/icons-material/Clear';
+import MenuIcon from '@mui/icons-material/Menu';
+import { SentimentVeryDissatisfiedSharp } from '@mui/icons-material';
 //import { Turn as Hamburger } from "hamburger-react";
 
 export default function Menu() {
   const [sidebar, setSidebar] = useState(false);
+  const [islogin, setIsLogin] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [myData, setMyData] = useState({});
   const HandleMenu = (toggled) => {
     if (toggled) {
-      document.body.classList.add("fixed-position");
+      document.body.classList.add('fixed-position');
     } else {
-      document.body.classList.remove("fixed-position");
+      document.body.classList.remove('fixed-position');
     }
     setSidebar(toggled);
   };
+
+  const getMe = async () => {
+    console.log('Getting  me...');
+    try {
+      const response = await fetch(
+        `/api/v1/gbdleathers/client/customer/getme`,
+        {
+          method: 'GET',
+          // credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      const res = JSON.parse(await response.text());
+      // alert(res.status);
+      if (res.status === 'success') {
+        setIsLogin(true);
+        setMyData(res.data);
+        // alert(res.status);
+      }
+    } catch (err) {
+      // console.log('Error', err);
+      setIsLogin(false);
+    }
+    setLoading(false);
+  };
+
+  function MyAccount() {
+    if (loading) {
+      getMe();
+      return <></>;
+    }
+
+    if (islogin) {
+      return (
+        <>
+          <Link to="/my-account">
+            <span>MY ACCOUNT</span>
+          </Link>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Link to="/login">
+            <span>LOGIN</span>
+          </Link>
+        </>
+      );
+    }
+  }
+
   return (
     <>
       <div>
-        <div style={{ padding: ".8rem" }}>
+        <div style={{ padding: '.8rem' }}>
           <MenuIcon onClick={() => HandleMenu(true)} style={{ fontSize: 35 }} />
         </div>
         <div
-          className={sidebar ? "navDiv active" : "navDiv"}
+          className={sidebar ? 'navDiv active' : 'navDiv'}
           onClick={() => HandleMenu(false)}
         ></div>
-        <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
+        <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
           <ul className="nav-menu-items" onClick={() => HandleMenu(false)}>
             <li className="navbar-toggle">
               <div className="menu-bars">
@@ -83,9 +140,7 @@ export default function Menu() {
             </li>
 
             <li className="nav-text">
-              <Link to="/login">
-                <span>LOGIN</span>
-              </Link>
+              <MyAccount />
             </li>
           </ul>
         </nav>

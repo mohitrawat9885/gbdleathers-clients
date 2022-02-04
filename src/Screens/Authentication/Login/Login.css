@@ -5,16 +5,16 @@
   justify-content: center;
 }
 .signup-body p {
-  font-family: Cambria, Cochin, Times, "Times New Roman", serif !important;
+  font-family: Cambria, Cochin, Times, 'Times New Roman', serif !important;
 }
 .signup-body span {
-  font-family: Cambria, Cochin, Times, "Times New Roman", serif !important;
+  font-family: Cambria, Cochin, Times, 'Times New Roman', serif !important;
 }
 .signup-body input {
-  font-family: Cambria, Cochin, Times, "Times New Roman", serif !important;
+  font-family: Cambria, Cochin, Times, 'Times New Roman', serif !important;
 }
 .signup-body button {
-  font-family: Cambria, Cochin, Times, "Times New Roman", serif !important;
+  font-family: Cambria, Cochin, Times, 'Times New Roman', serif !important;
 }
 .login-div {
   width: 22rem;

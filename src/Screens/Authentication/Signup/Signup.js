@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Signup.css';
 // import { TextField } from "@mui/material";
 import { makeStyles } from '@mui/styles';
@@ -6,32 +7,47 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import Header from '../../Header/Header';
 import Footer from '../../Footer/Footer';
-// const useStyles = makeStyles(() => ({
-//   loginBtn: {
-//     "& > *": {
-//       width: "100%",
-//       height: "auto",
-//       display: "flex",
-//       justifyContent: "center",
-//       alignItems: "center",
-//       color: "white",
-//     },
-//   },
-//   signupBtn: {
-//     "& > *": {
-//       width: "100%",
-//       height: "auto",
-//       display: "flex",
-//       justifyContent: "center",
-//       alignItems: "center",
-//     },
-//   },
-// }));
+
 export default function Signup() {
+  let navigate = useNavigate();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   // const classes = useStyles();
+  const [first_name, setFirsetName] = useState('');
+  const [last_name, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const signup = async () => {
+    try {
+      const response = await fetch(
+        '/api/v1/gbdleathers/client/customer/signup',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            first_name,
+            last_name,
+            email,
+            password,
+            passwordConfirm: password,
+          }),
+        }
+      );
+      const res = JSON.parse(await response.text());
+      if (res.status === 'success') {
+        navigate('/');
+      } else {
+        alert(res.message);
+      }
+    } catch (error) {
+      alert('Something went wrong!');
+    }
+  };
+
   return (
     <>
       <Header />
@@ -46,25 +62,25 @@ export default function Signup() {
               type="text"
               id="fname"
               name="fname"
-              // onChange={(event) => alert(event.target.value)}
+              onChange={(event) => setFirsetName(event.target.value)}
             />
           </div>
           <div className="signup-detail">
             <p>LAST NAME</p>
             <input
               type="text"
-              id="fname"
-              name="fname"
-              // onChange={(event) => alert(event.target.value)}
+              id="lname"
+              name="lname"
+              onChange={(event) => setLastName(event.target.value)}
             />
           </div>
           <div className="signup-detail">
             <p>E-Mail</p>
             <input
               type="text"
-              id="fname"
-              name="fname"
-              // onChange={(event) => alert(event.target.value)}
+              id="email"
+              name="email"
+              onChange={(event) => setEmail(event.target.value)}
             />
           </div>
           <div className="signup-detail">
@@ -74,13 +90,15 @@ export default function Signup() {
 
             <input
               type="password"
-              id="fname"
-              name="fname"
-              // onChange={(event) => alert(event.target.value)}
+              id="pass"
+              name="pass"
+              onChange={(event) => setPassword(event.target.value)}
             />
           </div>
           <div className="signup-detail">
-            <Button variant="outlined">Sign Up</Button>
+            <Button variant="outlined" onClick={() => signup()}>
+              Sign Up
+            </Button>
           </div>
           <div className="signup-detail-have-account">
             <Link to="/login">

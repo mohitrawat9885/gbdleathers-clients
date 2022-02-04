@@ -10,7 +10,9 @@ import Product from './Screens/Product/Product';
 import Categorys from './Screens/Categorys/Categorys';
 import Login from './Screens/Authentication/Login/Login';
 import Signup from './Screens/Authentication/Signup/Signup';
+import MyAccount from './Screens/MyAccount/MyAccount';
 import ContactUs from './Screens/ContactUs/ContactUs';
+import CheckOut from './Screens/CheckOut/CheckOut';
 import {
   BrowserRouter as Router,
   Routes,
@@ -20,9 +22,14 @@ import {
 } from 'react-router-dom';
 import Shop from './Screens/Shop/Shop';
 
-global.api = 'http://192.168.43.14:8000/api/v1/gbdleathers';
-global.image_path = 'http://192.168.43.14:8000/images/';
+// /api/v1/gbdleathers
+global.api = '/api/v1/gbdleathers';
+global.image_path = '/images/';
 
+// global.api = 'https://gbdleathers.com:8000/api/v1/gbdleathers';
+// global.image_path = 'https://gbdleathers.com:8000/images/';
+
+global.isLogin = false;
 function App() {
   return (
     <>
@@ -110,9 +117,28 @@ function App() {
               </>
             }
           />
+          <Route
+            path="/my-account"
+            element={
+              <>
+                <Header />
+                <MyAccount />
+                <Footer />
+              </>
+            }
+          />
+
+          <Route
+            path="/check-out"
+            element={
+              <>
+                <Header />
+                <CheckOut />
+                <Footer />
+              </>
+            }
+          />
         </Routes>
-        {/* <Footer /> */}
-        {/* </ScrollToTop> */}
       </Router>
     </>
   );

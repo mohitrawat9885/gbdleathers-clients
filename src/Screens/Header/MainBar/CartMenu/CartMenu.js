@@ -1,48 +1,196 @@
-import React, { useState } from "react";
-import "./CartMenu.css";
-import { Link } from "react-router-dom";
-import ClearIcon from "@mui/icons-material/Clear";
+import React, { useState } from 'react';
+import './CartMenu.css';
+import { Link } from 'react-router-dom';
+import ClearIcon from '@mui/icons-material/Clear';
 
-import Badge from "@mui/material/Badge";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import CartQuantity from "../../../Components/CartQuantity/CartQuantity";
-import CartProduct from "./CartProduct/CartProduct";
+import Badge from '@mui/material/Badge';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+// import CartQuantity from '../../../Components/CartQuantity/CartQuantity';
+import Ripple from 'react-ripples';
+import './CartQuantity.css';
+import Button from '@mui/material/Button';
+// import CartProduct from './CartProduct/CartProduct';
+
+import './CartProduct.css';
 //import { Turn as Hamburger } from "hamburger-react";
 
 export default function CartMenu() {
+  const [loading, setLoading] = useState(true);
   const [sidebar, setSidebar] = useState(false);
+  const [cartList, setCartList] = useState([]);
+
+  // const [total, setTotal] = useState(0);
+  let total = 0;
   const HandleMenu = (toggled) => {
     if (toggled) {
-      document.body.classList.add("cart-menu-fixed-position");
+      getCartProducts();
+      document.body.classList.add('cart-menu-fixed-position');
     } else {
-      document.body.classList.remove("cart-menu-fixed-position");
+      document.body.classList.remove('cart-menu-fixed-position');
     }
     setSidebar(toggled);
   };
+
+  const getCartProducts = async () => {
+    try {
+      const response = await fetch(`/api/v1/gbdleathers/client/customer/cart`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const res = JSON.parse(await response.text());
+      if (res.status === 'success') {
+        total = 0;
+        setCartList(res.data);
+
+        // console.log(res.data);
+      }
+    } catch (error) {
+      console.log(error);
+      // setProduct({});
+    }
+    setLoading(false);
+  };
+  const addToCart = async (productId, quantity) => {
+    try {
+      const response = await fetch(`/api/v1/gbdleathers/client/customer/cart`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          product: productId,
+          quantity,
+        }),
+      });
+      console.log('Responce', response.status);
+      if (response.status === 204) {
+        getCartProducts();
+        return;
+      }
+      const res = JSON.parse(await response.text());
+      if (res.status === 'success') {
+        getCartProducts();
+      } else {
+        // alert(res.status.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  function CartProduct(props) {
+    return (
+      <>
+        <div className="cart-menu-product-div">
+          <div className="cart-menu-product-img">
+            <img
+              src={`${global.image_path}${props.product.front_image}`}
+              alt=""
+            />
+          </div>
+          <div className="cart-menu-product-detail">
+            <div className="cart-menu-product-detail-name">
+              <p>{props.product.name}</p>
+            </div>
+            <div className="cart-menu-product-detail-qty-price">
+              <div className="cart-menu-product-detail-qty">
+                <div className="cart-menu-quantity">
+                  <div
+                    className="cart-menu-quantity-btn"
+                    onClick={() => addToCart(props.product._id, -1)}
+                  >
+                    -
+                  </div>
+                  <p>{props.quantity}</p>
+                  <div
+                    className="cart-menu-quantity-btn"
+                    onClick={() => addToCart(props.product._id, 1)}
+                  >
+                    +
+                  </div>
+                </div>
+              </div>
+
+              <div className="cart-menu-product-detail-price">
+                <p>QTR {props.product.price * props.quantity}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  function calculateTotal() {
+    let total = 0;
+    for (let i in cartList) {
+      total = total + cartList[i].product.price * cartList[i].quantity;
+    }
+    return total;
+    // alert(total);
+  }
+  function CartItems() {
+    if (loading) {
+      getCartProducts();
+      return <>Loading...</>;
+    } else if (cartList.length > 0) {
+      return (
+        <>
+          {cartList.map((cart, index) => (
+            <li className="cart-menu-product-list-product" key={index}>
+              {/* <Link to="/"> */}
+              <CartProduct product={cart.product} quantity={cart.quantity} />
+              {/* </Link> */}
+            </li>
+          ))}
+
+          <li className="cart-menu-product-list-check-out">
+            <div className="cart-menu-product-list-check-out-total">
+              <p>SUBTOTAL</p>
+              <span>QTR {calculateTotal()}</span>
+            </div>
+
+            <Link to="/check-out">
+              <Ripple className="cart-menu-product-list-check-out-btn">
+                <div>
+                  <p>CHECK OUT</p>
+                </div>
+              </Ripple>
+            </Link>
+          </li>
+        </>
+      );
+    } else {
+      return <>Empty Cart</>;
+    }
+  }
+
   return (
     <>
       <div>
         <div>
           <Badge
             onClick={() => HandleMenu(true)}
-            style={{ fontSize: 35 }}
-            badgeContent={9}
-            color="primary"
+            style={{ fontSize: 35, textEmphasisColor: 'gray' }}
+            badgeContent={cartList.length}
+            color="success"
           >
             <ShoppingCartOutlinedIcon style={{ fontSize: 28 }} />
           </Badge>
         </div>
         <div
           className={
-            sidebar ? "cart-menu-navDiv cart-menu-active" : "cart-menu-navDiv"
+            sidebar ? 'cart-menu-navDiv cart-menu-active' : 'cart-menu-navDiv'
           }
           onClick={() => HandleMenu(false)}
         ></div>
         <nav
           className={
             sidebar
-              ? "cart-menu-nav-menu cart-menu-active"
-              : "cart-menu-nav-menu"
+              ? 'cart-menu-nav-menu cart-menu-active'
+              : 'cart-menu-nav-menu'
           }
         >
           <ul className="cart-menu-nav-menu-items">
@@ -56,32 +204,7 @@ export default function CartMenu() {
               </div>
             </li>
 
-            <li className="cart-menu-product-list-product">
-              <Link to="/">
-                <CartProduct />
-              </Link>
-            </li>
-
-            <li className="cart-menu-product-list-product">
-              <Link to="/">
-                <CartProduct />
-              </Link>
-            </li>
-
-            <li className="cart-menu-product-list-product">
-              <Link to="/">
-                <CartProduct />
-              </Link>
-            </li>
-            <li className="cart-menu-product-list-check-out">
-              <div className="cart-menu-product-list-check-out-total">
-                <p>SUBTOTAL</p>
-                <span>QTR 200.00</span>
-              </div>
-              <div className="cart-menu-product-list-check-out-btn">
-                <p>CHECK OUT</p>
-              </div>
-            </li>
+            <CartItems />
           </ul>
         </nav>
       </div>

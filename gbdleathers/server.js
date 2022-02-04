@@ -5,7 +5,7 @@ const https = require('https');
 const path = require('path');
 const app = express();
 
-const env = 'delelopment';
+const env = 'development';
 app.use(express.static(path.join(__dirname, 'build')));
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
@@ -15,15 +15,15 @@ const PORT = 80;
 
 if (env === 'production') {
   const privateKey = fs.readFileSync(
-    '/etc/letsencrypt/live/gbdhandwork.com/privkey.pem',
+    '/etc/letsencrypt/live/gbdleathers.com/privkey.pem',
     'utf8'
   );
   const certificate = fs.readFileSync(
-    '/etc/letsencrypt/live/gbdhandwork.com/cert.pem',
+    '/etc/letsencrypt/live/gbdleathers.com/cert.pem',
     'utf8'
   );
   const ca = fs.readFileSync(
-    '/etc/letsencrypt/live/gbdhandwork.com/chain.pem',
+    '/etc/letsencrypt/live/gbdleathers.com/fullchain.pem',
     'utf8'
   );
   const credentials = {

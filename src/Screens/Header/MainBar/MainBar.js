@@ -24,7 +24,7 @@ const MainBar = () => {
           <div className="rightMenus">
             <div className="rightMenuHolder">
               <div className="login">
-                <Link to="/login">
+                <Link to="/my-account ">
                   <PermIdentityOutlinedIcon style={{ fontSize: 28 }} />
                 </Link>
               </div>
