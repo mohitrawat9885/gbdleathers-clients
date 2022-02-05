@@ -352,7 +352,15 @@ export default function CheckOut() {
             <Ripples
               color="white"
               className="checkout-summary-add-address-btn"
-              onClick={() => setAddEditAddress('add')}
+              onClick={() => {
+                setAddEditAddress('add');
+                window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth',
+                  /* you can also use 'auto' behaviour
+                   in place of 'smooth' */
+                });
+              }}
             >
               <div>
                 <p>ADD SHIPPING ADDRESS</p>
@@ -479,7 +487,7 @@ export default function CheckOut() {
                 Cancel
               </p>
             </div>
-            <br />
+            {/* <br /> */}
             <div className="checkout-main-display-add-address">
               <div className="checkout-main-display-add-address-section-1">
                 <div className="checkout-main-display-add-address-section-1-1">

@@ -23,3 +23,6 @@ img.hover-zoom {
 img.hover-zoom:hover {
   transform: scale(1.25);
 }
+html {
+  scroll-behavior: smooth;
+}

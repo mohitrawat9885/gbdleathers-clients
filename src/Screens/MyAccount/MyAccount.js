@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Ripples from 'react-ripples';
 
@@ -14,6 +14,9 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import './MyAccount.css';
 // import { Phone } from '@mui/icons-material';
 export default function MyAccount() {
+  const myRef = useRef(null);
+  const executeScroll = () => myRef.current.scrollIntoView();
+
   let navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
@@ -516,7 +519,10 @@ export default function MyAccount() {
                   marginTop: 5,
                   marginBotton: 5,
                 }}
-                onClick={() => setPage('detail')}
+                onClick={() => {
+                  setPage('detail');
+                  executeScroll();
+                }}
               >
                 <AccountCircleOutlinedIcon
                   style={{
@@ -532,7 +538,10 @@ export default function MyAccount() {
                   marginTop: 5,
                   marginBotton: 5,
                 }}
-                onClick={() => setPage('addresses')}
+                onClick={() => {
+                  setPage('addresses');
+                  executeScroll();
+                }}
               >
                 <AddLocationOutlinedIcon
                   style={{
@@ -548,7 +557,10 @@ export default function MyAccount() {
                   marginTop: 5,
                   marginBotton: 5,
                 }}
-                onClick={() => setPage('orders')}
+                onClick={() => {
+                  setPage('orders');
+                  executeScroll();
+                }}
               >
                 <ShoppingBagOutlinedIcon
                   style={{
@@ -564,7 +576,10 @@ export default function MyAccount() {
                   marginTop: 5,
                   marginBotton: 5,
                 }}
-                onClick={() => setPage('setting')}
+                onClick={() => {
+                  setPage('setting');
+                  executeScroll();
+                }}
               >
                 <SettingsApplicationsOutlinedIcon
                   style={{
@@ -591,7 +606,9 @@ export default function MyAccount() {
               </button>
             </Ripples>
           </div>
-          <div className="my-account-main-display">{MyAccountDisplay()}</div>
+          <div ref={myRef} className="my-account-main-display">
+            {MyAccountDisplay()}
+          </div>
         </div>
       </div>
     </>
