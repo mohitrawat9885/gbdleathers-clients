@@ -644,7 +644,10 @@ export default function CheckOut() {
             <p>QTR {calculateTotal()}</p>
           </div>
           <Ripples
-            onClick={() => checkout()}
+            onClick={() => {
+              window.scroll(0, 0);
+              checkout();
+            }}
             color="white"
             className="checkout-summary-checkout-btn"
           >
