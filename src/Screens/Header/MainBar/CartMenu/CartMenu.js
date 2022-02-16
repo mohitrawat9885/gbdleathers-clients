@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './CartMenu.css';
 import { Link } from 'react-router-dom';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -10,18 +10,23 @@ import Ripple from 'react-ripples';
 import './CartQuantity.css';
 // import Button from '@mui/material/Button';
 // import CartProduct from './CartProduct/CartProduct';
-
+import GlobalState from '../../../../GlobalState';
 import './CartProduct.css';
 //import { Turn as Hamburger } from "hamburger-react";
 
 export default function CartMenu() {
+  const [cartMenu, setCartMenu] = React.useContext(GlobalState);
+
   const [loading, setLoading] = useState(true);
   const [sidebar, setSidebar] = useState(false);
   const [cartList, setCartList] = useState([]);
 
+  useEffect(() => {
+    HandleMenu(cartMenu);
+  }, [cartMenu]);
   // const [total, setTotal] = useState(0);
 
-  const HandleMenu = (toggled) => {
+  const HandleMenu = function (toggled) {
     if (toggled) {
       getCartProducts();
       document.body.classList.add('cart-menu-fixed-position');
@@ -29,6 +34,7 @@ export default function CartMenu() {
       document.body.classList.remove('cart-menu-fixed-position');
     }
     setSidebar(toggled);
+    setCartMenu(toggled);
   };
 
   const getCartProducts = async () => {
@@ -98,12 +104,14 @@ export default function CartMenu() {
                 <div className="cart-menu-quantity">
                   <div
                     className="cart-menu-quantity-btn"
+                    style={{ cursor: 'pointer' }}
                     onClick={() => addToCart(props.product._id, -1)}
                   >
                     -
                   </div>
                   <p>{props.quantity}</p>
                   <div
+                    style={{ cursor: 'pointer' }}
                     className="cart-menu-quantity-btn"
                     onClick={() => addToCart(props.product._id, 1)}
                   >
@@ -172,7 +180,11 @@ export default function CartMenu() {
         <div>
           <Badge
             onClick={() => HandleMenu(true)}
-            style={{ fontSize: 35, textEmphasisColor: 'gray' }}
+            style={{
+              fontSize: 35,
+              textEmphasisColor: 'gray',
+              cursor: 'pointer',
+            }}
             badgeContent={cartList.length}
             color="success"
           >
@@ -198,7 +210,7 @@ export default function CartMenu() {
                 <p>CART</p>
                 <ClearIcon
                   onClick={() => HandleMenu(false)}
-                  style={{ fontSize: 35 }}
+                  style={{ fontSize: 35, cursor: 'pointer' }}
                 />
               </div>
             </li>

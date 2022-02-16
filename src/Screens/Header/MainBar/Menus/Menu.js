@@ -76,7 +76,10 @@ export default function Menu() {
     <>
       <div>
         <div style={{ padding: '.8rem' }}>
-          <MenuIcon onClick={() => HandleMenu(true)} style={{ fontSize: 35 }} />
+          <MenuIcon
+            onClick={() => HandleMenu(true)}
+            style={{ fontSize: 35, cursor: 'pointer' }}
+          />
         </div>
         <div
           className={sidebar ? 'navDiv active' : 'navDiv'}
@@ -86,7 +89,7 @@ export default function Menu() {
           <ul className="nav-menu-items" onClick={() => HandleMenu(false)}>
             <li className="navbar-toggle">
               <div className="menu-bars">
-                <ClearIcon style={{ fontSize: 35 }} />
+                <ClearIcon style={{ fontSize: 35, cursor: 'pointer' }} />
               </div>
             </li>
 

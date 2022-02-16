@@ -28,7 +28,7 @@ a {
 }
 .logo p {
   letter-spacing: 0.1rem;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: 'Times New Roman', Times, serif !important;
   font-weight: bolder !important;
 }
 

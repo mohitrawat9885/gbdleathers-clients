@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Ripples from 'react-ripples';
 
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
@@ -14,13 +14,18 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import './MyAccount.css';
 // import { Phone } from '@mui/icons-material';
 export default function MyAccount() {
+  const search = useLocation().search;
+  const option = new URLSearchParams(search).get('option');
+
+  // alert(name);
   const myRef = useRef(null);
   const executeScroll = () => myRef.current.scrollIntoView();
 
   let navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState('detail');
+  const [page, setPage] = useState(option === 'orders' ? 'orders' : 'detail');
+
   const [addressPage, setAddressPage] = useState('show');
 
   const [addressList, setAddressList] = useState([]);
@@ -39,7 +44,44 @@ export default function MyAccount() {
   const [phone, setPhone] = useState();
   const [defaultAddress, setDefaultAddress] = useState(false);
 
+  const [orderLoading, setOrderLoading] = useState(true);
+  const [orderList, setOrderList] = useState([]);
+
+  const [my_first_name, setMyFirstName] = useState();
+  const [my_last_name, setMyLastName] = useState();
+  const [my_email, setMyEmail] = useState();
+  const [edit_my_detail, setEditMyDetail] = useState(false);
+  const [edit_my_password, setEditMyPassword] = useState(false);
+
+  const [my_password_current, setMyPasswordCurrent] = useState();
+  const [my_password, setMyPassword] = useState();
+  const [my_password_confirm, setMyPasswordConfirm] = useState();
+
   // END address VAriables
+  const getOrders = async () => {
+    try {
+      // setOrderLoading(true);
+      const response = await fetch(
+        `/api/v1/gbdleathers/client/customer/orders`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      const res = JSON.parse(await response.text());
+      if (res.status === 'success') {
+        setOrderList(res.data);
+        console.log('Orders', res.data);
+      } else {
+        alert(res.message);
+      }
+    } catch (err) {
+      alert(err);
+    }
+    setOrderLoading(false);
+  };
 
   const getMe = async () => {
     try {
@@ -56,11 +98,73 @@ export default function MyAccount() {
       // alert(res.status);
       if (res.status === 'success') {
         setLoading(false);
+        setMyFirstName(res.data.first_name);
+        setMyLastName(res.data.last_name);
+        setMyEmail(res.data.email);
         return;
       }
     } catch (err) {}
     setLoading(false);
     navigate('/login');
+  };
+
+  const updateMyDetails = async () => {
+    try {
+      const response = await fetch(
+        `/api/v1/gbdleathers/client/customer/updateMe`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            first_name: my_first_name,
+            last_name: my_last_name,
+            email: my_email,
+          }),
+        }
+      );
+      const res = JSON.parse(await response.text());
+      // alert(res.status);
+      if (res.status === 'success') {
+        setEditMyDetail(false);
+        alert('Details Updated');
+      } else {
+        alert('Opss! Something went wrong. May be email is already there.');
+        return;
+      }
+    } catch (err) {}
+    getMe();
+  };
+
+  const updateMyPassword = async () => {
+    try {
+      const response = await fetch(
+        `/api/v1/gbdleathers/client/customer/updateMyPassword`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            passwordCurrent: my_password_current,
+            password: my_password,
+            passwordConfirm: my_password_confirm,
+          }),
+        }
+      );
+      const res = JSON.parse(await response.text());
+      // alert(res.status);
+      if (res.status === 'success') {
+        setEditMyPassword(false);
+        setMyPassword(null);
+        setMyPasswordCurrent(null);
+        setMyPasswordConfirm(null);
+        alert('Your password is Updated');
+      } else {
+        alert(res.message);
+      }
+    } catch (err) {}
   };
 
   function resetData() {
@@ -256,6 +360,9 @@ export default function MyAccount() {
       return (
         <Ripples>
           <button
+            style={{
+              cursor: 'pointer',
+            }}
             onClick={() => {
               editAddress();
             }}
@@ -268,6 +375,9 @@ export default function MyAccount() {
       return (
         <Ripples>
           <button
+            style={{
+              cursor: 'pointer',
+            }}
             onClick={() => {
               addAddress();
             }}
@@ -280,10 +390,191 @@ export default function MyAccount() {
   }
 
   function MyDetail() {
+    if (edit_my_detail) {
+      return (
+        <>
+          <div className="my-account-main-display-heading">
+            <p>My Details</p>
+            <p
+              style={{
+                fontSize: 18,
+                cursor: 'pointer',
+              }}
+              onClick={() => setEditMyDetail(false)}
+            >
+              Cancel
+            </p>
+          </div>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '48% 4% 48%',
+            }}
+          >
+            <div className="my-account-main-display-add-address-section-1-1">
+              <label htmlFor="first_name">FIRST NAME</label>
+              <br />
+              <input
+                id="first_name"
+                type="text"
+                value={my_first_name}
+                onChange={(e) => setMyFirstName(e.target.value)}
+              />
+            </div>
+            <div> </div>
+            <div className="my-account-main-display-add-address-section-1-1">
+              <label htmlFor="last_name">LAST NAME</label>
+              <br />
+              <input
+                id="last_name"
+                type="text"
+                name="last_name"
+                value={my_last_name}
+                onChange={(e) => setMyLastName(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="my-account-main-display-add-address-section-1-1">
+            <label htmlFor="last_name">Email</label>
+            <br />
+            <input
+              id="last_name"
+              type="text"
+              name="last_name"
+              value={my_email}
+              onChange={(e) => setMyEmail(e.target.value)}
+            />
+          </div>
+          <div className="my-account-main-display-add-address-btn">
+            <Ripples>
+              <button
+                style={{
+                  cursor: 'pointer',
+                }}
+                onClick={() => {
+                  updateMyDetails();
+                }}
+              >
+                UPDATE DETAILS
+              </button>
+            </Ripples>
+          </div>
+        </>
+      );
+    } else if (edit_my_password) {
+      return (
+        <>
+          <div className="my-account-main-display-heading">
+            <p>My Details</p>
+            <p
+              style={{
+                fontSize: 18,
+                cursor: 'pointer',
+              }}
+              onClick={() => setEditMyPassword(false)}
+            >
+              Cancel
+            </p>
+          </div>
+          <div>
+            <div className="my-account-main-display-add-address-section-1-1">
+              <label htmlFor="first_name">CURRENT PASSWORD</label>
+              <br />
+              <input
+                id="first_name"
+                type="password"
+                value={my_password_current}
+                onChange={(e) => setMyPasswordCurrent(e.target.value)}
+              />
+            </div>
+            <div> </div>
+            <div className="my-account-main-display-add-address-section-1-1">
+              <label htmlFor="last_name">NEW PASSWORD</label>
+              <br />
+              <input
+                id="last_name"
+                type="password"
+                name="last_name"
+                value={my_password}
+                onChange={(e) => setMyPassword(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="my-account-main-display-add-address-section-1-1">
+            <label htmlFor="last_name">CONFIRM PASSWORD</label>
+            <br />
+            <input
+              id="last_name"
+              type="password"
+              name="last_name"
+              value={my_password_confirm}
+              onChange={(e) => setMyPasswordConfirm(e.target.value)}
+            />
+          </div>
+          <div className="my-account-main-display-add-address-btn">
+            <Ripples>
+              <button
+                style={{
+                  cursor: 'pointer',
+                }}
+                onClick={() => {
+                  updateMyPassword();
+                }}
+              >
+                UPDATE PASSWORD
+              </button>
+            </Ripples>
+          </div>
+        </>
+      );
+    }
     return (
-      <div className="my-account-main-display-heading">
-        <p>My Details</p>
-      </div>
+      <>
+        <div className="my-account-main-display-heading">
+          <p>My Details</p>
+          <div>
+            <div>
+              <p
+                style={{
+                  fontSize: 'small',
+                }}
+              >
+                Edit Detail
+              </p>
+              <EditIcon
+                style={{
+                  cursor: 'pointer',
+                }}
+                onClick={() => setEditMyDetail(true)}
+              />
+            </div>
+            <div>
+              <p
+                style={{
+                  fontSize: 'small',
+                }}
+              >
+                Change Password
+              </p>
+              <EditIcon
+                style={{
+                  cursor: 'pointer',
+                }}
+                onClick={() => setEditMyPassword(true)}
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          style={{ padding: '0.4rem' }}
+          className="my-account-main-display-mydetaiils"
+        >
+          <p>
+            Name {my_first_name} {my_last_name}
+          </p>
+          <p>Email:- {my_email}</p>
+        </div>
+      </>
     );
   }
   function MyAddresses() {
@@ -299,6 +590,7 @@ export default function MyAccount() {
             <p
               style={{
                 fontSize: 18,
+                cursor: 'pointer',
               }}
               onClick={() => setAddressPage('add')}
             >
@@ -323,12 +615,16 @@ export default function MyAccount() {
               </div>
               <div>
                 <EditIcon
+                  style={{ cursor: 'pointer' }}
                   onClick={() => {
                     setData(address);
                     setAddressPage('edit');
                   }}
                 />
-                <DeleteForeverIcon onClick={() => deleteAddress(address._id)} />
+                <DeleteForeverIcon
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => deleteAddress(address._id)}
+                />
               </div>
             </div>
           ))}
@@ -342,6 +638,7 @@ export default function MyAccount() {
             <p
               style={{
                 fontSize: 18,
+                cursor: 'pointer',
               }}
               onClick={() => setAddressPage('show')}
             >
@@ -456,6 +753,7 @@ export default function MyAccount() {
               <input
                 style={{
                   width: 20,
+                  cursor: 'pointer',
                 }}
                 id="set_default"
                 type="checkbox"
@@ -473,30 +771,99 @@ export default function MyAccount() {
     }
   }
   function MyOrders() {
+    function getDate(date) {
+      // let d = new Date(date).toLocaleString();
+      // let time = new Date(date).toLocaleDateString();
+
+      let d = new Date(date).toDateString();
+      let time = new Date(date).toLocaleTimeString();
+
+      return d + ' ' + time;
+    }
+    if (orderLoading) {
+      getOrders();
+      return <p>Loading...</p>;
+    }
     return (
-      <div className="my-account-main-display-heading">
-        <p>My Order</p>
-      </div>
+      <>
+        <div className="myaccount-myorders-div">
+          {orderList.map((order, index) => (
+            <>
+              <div key={index} className="myaccount-myorders-status">
+                <p>Order Date: {getDate(order.ordered_at)}</p>
+                <p>Status: {order.status}</p>
+              </div>
+              <div className="myaccount-myorders-shipping">
+                <p>
+                  <b>Shipping Address</b>
+                </p>
+                <p>
+                  {order.address.first_name} {order.address.last_name}
+                </p>
+                <p>
+                  {order.address.address_1} {order.address.address_2}
+                </p>
+                <p>{order.address.city}</p>
+                <p>
+                  {order.address.postal_zip_code} {order.address.province}{' '}
+                  {order.address.country}
+                </p>
+                <p>{order.address.phone}</p>
+              </div>
+              {order.products.map((product, index) => (
+                <div className="myaccount-myorders-products" key={index}>
+                  <div className="myaccount-myorders-product-img">
+                    <img src={`/images/${product.image}`} alt="" />
+                  </div>
+                  <div className="myaccount-myorders-product-detail">
+                    <p>{product.name}</p>
+                    <p>
+                      Quantity:- <b>{product.quantity}</b>
+                    </p>
+                    <p>
+                      <b>
+                        {order.total_cost.currency}{' '}
+                        {product.price * product.quantity}
+                      </b>
+                    </p>
+                  </div>
+                  <div className="myaccount-myorders-product-status">
+                    <p>{product.status}</p>
+                  </div>
+                </div>
+              ))}
+            </>
+          ))}
+        </div>
+      </>
     );
   }
-  function AccountSetting() {
-    return (
-      <div className="my-account-main-display-heading">
-        <p>Account Setting</p>
-      </div>
-    );
-  }
+  // function AccountSetting() {
+  //   return (
+  //     <div className="my-account-main-display-heading">
+  //       <p>Account Setting</p>
+  //     </div>
+  //   );
+  // }
 
   function MyAccountDisplay() {
-    if (page === 'detail') {
-      return MyDetail();
-    } else if (page === 'addresses') {
+    if (page === 'addresses') {
       return MyAddresses();
     } else if (page === 'orders') {
-      return MyOrders();
-    } else if (page === 'setting') {
-      return <AccountSetting />;
+      return (
+        <>
+          <div className="my-account-main-display-heading">
+            <p>My Order</p>
+          </div>
+          {MyOrders()}
+        </>
+      );
+    } else {
+      return MyDetail();
     }
+    // else if (page === 'setting') {
+    //   return <AccountSetting />;
+    // }
   }
 
   return (
@@ -518,6 +885,7 @@ export default function MyAccount() {
                   border: 1,
                   marginTop: 5,
                   marginBotton: 5,
+                  cursor: 'pointer',
                 }}
                 onClick={() => {
                   setPage('detail');
@@ -537,6 +905,7 @@ export default function MyAccount() {
                 style={{
                   marginTop: 5,
                   marginBotton: 5,
+                  cursor: 'pointer',
                 }}
                 onClick={() => {
                   setPage('addresses');
@@ -556,6 +925,7 @@ export default function MyAccount() {
                 style={{
                   marginTop: 5,
                   marginBotton: 5,
+                  cursor: 'pointer',
                 }}
                 onClick={() => {
                   setPage('orders');
@@ -570,7 +940,7 @@ export default function MyAccount() {
                 My Orders
               </button>
             </Ripples>
-            <Ripples>
+            {/* <Ripples>
               <button
                 style={{
                   marginTop: 5,
@@ -588,12 +958,13 @@ export default function MyAccount() {
                 />
                 Account settings
               </button>
-            </Ripples>
+            </Ripples> */}
             <Ripples>
               <button
                 style={{
                   marginTop: 5,
                   marginBotton: 5,
+                  cursor: 'pointer',
                 }}
                 onClick={() => logout()}
               >

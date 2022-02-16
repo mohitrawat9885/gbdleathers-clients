@@ -3,7 +3,7 @@ import './CheckOut.css';
 import EditIcon from '@mui/icons-material/Edit';
 import Ripples from 'react-ripples';
 import DeleteIcon from '@mui/icons-material/Delete';
-// import Ripples from 'react-ripples';
+import ReactLoading from 'react-loading';
 
 export default function CheckOut() {
   const [addEditAddress, setAddEditAddress] = useState('product');
@@ -13,6 +13,8 @@ export default function CheckOut() {
 
   const [addressList, setAddressList] = useState([]);
   const [addressListFetched, setAddressListFetched] = useState(false);
+
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
 
   const [addressId, setAddressId] = useState();
   const [checkoutAddress, setCheckoutAddress] = useState();
@@ -57,6 +59,7 @@ export default function CheckOut() {
 
   const checkout = async () => {
     try {
+      setCheckoutLoading(true);
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/checkout`,
         {
@@ -71,11 +74,16 @@ export default function CheckOut() {
       );
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
-        alert(res.message);
+        window.location = res.payment_url;
+        // alert(res.message);
       } else {
-        alert('Something went wrong!');
+        setCheckoutLoading(false);
+        alert(res.message);
       }
-    } catch (err) {}
+    } catch (err) {
+      alert('Something went wrong try again later!');
+      setCheckoutLoading(false);
+    }
   };
 
   const addAddress = async () => {
@@ -151,7 +159,6 @@ export default function CheckOut() {
         resetData();
         getAddress();
         setAddEditAddress('product');
-
         return;
       } else {
         alert(res.message);
@@ -271,6 +278,48 @@ export default function CheckOut() {
     // alert(total);
   }
 
+  function GetCheckoutButton() {
+    if (checkoutLoading) {
+      return (
+        <Ripples
+          // onClick={() => {
+          //   window.scroll(0, 0);
+          //   checkout();
+          // }}
+          color="rgb(58, 58, 58)"
+          className="checkout-summary-checkout-btn"
+        >
+          <div
+            style={{
+              display: 'flex',
+              width: '100%',
+              // height: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <ReactLoading type="spin" color="white" height={22} width={22} />
+          </div>
+        </Ripples>
+      );
+    }
+    return (
+      <>
+        <Ripples
+          onClick={() => {
+            checkout();
+          }}
+          color="white"
+          className="checkout-summary-checkout-btn"
+        >
+          <div>
+            <p>CHECK OUT</p>
+          </div>
+        </Ripples>
+      </>
+    );
+  }
+
   function Addresses() {
     if (!addressListFetched) {
       getAddress();
@@ -294,12 +343,14 @@ export default function CheckOut() {
                   }}
                 >
                   <input
+                    style={{
+                      cursor: 'pointer',
+                    }}
                     type="radio"
                     name="address"
                     onClickCapture={() => setCheckoutAddress(address._id)}
-                    defaultChecked={address.defaultAddress}
+                    // defaultChecked={address.defaultAddress}
                   />
-
                   <div
                     style={{
                       width: '30%',
@@ -310,6 +361,9 @@ export default function CheckOut() {
                   >
                     <EditIcon
                       fontSize="small"
+                      style={{
+                        cursor: 'pointer',
+                      }}
                       onClick={() => {
                         setData(address);
                         setAddEditAddress('edit');
@@ -317,6 +371,9 @@ export default function CheckOut() {
                     />
                     <DeleteIcon
                       fontSize="small"
+                      style={{
+                        cursor: 'pointer',
+                      }}
                       onClick={() => {
                         deleteAddress(address._id);
                         setAddEditAddress('product');
@@ -357,8 +414,6 @@ export default function CheckOut() {
                 window.scrollTo({
                   top: 0,
                   behavior: 'smooth',
-                  /* you can also use 'auto' behaviour
-                   in place of 'smooth' */
                 });
               }}
             >
@@ -399,6 +454,10 @@ export default function CheckOut() {
             <button
               onClick={() => {
                 editAddress();
+                window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth',
+                });
               }}
             >
               UPDATE ADDRESS
@@ -412,6 +471,10 @@ export default function CheckOut() {
           <button
             onClick={() => {
               addAddress();
+              window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+              });
             }}
           >
             ADD ADDRESS
@@ -456,6 +519,9 @@ export default function CheckOut() {
                   </div>
                 </div>
                 <DeleteIcon
+                  style={{
+                    cursor: 'pointer',
+                  }}
                   onClick={() => addToCart(cart.product._id, -cart.quantity)}
                 />
               </div>
@@ -481,6 +547,7 @@ export default function CheckOut() {
               <p
                 style={{
                   fontSize: 18,
+                  cursor: 'pointer',
                 }}
                 onClick={() => setAddEditAddress('product')}
               >
@@ -596,6 +663,7 @@ export default function CheckOut() {
                 <input
                   style={{
                     width: 20,
+                    cursor: 'pointer',
                   }}
                   id="set_default"
                   type="checkbox"
@@ -643,18 +711,7 @@ export default function CheckOut() {
             <p>TOTAL COST</p>
             <p>QTR {calculateTotal()}</p>
           </div>
-          <Ripples
-            onClick={() => {
-              window.scroll(0, 0);
-              checkout();
-            }}
-            color="white"
-            className="checkout-summary-checkout-btn"
-          >
-            <div>
-              <p>CHECK OUT</p>
-            </div>
-          </Ripples>
+          {GetCheckoutButton()}
         </div>
       </div>
     </div>

@@ -123,6 +123,46 @@
   letter-spacing: 0.2rem;
 }
 
+.myaccount-myorders-status {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-top: 2rem;
+  border-top: 1px solid lightgray;
+}
+.myaccount-myorders-status p {
+  font-size: 18px;
+  color: rgb(100, 100, 100);
+}
+
+.myaccount-myorders-products {
+  padding: 0.8rem;
+  border-top: 1px solid lightgray;
+  padding-top: 1rem;
+  display: grid;
+  grid-template-columns: 30% 55% 15%;
+}
+.myaccount-myorders-product-img {
+  width: 9rem;
+  height: 9rem;
+}
+.myaccount-myorders-product-detail {
+  display: flex;
+  padding: 0.4rem;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.myaccount-myorders-product-status {
+  padding: 0.4rem;
+}
+.myaccount-myorders-shipping {
+  border: 1px solid lightgray;
+  padding: 0.8rem;
+}
+.myaccount-myorders-shipping p {
+  color: gray;
+}
+
 @media only screen and (max-width: 900px) {
   .my-account-main {
     width: 100%;
@@ -155,5 +195,65 @@
     margin-top: 0.5rem;
     padding-left: 0.3rem;
     margin-bottom: 1rem;
+  }
+  .myaccount-myorders-status p {
+    font-size: 18px;
+  }
+  .myaccount-myorders-product-detail p {
+    font-size: 16px;
+  }
+  .myaccount-myorders-product-status p {
+    font-size: 16px;
+  }
+  /* .myaccount-myorders-product-img {
+    width: 6rem;
+    height: 6rem;
+  } */
+}
+
+@media only screen and (max-width: 700px) {
+  .my-account-main-display {
+    width: 100%;
+    padding-left: 1%;
+    padding-right: 1%;
+    /* height: 70vh; */
+
+    padding-bottom: 0.5rem;
+    /* grid-column: 2; */
+  }
+  .myaccount-myorders-product-detail p {
+    font-size: 14px;
+  }
+  .myaccount-myorders-status p {
+    font-size: 16px;
+  }
+
+  .myaccount-myorders-product-img {
+    width: 7rem;
+    height: 7rem;
+  }
+}
+
+@media only screen and (max-width: 560px) {
+  .my-account-div {
+    padding-top: 2rem;
+    padding-left: 3%;
+    padding-right: 3%;
+    /* padding-bottom: 5rem;
+    background-color: rgb(250, 249, 249); */
+  }
+  .myaccount-myorders-product-detail p {
+    font-size: 14px;
+  }
+  .myaccount-myorders-product-status p {
+    font-size: 14px;
+  }
+  .myaccount-myorders-status p {
+    font-size: 14px;
+  }
+
+  .myaccount-myorders-product-img {
+    width: 5rem;
+    height: 5rem;
   }
 }

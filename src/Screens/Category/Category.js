@@ -10,32 +10,10 @@ export default function Category() {
     window.scrollTo(0, 0);
   }, []);
   const { categoryId } = useParams();
-  const [value, setValue] = React.useState(4.5);
+  // const [value, setValue] = React.useState(4.5);
   const [loading, setLoading] = useState(true);
   const [productList, setProductList] = useState([]);
   const [category, setCategory] = useState([]);
-
-  // const getAllProduct = async (quaryString = '') => {
-  //   try {
-  //     const response = await fetch(
-  //       `${global.api}/client/product${quaryString}`,
-  //       {
-  //         method: 'GET',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //       }
-  //     );
-  //     const res = JSON.parse(await response.text());
-  //     if (res.status === 'success') {
-  //       setProductList(res.data);
-  //       console.log(res.data);
-  //     }
-  //   } catch (error) {
-  //     setProductList([]);
-  //   }
-  //   setLoading(false);
-  // };
 
   const getCategory = async (quaryString, list) => {
     try {

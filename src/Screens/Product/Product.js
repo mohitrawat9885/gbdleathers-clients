@@ -1,28 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './Product.css';
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
-import { useParams } from 'react-router-dom';
-
+import { useParams, Link } from 'react-router-dom';
+import ReactLoading from 'react-loading';
 import Button from '@mui/material/Button';
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 // import Box from "@mui/material/Box";
 import Rating from '@mui/material/Rating';
+import Ripple from 'react-ripples';
 // import Typography from "@mui/material/Typography";
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
+import GlobalState from '../../GlobalState';
 export default function Product() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  // const { addItemToList } = useContext(GlobalContext);
+  const [cartMenu, setCartMenu] = useContext(GlobalState);
+
   const [value, setValue] = React.useState(4.5);
   const [product, setProduct] = useState({});
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [variantsList, setVariantList] = useState([]);
   const [variantsSelected, setVariantsSelected] = useState();
+
+  const [productList, setProductList] = useState([]);
+  const [categoryId, setCategoryId] = useState();
+  const [productListLoading, setProductListLoading] = useState(true);
+
+  const [addToCartLoading, setAddToCartLoading] = useState(false);
+
+  const [propertiesList, setPropertiesList] = useState([]);
 
   const properties = {
     //thumbnailPosition: "left",
@@ -33,6 +47,10 @@ export default function Product() {
     showPlayButton: false,
   };
   let { productId } = useParams();
+  function refreshPage() {
+    setLoading(true);
+    window.scroll(0, 0);
+  }
 
   const getProduct = async () => {
     try {
@@ -48,6 +66,7 @@ export default function Product() {
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
         setProduct(res.data);
+        setCategoryId(res.data.category._id);
         setImages(res.data.images);
         const myVariants = res.data.variants;
         // console.log(myVariants);
@@ -73,7 +92,19 @@ export default function Product() {
           fiV.push(tepFiV);
         }
         setVariantList(fiV);
-        console.log(fiV);
+        // console.log('Properties', res.data.multi_properties);
+        if (res.data.multi_properties) {
+          let proList = [];
+          for (let i in res.data.multi_properties) {
+            let obj = {
+              name: i,
+              values: res.data.multi_properties[i],
+            };
+            proList.push(obj);
+          }
+          setPropertiesList(proList);
+        }
+        // console.log(fiV);
       }
     } catch (error) {
       console.log(error);
@@ -97,7 +128,7 @@ export default function Product() {
         }
         // console.log(values[i].name, values[i].value);
       }
-      console.log(query);
+      // console.log(query);
 
       const response = await fetch(
         `${global.api}/client/product/${productId}/variant?${query}`,
@@ -110,8 +141,8 @@ export default function Product() {
       );
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
-        let vari = res.data.data;
-        console.log(res.data);
+        // let vari = res.data.data;
+        console.log('Variant Selected is ', res.data);
         // alert(res.status);
       } else {
         alert(res.message);
@@ -123,6 +154,7 @@ export default function Product() {
 
   const addToCart = async () => {
     try {
+      setAddToCartLoading(true);
       const response = await fetch(`/api/v1/gbdleathers/client/customer/cart`, {
         method: 'POST',
         headers: {
@@ -134,12 +166,36 @@ export default function Product() {
       });
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
+        setCartMenu(true);
+        setAddToCartLoading(false);
       } else {
-        // alert(res.status.message);
+        alert(res.message);
+        setAddToCartLoading(false);
       }
     } catch (error) {
       console.log(error);
+      setAddToCartLoading(false);
     }
+  };
+  const getCategory = async () => {
+    try {
+      const response = await fetch(
+        `${global.api}/client/category/${categoryId}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      const res = JSON.parse(await response.text());
+      if (res.status === 'success') {
+        setProductList(res.data.products);
+        setProductListLoading(false);
+        // console.log(res.data);
+      }
+    } catch (error) {}
+    // setLoading(false);
   };
 
   function ShowVariants() {
@@ -165,6 +221,109 @@ export default function Product() {
           ))}
         </div>
       </>
+    );
+  }
+  function ShowProperties() {
+    return (
+      <>
+        <div className="product-variants-div">
+          {propertiesList.map((properti, index) => (
+            <div key={index}>
+              <label for={properti.name}>{properti.name}</label>
+              <br />
+              <select
+                name={properti.name}
+                id={properti.name}
+                onChange={() => getVariants()}
+              >
+                {properti.values.map((value, i) => (
+                  <option key={i} value={value}>
+                    {value}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ))}
+        </div>
+      </>
+    );
+  }
+
+  function AddToCartButton() {
+    if (addToCartLoading) {
+      return (
+        <div className="product-detail-add-to-cart-loading">
+          <ReactLoading color="white" type="spin" height={30} width={30} />
+        </div>
+      );
+    } else {
+      return (
+        <div className="product-detail-add-to-cart">
+          <Ripple color="white" onClick={addToCart}>
+            ADD TO CART
+          </Ripple>
+        </div>
+      );
+    }
+  }
+
+  function GetProductsWithSamecategory() {
+    if (productListLoading && categoryId) {
+      getCategory(categoryId);
+      return <>Loading...</>;
+    }
+    return (
+      <div className="category-page-parent">
+        <div className="category-page-heading">
+          <span>PRODUCTS WITH SAME CATEGORY</span>
+        </div>
+        <div className="category-page-body">
+          {productList.map((product, index) => (
+            <div className="category-page-holder" key={index}>
+              <Link
+                onClick={() => refreshPage()}
+                to={`/product/${product._id}`}
+                style={{ textDecoration: 'none' }}
+              >
+                <div className="category-page-img">
+                  <img
+                    src={`${global.image_path}${product.front_image}`}
+                    onMouseOver={(e) =>
+                      (e.currentTarget.src = `${global.image_path}${product.back_image}`)
+                    }
+                    onMouseOut={(e) =>
+                      (e.currentTarget.src = `${global.image_path}${product.front_image}`)
+                    }
+                    alt=""
+                  />
+                </div>
+                <br />
+                <div className="category-page-detail">
+                  <p>{product.name}</p>
+                  <div className="category-page-price">
+                    <p>QR {product.price}</p>
+                  </div>
+                  <div className="category-page-review">
+                    <p>{product.ratingsQuantity} reviews</p>
+                    {/* <br /> */}
+                    <Rating
+                      className="category-page-review-rating"
+                      name="simple-controlled"
+                      style={{
+                        paddingLeft: '0px',
+                        marginLeft: '0px',
+                        // marginRight: ".8rem",
+                      }}
+                      value={parseInt(product.ratingsAverage)}
+                      readOnly
+                    />
+                  </div>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
+      </div>
     );
   }
 
@@ -212,8 +371,15 @@ export default function Product() {
               </p>
             </div>
           </div>
-          <div>
+          <div
+            style={{
+              width: '70%',
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
+          >
             <ShowVariants />
+            <ShowProperties />
           </div>
           <div className="product-detail-indicators">
             <FiberManualRecordIcon style={{ color: 'green' }} />
@@ -229,19 +395,7 @@ export default function Product() {
             <p>{product.summary}</p>
           </div>
 
-          <div className="product-detail-add-to-cart">
-            <Button
-              style={{
-                width: '100%',
-                backgroundColor: 'brown',
-                borderRadius: 0,
-              }}
-              variant="contained"
-              onClick={addToCart}
-            >
-              ADD TO CART
-            </Button>
-          </div>
+          {AddToCartButton()}
 
           <div className="product-detail-description">
             <h5>Description:-</h5>
@@ -250,6 +404,7 @@ export default function Product() {
           </div>
         </div>
       </div>
+      {GetProductsWithSamecategory()}
       <Footer />
     </>
   );

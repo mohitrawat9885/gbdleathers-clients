@@ -58,10 +58,11 @@
   display: flex;
   justify-content: space-between;
 }
-.login-detail-password a {
+.login-detail-password span {
   color: rgb(0, 0, 0);
+  cursor: pointer;
 }
-.login-detail-password a:hover {
+.login-detail-password span:hover {
   color: rgb(83, 82, 82);
 }
 
@@ -85,7 +86,23 @@
   font-family: Arial, Helvetica, sans-serif !important;
   /* background-color: rgb(158, 158, 158); */
 }
+
+.login-detail-signin-forgot button {
+  width: 100%;
+  font-size: medium;
+  letter-spacing: 0.2rem;
+  color: rgb(255, 255, 255);
+  /* border: 1px solid black; */
+  border-radius: 0%;
+  font-family: Arial, Helvetica, sans-serif !important;
+  background-color: rgb(98, 98, 98);
+}
 .login-detail-signin button:hover {
+  background-color: rgb(98, 98, 98);
+  border: 1px solid rgb(98, 98, 98);
+  color: white;
+}
+.login-detail-signin-forgot button:hover {
   background-color: rgb(98, 98, 98);
   border: 1px solid rgb(98, 98, 98);
   color: white;
@@ -116,8 +133,29 @@
   font-family: Arial, Helvetica, sans-serif !important;
   /* background-color: rgb(161, 64, 64); */
 }
+
+.login-detail-create-account-forgot p button {
+  width: 100%;
+  font-size: medium;
+  letter-spacing: 0.2rem;
+  color: rgb(0, 0, 0);
+  border: 1px solid transparent;
+  border-radius: 0%;
+  font-family: Arial, Helvetica, sans-serif !important;
+  /* background-color: rgb(161, 64, 64); */
+}
 .login-detail-create-account a button:hover {
   background-color: rgb(98, 98, 98);
   border: 1px solid rgb(98, 98, 98);
   color: rgb(255, 255, 255);
+}
+
+.login-detail-create-account-forgot p button:hover {
+  width: 100%;
+  font-size: medium;
+  letter-spacing: 0.2rem;
+  color: rgb(0, 0, 0);
+  border: 1px solid transparent;
+  border-radius: 0%;
+  font-family: Arial, Helvetica, sans-serif !important;
 }

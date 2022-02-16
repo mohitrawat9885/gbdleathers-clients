@@ -151,6 +151,7 @@ img {
   color: white;
   letter-spacing: 0.1rem;
   background-color: rgb(58, 58, 58);
+  cursor: pointer;
 }
 
 .checkout-summary-add-address-btn {
@@ -164,6 +165,7 @@ img {
   color: white;
   letter-spacing: 0.1rem;
   background-color: rgb(255, 158, 47);
+  cursor: pointer;
 }
 
 /* Address  */
@@ -218,6 +220,7 @@ img {
   color: white;
   font-size: 16px;
   letter-spacing: 0.2rem;
+  cursor: pointer;
 }
 
 .checkout-menu-quantity {
@@ -242,6 +245,7 @@ img {
   align-items: center;
   font-size: 22px;
   font-weight: bolder;
+  cursor: pointer;
 }
 .checkout-menu-quantity-btn:hover {
   background-color: #000000;
