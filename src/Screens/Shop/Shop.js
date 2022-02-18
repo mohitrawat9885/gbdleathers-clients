@@ -83,7 +83,7 @@ export default function Shop() {
                         marginLeft: '0px',
                         // fontSize: ".9rem",
                       }}
-                      value={parseInt(product.ratingsAverage)}
+                      value={parseFloat(product.ratingsAverage)}
                       readOnly
                     />
                   </div>

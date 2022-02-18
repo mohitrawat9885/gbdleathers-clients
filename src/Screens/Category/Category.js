@@ -84,7 +84,7 @@ export default function Category() {
                         marginLeft: '0px',
                         // marginRight: ".8rem",
                       }}
-                      value={parseInt(product.ratingsAverage)}
+                      value={parseFloat(product.ratingsAverage)}
                       readOnly
                     />
                   </div>

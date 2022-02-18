@@ -15,6 +15,9 @@ import Ripple from 'react-ripples';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
 import GlobalState from '../../GlobalState';
+
+import Reviews from './Reviews/Reviews';
+
 export default function Product() {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -23,7 +26,7 @@ export default function Product() {
   // const { addItemToList } = useContext(GlobalContext);
   const [cartMenu, setCartMenu] = useContext(GlobalState);
 
-  const [value, setValue] = React.useState(4.5);
+  const [parentProduct, setParentProduct] = useState({});
   const [product, setProduct] = useState({});
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -66,6 +69,7 @@ export default function Product() {
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
         setProduct(res.data);
+        setParentProduct(res.data);
         setCategoryId(res.data.category._id);
         setImages(res.data.images);
         const myVariants = res.data.variants;
@@ -92,6 +96,7 @@ export default function Product() {
           fiV.push(tepFiV);
         }
         setVariantList(fiV);
+        // console.log('Variant List', fiV);
         // console.log('Properties', res.data.multi_properties);
         if (res.data.multi_properties) {
           let proList = [];
@@ -104,6 +109,7 @@ export default function Product() {
           }
           setPropertiesList(proList);
         }
+        // getVariants();
         // console.log(fiV);
       }
     } catch (error) {
@@ -126,10 +132,10 @@ export default function Product() {
         if (i < values.length - 1) {
           query = query + '&';
         }
-        // console.log(values[i].name, values[i].value);
       }
-      // console.log(query);
 
+      // document.querySelector('select').COLOR.value = 'Blue';
+      // console.log('Variant Query', query);
       const response = await fetch(
         `${global.api}/client/product/${productId}/variant?${query}`,
         {
@@ -141,15 +147,52 @@ export default function Product() {
       );
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
-        // let vari = res.data.data;
-        console.log('Variant Selected is ', res.data);
-        // alert(res.status);
+        let prd = res.data.data;
+        let newPrd = { ...parentProduct };
+        newPrd._id = prd._id;
+        if (prd.name) {
+          newPrd.name = prd.name;
+        }
+        if (prd.price) {
+          newPrd.price = prd.price;
+        }
+        if (prd.stock) {
+          newPrd.stock = prd.stock;
+        }
+        if (prd.summary) {
+          newPrd.summary = prd.summary;
+        }
+        if (prd.description) {
+          newPrd.description = prd.description;
+        }
+        if (prd.ratingsAverage) {
+          newPrd.ratingsAverage = prd.ratingsAverage;
+        }
+        if (prd.ratingsQuantity) {
+          newPrd.ratingsQuantity = prd.ratingsQuantity;
+        }
+        if (prd.multi_properties) {
+          newPrd.multi_properties = prd.multi_properties;
+        }
+        if (prd.images && prd.images.length > 0) {
+          newPrd.images = prd.images;
+          setImages(res.data.data.images);
+        } else {
+          setImages(parentProduct.images);
+        }
+        setProduct(newPrd);
+        for (let x in prd.properties) {
+          document.getElementById(`${x}`).value = prd.properties[x];
+          // console.log('Key = ', x, ' Value = ', prd.properties[x]);
+        }
+        // console.log('Tis', prd.properties);
       } else {
         alert(res.message);
       }
     } catch (error) {
-      console.log(error);
+      console.log('ERRPR VARIANT', error);
     }
+    //
   };
 
   const addToCart = async () => {
@@ -161,7 +204,7 @@ export default function Product() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          product: productId,
+          product: product._id,
         }),
       });
       const res = JSON.parse(await response.text());
@@ -197,6 +240,9 @@ export default function Product() {
     } catch (error) {}
     // setLoading(false);
   };
+  useEffect(() => {
+    getVariants();
+  }, [variantsList]);
 
   function ShowVariants() {
     return (
@@ -204,7 +250,7 @@ export default function Product() {
         <div className="product-variants-div">
           {variantsList.map((variant, index) => (
             <div key={index}>
-              <label for={variant.name}>{variant.name}</label>
+              <label htmlFor={variant.name}>{variant.name}</label>
               <br />
               <select
                 name={variant.name}
@@ -234,7 +280,7 @@ export default function Product() {
               <select
                 name={properti.name}
                 id={properti.name}
-                onChange={() => getVariants()}
+                // onChange={() => getVariants()}
               >
                 {properti.values.map((value, i) => (
                   <option key={i} value={value}>
@@ -314,7 +360,7 @@ export default function Product() {
                         marginLeft: '0px',
                         // marginRight: ".8rem",
                       }}
-                      value={parseInt(product.ratingsAverage)}
+                      value={parseFloat(product.ratingsAverage)}
                       readOnly
                     />
                   </div>
@@ -358,7 +404,7 @@ export default function Product() {
                   marginRight: '.8rem',
                   // justifyContent: "space-between",
                 }}
-                value={parseInt(product.ratingsAverage)}
+                value={parseFloat(product.ratingsAverage)}
                 // size="small"
                 readOnly
               />
@@ -405,6 +451,17 @@ export default function Product() {
         </div>
       </div>
       {GetProductsWithSamecategory()}
+      <Reviews
+        productId={product._id}
+        numberOfReviews={product.ratingsQuantity}
+        rating={product.ratingsAverage}
+      />
+      <div
+        style={{
+          width: '100%',
+          height: '30vh',
+        }}
+      ></div>
       <Footer />
     </>
   );
