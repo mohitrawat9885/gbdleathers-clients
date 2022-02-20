@@ -3,7 +3,7 @@ import './Menu.css';
 import { Link } from 'react-router-dom';
 import ClearIcon from '@mui/icons-material/Clear';
 import MenuIcon from '@mui/icons-material/Menu';
-import { SentimentVeryDissatisfiedSharp } from '@mui/icons-material';
+// import { SentimentVeryDissatisfiedSharp } from '@mui/icons-material';
 //import { Turn as Hamburger } from "hamburger-react";
 
 export default function Menu() {
@@ -111,7 +111,7 @@ export default function Menu() {
               </Link>
             </li>
 
-            <li className="nav-text">
+            {/* <li className="nav-text">
               <Link to="/up-coming-workshops">
                 <span>UP COMING WORKSHOPS</span>
               </Link>
@@ -130,12 +130,12 @@ export default function Menu() {
               <Link to="/product-suggestion">
                 <span>PRODUCT SUGGESTION</span>
               </Link>
-            </li>
-            <li className="nav-text">
+            </li> */}
+            {/* <li className="nav-text">
               <Link to="/our-shop-profile">
                 <span>OUR SHOP PROFILE</span>
               </Link>
-            </li>
+            </li> */}
             <li className="nav-text">
               <Link to="/contact-us">
                 <span>CONTACT US</span>

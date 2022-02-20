@@ -23,7 +23,7 @@ export default function CartMenu() {
 
   useEffect(() => {
     HandleMenu(cartMenu);
-  }, [cartMenu]);
+  }, cartMenu);
   // const [total, setTotal] = useState(0);
 
   const HandleMenu = function (toggled) {

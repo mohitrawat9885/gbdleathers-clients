@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import Header from './Screens/Header/Header';
 import Footer from './Screens/Footer/Footer';
@@ -14,13 +14,7 @@ import ResetPassword from './Screens/Authentication/Login/ResetPassword';
 import MyAccount from './Screens/MyAccount/MyAccount';
 import ContactUs from './Screens/ContactUs/ContactUs';
 import CheckOut from './Screens/CheckOut/CheckOut';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  withRouter,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Shop from './Screens/Shop/Shop';
 import GlobalState from './GlobalState';
 

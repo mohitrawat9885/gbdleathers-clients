@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import './Product.css';
-import ImageGallery from 'react-image-gallery';
-import 'react-image-gallery/styles/css/image-gallery.css';
+// import ImageGallery from 'react-image-gallery';
+// import 'react-image-gallery/styles/css/image-gallery.css';
 import { useParams, Link } from 'react-router-dom';
 import ReactLoading from 'react-loading';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -13,6 +13,17 @@ import Rating from '@mui/material/Rating';
 import Ripple from 'react-ripples';
 // import Typography from "@mui/material/Typography";
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import ImageGallery from 'react-image-gallery';
+// import SideExample from './ProductImages/ReactImageMagnify';
+// import Zoom from 'react-medium-image-zoom';
+
+import 'react-image-gallery/styles/css/image-gallery.css';
+
+// import MyImageGallery from './ProductImages/ImageGallary';
+
+// import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+
+import 'react-medium-image-zoom/dist/styles.css';
 
 import GlobalState from '../../GlobalState';
 
@@ -28,7 +39,7 @@ export default function Product() {
 
   const [parentProduct, setParentProduct] = useState({});
   const [product, setProduct] = useState({});
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState([{ image: '' }]);
   const [loading, setLoading] = useState(true);
   const [variantsList, setVariantList] = useState([]);
   const [variantsSelected, setVariantsSelected] = useState();
@@ -41,14 +52,6 @@ export default function Product() {
 
   const [propertiesList, setPropertiesList] = useState([]);
 
-  const properties = {
-    //thumbnailPosition: "left",
-    useBrowserFullscreen: true,
-    showPlayButton: true,
-    slideOnThumbnailOver: true,
-    // showNav: false,
-    showPlayButton: false,
-  };
   let { productId } = useParams();
   function refreshPage() {
     setLoading(true);
@@ -109,14 +112,15 @@ export default function Product() {
           }
           setPropertiesList(proList);
         }
+        setLoading(false);
         // getVariants();
         // console.log(fiV);
       }
     } catch (error) {
       console.log(error);
       setProduct({});
+      setLoading(false);
     }
-    setLoading(false);
   };
   if (loading) {
     getProduct();
@@ -360,6 +364,7 @@ export default function Product() {
                         marginLeft: '0px',
                         // marginRight: ".8rem",
                       }}
+                      precision={0.5}
                       value={parseFloat(product.ratingsAverage)}
                       readOnly
                     />
@@ -373,6 +378,21 @@ export default function Product() {
     );
   }
 
+  // function myRenderItem(item) {
+  //   return <SideExample />;
+  // }
+
+  const properties = {
+    thumbnailPosition: 'bottom',
+    useBrowserFullscreen: false,
+    slideOnThumbnailOver: true,
+    showPlayButton: false,
+    // renderItem: myRenderItem.bind(this),
+  };
+
+  if (loading) {
+    return <Header />;
+  }
   return (
     <>
       <Header />
@@ -404,6 +424,7 @@ export default function Product() {
                   marginRight: '.8rem',
                   // justifyContent: "space-between",
                 }}
+                precision={0.5}
                 value={parseFloat(product.ratingsAverage)}
                 // size="small"
                 readOnly

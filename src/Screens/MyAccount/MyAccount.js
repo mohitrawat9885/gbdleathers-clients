@@ -5,7 +5,7 @@ import Ripples from 'react-ripples';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import AddLocationOutlinedIcon from '@mui/icons-material/AddLocationOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-import SettingsApplicationsOutlinedIcon from '@mui/icons-material/SettingsApplicationsOutlined';
+// import SettingsApplicationsOutlinedIcon from '@mui/icons-material/SettingsApplicationsOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 // import AddIcon from '@mui/icons-material/Add';

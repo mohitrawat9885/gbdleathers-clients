@@ -1,26 +1,26 @@
-import React, { useState } from "react";
-import "./FooterDiv1.css";
+import React, { useState } from 'react';
+import './FooterDiv1.css';
 
-import CallRoundedIcon from "@mui/icons-material/CallRounded";
-import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
-import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
+import CallRoundedIcon from '@mui/icons-material/CallRounded';
+import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
+import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 
-import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
-import SendRoundedIcon from "@mui/icons-material/SendRounded";
-import { Link } from "react-router-dom";
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
+import SendRoundedIcon from '@mui/icons-material/SendRounded';
+import { Link } from 'react-router-dom';
 export default function FooterDiv1() {
-  const [footerMenu1, setFooterMenu1] = useState("down");
+  const [footerMenu1, setFooterMenu1] = useState('down');
   const footerDivDropdownMenu1 = () => {
-    if (footerMenu1 == "up") {
+    if (footerMenu1 === 'up') {
       document
-        .getElementById("footer-div-1-2-nav-1-open")
-        .classList.remove("footer-div-1-2-nav-1-open-active");
-      setFooterMenu1("down");
+        .getElementById('footer-div-1-2-nav-1-open')
+        .classList.remove('footer-div-1-2-nav-1-open-active');
+      setFooterMenu1('down');
     } else {
       document
-        .getElementById("footer-div-1-2-nav-1-open")
-        .classList.add("footer-div-1-2-nav-1-open-active");
-      setFooterMenu1("up");
+        .getElementById('footer-div-1-2-nav-1-open')
+        .classList.add('footer-div-1-2-nav-1-open-active');
+      setFooterMenu1('up');
     }
   };
   return (
@@ -105,7 +105,7 @@ export default function FooterDiv1() {
                 <input type="text" />
                 <SendRoundedIcon
                   style={{
-                    fontSize: "30px",
+                    fontSize: '30px',
                   }}
                 />
               </div>

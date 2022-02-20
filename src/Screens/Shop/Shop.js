@@ -9,7 +9,7 @@ export default function Shop() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  const [value, setValue] = React.useState(4.5);
+  // const [value, setValue] = React.useState(4.5);
   const [loading, setLoading] = useState(true);
   const [productList, setProductList] = useState([]);
 
@@ -83,6 +83,7 @@ export default function Shop() {
                         marginLeft: '0px',
                         // fontSize: ".9rem",
                       }}
+                      precision={0.5}
                       value={parseFloat(product.ratingsAverage)}
                       readOnly
                     />
