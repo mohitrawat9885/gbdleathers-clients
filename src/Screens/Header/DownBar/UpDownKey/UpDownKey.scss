@@ -8,11 +8,14 @@ $duration: 0.5s;
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   position: relative;
   cursor: pointer;
+  margin-left: 0.9rem;
 }
 
 .left-bar {
+  // border: 1px solid green;
   position: absolute;
   background-color: transparent;
   //   top: 0;
@@ -24,7 +27,7 @@ $duration: 0.5s;
   //   float: right;
   //   border-radius: 2px;
   &:after {
-    content: "";
+    content: '';
     background-color: rgb(0, 0, 0);
     width: 20px;
     height: 3px;
@@ -40,7 +43,7 @@ $duration: 0.5s;
   position: absolute;
   background-color: transparent;
   // top: 0px;
-  left: 16px;
+  left: 23px;
   //   width: 40px;
   //   height: 10px;
   //   display: block;
@@ -48,7 +51,7 @@ $duration: 0.5s;
   //   float: right;
   border-radius: 2px;
   &:after {
-    content: "";
+    content: '';
     background-color: rgb(0, 0, 0);
     width: 20px;
     height: 3px;

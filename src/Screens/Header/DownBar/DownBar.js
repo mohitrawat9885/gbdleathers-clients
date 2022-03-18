@@ -4,17 +4,6 @@ import UpDownKey from './UpDownKey/UpDownKey';
 import './DownBar.css';
 import './DownBarMobile.css';
 
-const data = [
-  'WALLETS',
-  'BELTS',
-  'TECH',
-  'DIY KITS',
-  'WATCH STRAPS',
-  'NOTEBOOK COVERS',
-  'EVERYTHINGS ELSE',
-  'GIFT CARD',
-];
-
 const DownBar = () => {
   const [loading, setLoading] = useState(true);
   const [categoryList, setCategoryList] = useState([]);
@@ -53,7 +42,7 @@ const DownBar = () => {
       setKeyStatus('down');
     } else {
       document.getElementById('downBar-mobile-id').style.height =
-        data.length * 3.5 + 'rem';
+        categoryList.length * 3.5 + 'rem';
       setKeyStatus('up');
     }
   };
