@@ -6,7 +6,11 @@ import { Link } from 'react-router-dom';
 import Header from '../../Header/Header';
 import Footer from '../../Footer/Footer';
 
+import { useAlert } from "react-alert";
+
+
 export default function Signup() {
+  const alert = useAlert();
   let navigate = useNavigate();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -37,12 +41,13 @@ export default function Signup() {
       );
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
+        alert.success("Welcome! Your Accound has been created succesfully.")
         navigate('/');
       } else {
-        alert(res.message);
+        alert.error(res.message);
       }
     } catch (error) {
-      alert('Something went wrong!');
+      alert.error('Something went wrong!');
     }
   };
 

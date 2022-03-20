@@ -5,7 +5,10 @@ import Ripples from 'react-ripples';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ReactLoading from 'react-loading';
 
+import { useAlert } from "react-alert";
+
 export default function CheckOut() {
+  const alert = useAlert();
   const [addEditAddress, setAddEditAddress] = useState('product');
 
   const [loadingCart, setLoadingCart] = useState(true);
@@ -78,10 +81,10 @@ export default function CheckOut() {
         // alert(res.message);
       } else {
         setCheckoutLoading(false);
-        alert(res.message);
+        alert.error(res.message);
       }
     } catch (err) {
-      alert('Something went wrong try again later!');
+      alert.error('Something went wrong try again later!');
       setCheckoutLoading(false);
     }
   };
@@ -114,13 +117,14 @@ export default function CheckOut() {
       if (res.status === 'success') {
         // alert(res.status);
         // setLoading(false);
+        alert.success(res.message)
         resetData();
         getAddress();
         setAddEditAddress('product');
         // setAddressPage('show');
         return;
       } else {
-        alert(res.message);
+        alert.error(res.message);
       }
     } catch (err) {}
     // setLoading(false);
@@ -156,16 +160,17 @@ export default function CheckOut() {
       if (res.status === 'success') {
         // alert(res.status);
         // setLoading(false);
+        alert.success(res.message)
         resetData();
         getAddress();
         setAddEditAddress('product');
         return;
       } else {
-        alert(res.message);
+        alert.error(res.message);
       }
     } catch (err) {
       console.log(err);
-      alert('Something went wrong!');
+      alert.error('Something went wrong!');
     }
     // setLoading(false);
     // navigate('/login');
@@ -184,13 +189,14 @@ export default function CheckOut() {
       );
       if (response.status === 204) {
         // alert('Deleted');
+        alert.success("Deleted!")
         getAddress();
         return;
       }
-      alert('Something went wrong! try again.');
+      alert.error('Something went wrong! try again.');
     } catch (err) {
       // console.log(err);
-      alert('Something went wrong!');
+      alert.error('Something went wrong!');
     }
     // setLoading(false);
     // navigate('/login');
@@ -210,6 +216,7 @@ export default function CheckOut() {
       const res = JSON.parse(await response.text());
       // alert(res.status);
       if (res.status === 'success') {
+        
         setAddressList(res.data);
         setAddressListFetched(true);
         // console.log(res.data);
@@ -232,7 +239,7 @@ export default function CheckOut() {
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
         setCartList(res.data);
-
+        
         // console.log(res.data);
       }
     } catch (error) {

@@ -18,9 +18,20 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Shop from './Screens/Shop/Shop';
 import GlobalState from './GlobalState';
 
+import { positions, Provider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
+
+const options = {
+  timeout: 5000,
+  position: positions.TOP_CENTER
+};
+
+
+
 // /api/v1/gbdleathers
 global.api = '/api/v1/gbdleathers';
 global.image_path = '/images/';
+
 
 // global.api = 'https://gbdleathers.com:8000/api/v1/gbdleathers';
 // global.image_path = 'https://gbdleathers.com:8000/images/';
@@ -30,6 +41,8 @@ function App() {
   const [cartMenu, setCartMenu] = useState(false);
   return (
     <>
+    <Provider template={AlertTemplate} {...options}>
+
       <GlobalState.Provider value={[cartMenu, setCartMenu]}>
         <Router>
           {/* <ScrollToTop> */}
@@ -149,6 +162,8 @@ function App() {
           </Routes>
         </Router>
       </GlobalState.Provider>
+  
+  </Provider>
     </>
   );
 }

@@ -12,8 +12,11 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import './MyAccount.css';
+
+import { useAlert } from "react-alert";
 // import { Phone } from '@mui/icons-material';
 export default function MyAccount() {
+  const alert = useAlert();
   const search = useLocation().search;
   const option = new URLSearchParams(search).get('option');
 
@@ -73,12 +76,12 @@ export default function MyAccount() {
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
         setOrderList(res.data);
-        console.log('Orders', res.data);
+        // console.log('Orders', res.data);
       } else {
-        alert(res.message);
+        alert.error(res.message);
       }
     } catch (err) {
-      alert(err);
+      alert.error(err);
     }
     setOrderLoading(false);
   };
@@ -128,9 +131,9 @@ export default function MyAccount() {
       // alert(res.status);
       if (res.status === 'success') {
         setEditMyDetail(false);
-        alert('Details Updated');
+        alert.success('Details Updated');
       } else {
-        alert('Opss! Something went wrong. May be email is already there.');
+        alert.error('Opss! Something went wrong. May be email is already there.');
         return;
       }
     } catch (err) {}
@@ -156,13 +159,14 @@ export default function MyAccount() {
       const res = JSON.parse(await response.text());
       // alert(res.status);
       if (res.status === 'success') {
+        alert.success('Your password is Updated');
         setEditMyPassword(false);
         setMyPassword(null);
         setMyPasswordCurrent(null);
         setMyPasswordConfirm(null);
-        alert('Your password is Updated');
+        
       } else {
-        alert(res.message);
+        alert.error(res.message);
       }
     } catch (err) {}
   };
@@ -220,14 +224,14 @@ export default function MyAccount() {
       const res = JSON.parse(await response.text());
       // alert(res.status);
       if (res.status === 'success') {
-        alert(res.status);
+        alert.success(res.status);
         // setLoading(false);
         resetData();
         getAddress();
         setAddressPage('show');
         return;
       } else {
-        alert(res.message);
+        alert.error(res.message);
       }
     } catch (err) {}
     // setLoading(false);
@@ -261,7 +265,7 @@ export default function MyAccount() {
       const res = JSON.parse(await response.text());
       // alert(res.status);
       if (res.status === 'success') {
-        alert(res.status);
+        alert.success(res.status);
         // setLoading(false);
         resetData();
         getAddress();
@@ -269,11 +273,11 @@ export default function MyAccount() {
 
         return;
       } else {
-        alert(res.message);
+        alert.error(res.message);
       }
     } catch (err) {
       console.log(err);
-      alert('Something went wrong!');
+      alert.error('Something went wrong!');
     }
     // setLoading(false);
     // navigate('/login');
@@ -291,14 +295,14 @@ export default function MyAccount() {
         }
       );
       if (response.status === 204) {
-        alert('Deleted');
+        alert.success('Deleted');
         getAddress();
         return;
       }
-      alert('Something went wrong! try again.');
+      alert.error('Something went wrong! try again.');
     } catch (err) {
       // console.log(err);
-      alert('Something went wrong!');
+      alert.error('Something went wrong!');
     }
     // setLoading(false);
     // navigate('/login');
@@ -322,7 +326,7 @@ export default function MyAccount() {
         setAddressListFetched(true);
         console.log(res.data);
       } else {
-        alert(res.message);
+        alert.error(res.message);
       }
     } catch (err) {}
     setLoading(false);
@@ -343,6 +347,7 @@ export default function MyAccount() {
 
       if (res.status === 'success') {
         setLoading(false);
+        alert.success("You have been logged out.")
         navigate('/');
         return;
       }

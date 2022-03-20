@@ -6,7 +6,11 @@ import { Link } from 'react-router-dom';
 import Header from '../../Header/Header';
 import Footer from '../../Footer/Footer';
 
+import { useAlert } from "react-alert";
+
+
 export default function Login() {
+  const alert = useAlert();
   const [forgotPassword, setForgotPassword] = useState(false);
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -17,6 +21,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
 
   const [forgotSubmit, setForgotSubmit] = useState('SUBMIT');
+
 
   const login = async () => {
     try {
@@ -35,20 +40,21 @@ export default function Login() {
       );
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
+        alert.success("Welcome! You are now login.")
         navigate('/');
         // console.log(res);
       } else {
-        alert(res.message);
+        alert.error(res.message);
       }
     } catch (error) {
       console.log(error);
-      alert('Something went wrong please try again!');
+      alert.error('Something went wrong please try again!');
     }
   };
   const ForgotPassword = async () => {
     try {
       if (!email) {
-        alert('Please provide email!');
+        alert.show('Please provide email!');
         return;
       }
       setForgotSubmit('Loading...');
@@ -66,15 +72,16 @@ export default function Login() {
       );
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
-        alert('Password Reset link is send to your entered email account!');
+        alert.show("Password Reset link is send to your entered email account!")
         navigate('/');
         // console.log(res);
       } else {
-        alert(res.message);
+        alert.error(res.message)
       }
     } catch (error) {
       console.log(error);
-      alert('Something went wrong please try again!');
+      
+      alert.show('Something went wrong please try again!');
     }
     setForgotSubmit('SUBMIT');
   };

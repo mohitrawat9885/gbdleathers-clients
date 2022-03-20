@@ -6,8 +6,10 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import Header from '../../Header/Header';
 import Footer from '../../Footer/Footer';
+import { useAlert } from "react-alert";
 
 export default function ResetPassword() {
+  const alert = useAlert();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -20,11 +22,11 @@ export default function ResetPassword() {
 
   const ResetPassword = async () => {
     if (!password) {
-      alert('Please provide password!');
+      alert.show('Please provide password!');
       return;
     }
     if (!passwordConfirm || !(password === passwordConfirm)) {
-      alert('Password do not match with confirm password!');
+      alert.show('Password do not match with confirm password!');
       return;
     }
     try {
@@ -43,15 +45,16 @@ export default function ResetPassword() {
       );
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
+        alert.success('Password reset successfully!');
         navigate('/');
-        alert('Password reset successfully!');
+       
         // console.log(res);
       } else {
-        alert(res.message);
+        alert.error(res.message);
       }
     } catch (error) {
       console.log(error);
-      alert('Something went wrong please try again!');
+      alert.error('Something went wrong please try again!');
     }
   };
 

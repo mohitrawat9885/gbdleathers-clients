@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import './Reviews.css';
 import Rating from '@mui/material/Rating';
+import { useAlert } from "react-alert";
 
 export default function Reviews(props) {
+  const alert = useAlert();
   const [rating, setRating] = useState();
   const [review, setReview] = useState();
   const [reviewList, setReviewList] = useState([]);
@@ -12,14 +14,15 @@ export default function Reviews(props) {
   const [myreview, setMyReview] = useState('nodata');
 
   const createReview = async () => {
+
     try {
       // const data = new FormData();
       if (!rating) {
-        alert('Please give some rating!');
+        alert.show('Please give some rating!');
         return;
       }
       if (!review) {
-        alert('Please give review!');
+        alert.show('Please give review!');
         return;
       }
       // alert(review);
@@ -45,11 +48,11 @@ export default function Reviews(props) {
         getMyReviews();
         getAllReviews();
       } else {
-        alert('Something went wrong please try again.');
+        alert.error('Something went wrong please try again.');
       }
     } catch (error) {
-      alert('Something Went wrong try again');
-      console.log(error);
+      alert.error('Something Went wrong try again');
+      // console.log(error);
     }
   };
 
@@ -71,7 +74,7 @@ export default function Reviews(props) {
         setReviewListLoading(false);
       }
     } catch (error) {
-      console.log('Error Fetching reviews', error);
+      // console.log('Error Fetching reviews', error);
       setReviewListLoading(false);
     }
   };

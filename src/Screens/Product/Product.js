@@ -19,6 +19,8 @@ import ImageGallery from 'react-image-gallery';
 
 import 'react-image-gallery/styles/css/image-gallery.css';
 
+import { useAlert } from "react-alert";
+
 // import MyImageGallery from './ProductImages/ImageGallary';
 
 // import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
@@ -30,6 +32,7 @@ import GlobalState from '../../GlobalState';
 import Reviews from './Reviews/Reviews';
 
 export default function Product() {
+  const alert = useAlert();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -191,7 +194,7 @@ export default function Product() {
         }
         // console.log('Tis', prd.properties);
       } else {
-        alert(res.message);
+        alert.error(res.message);
       }
     } catch (error) {
       console.log('ERRPR VARIANT', error);
@@ -216,11 +219,11 @@ export default function Product() {
         setCartMenu(true);
         setAddToCartLoading(false);
       } else {
-        alert(res.message);
+        alert.error(res.message);
         setAddToCartLoading(false);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setAddToCartLoading(false);
     }
   };
@@ -301,7 +304,7 @@ export default function Product() {
 
   function AddToCartButton() {
     if (addToCartLoading) {
-      return (
+      return ( 
         <div className="product-detail-add-to-cart-loading">
           <ReactLoading color="white" type="spin" height={30} width={30} />
         </div>
