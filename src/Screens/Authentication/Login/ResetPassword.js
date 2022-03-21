@@ -8,7 +8,10 @@ import Header from '../../Header/Header';
 import Footer from '../../Footer/Footer';
 import { useAlert } from "react-alert";
 
+import { Loading } from '../../../GlobalState';
+
 export default function ResetPassword() {
+  const [, setPageLoading] = React.useContext(Loading)
   const alert = useAlert();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -29,6 +32,7 @@ export default function ResetPassword() {
       alert.show('Password do not match with confirm password!');
       return;
     }
+    setPageLoading(true)
     try {
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/resetPassword/${passwordToken}`,
@@ -46,14 +50,17 @@ export default function ResetPassword() {
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
         alert.success('Password reset successfully!');
+        setPageLoading(false)
         navigate('/');
        
         // console.log(res);
       } else {
         alert.error(res.message);
+        setPageLoading(false)
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      setPageLoading(false)
       alert.error('Something went wrong please try again!');
     }
   };

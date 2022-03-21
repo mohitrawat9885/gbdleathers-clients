@@ -13,9 +13,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import './MyAccount.css';
 
+import {Loading} from "../../GlobalState"
+
 import { useAlert } from "react-alert";
 // import { Phone } from '@mui/icons-material';
 export default function MyAccount() {
+  const [, setPageLoading] = React.useContext(Loading)
   const alert = useAlert();
   const search = useLocation().search;
   const option = new URLSearchParams(search).get('option');
@@ -63,6 +66,7 @@ export default function MyAccount() {
   // END address VAriables
   const getOrders = async () => {
     try {
+      setPageLoading(true)
       // setOrderLoading(true);
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/orders`,
@@ -76,18 +80,22 @@ export default function MyAccount() {
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
         setOrderList(res.data);
+        setPageLoading(false)
         // console.log('Orders', res.data);
       } else {
+        setPageLoading(false)
         alert.error(res.message);
       }
     } catch (err) {
       alert.error(err);
+      setPageLoading(false)
     }
     setOrderLoading(false);
   };
 
   const getMe = async () => {
     try {
+      setPageLoading(false)
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/getme`,
         {
@@ -104,15 +112,19 @@ export default function MyAccount() {
         setMyFirstName(res.data.first_name);
         setMyLastName(res.data.last_name);
         setMyEmail(res.data.email);
+        setPageLoading(false)
         return;
       }
-    } catch (err) {}
+    } catch (err) {
+      setPageLoading(false)
+    }
     setLoading(false);
     navigate('/login');
   };
 
   const updateMyDetails = async () => {
     try {
+      setPageLoading(true)
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/updateMe`,
         {
@@ -131,17 +143,20 @@ export default function MyAccount() {
       // alert(res.status);
       if (res.status === 'success') {
         setEditMyDetail(false);
+        setPageLoading(false)
         alert.success('Details Updated');
       } else {
+        setPageLoading(false)
         alert.error('Opss! Something went wrong. May be email is already there.');
         return;
       }
-    } catch (err) {}
+    } catch (err) { setPageLoading(false)}
     getMe();
   };
 
   const updateMyPassword = async () => {
     try {
+      setPageLoading(true)
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/updateMyPassword`,
         {
@@ -164,11 +179,12 @@ export default function MyAccount() {
         setMyPassword(null);
         setMyPasswordCurrent(null);
         setMyPasswordConfirm(null);
-        
+        setPageLoading(false)
       } else {
         alert.error(res.message);
+        setPageLoading(false)
       }
-    } catch (err) {}
+    } catch (err) { setPageLoading(false)}
   };
 
   function resetData() {
@@ -200,6 +216,7 @@ export default function MyAccount() {
 
   const addAddress = async () => {
     try {
+      setPageLoading(true)
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/address`,
         {
@@ -229,17 +246,22 @@ export default function MyAccount() {
         resetData();
         getAddress();
         setAddressPage('show');
+        setPageLoading(false)
         return;
       } else {
         alert.error(res.message);
+        setPageLoading(false)
       }
-    } catch (err) {}
+    } catch (err) {
+      setPageLoading(false)
+    }
     // setLoading(false);
     // navigate('/login');
   };
 
   const editAddress = async () => {
     try {
+      setPageLoading(true)
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/address/${addressId}`,
         {
@@ -270,13 +292,15 @@ export default function MyAccount() {
         resetData();
         getAddress();
         setAddressPage('show');
-
+        setPageLoading(false)
         return;
       } else {
         alert.error(res.message);
+        setPageLoading(false)
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
+      setPageLoading(false)
       alert.error('Something went wrong!');
     }
     // setLoading(false);
@@ -285,6 +309,7 @@ export default function MyAccount() {
 
   const deleteAddress = async (id) => {
     try {
+      setPageLoading(true)
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/address/${id}`,
         {
@@ -297,11 +322,13 @@ export default function MyAccount() {
       if (response.status === 204) {
         alert.success('Deleted');
         getAddress();
+        setPageLoading(false)
         return;
       }
       alert.error('Something went wrong! try again.');
     } catch (err) {
       // console.log(err);
+      setPageLoading(false)
       alert.error('Something went wrong!');
     }
     // setLoading(false);
@@ -310,6 +337,7 @@ export default function MyAccount() {
 
   const getAddress = async () => {
     try {
+      setPageLoading(true)
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/address`,
         {
@@ -324,16 +352,19 @@ export default function MyAccount() {
       if (res.status === 'success') {
         setAddressList(res.data);
         setAddressListFetched(true);
-        console.log(res.data);
+        // console.log(res.data);
+        setPageLoading(false)
       } else {
         alert.error(res.message);
+        setPageLoading(false)
       }
-    } catch (err) {}
+    } catch (err) { setPageLoading(false)}
     setLoading(false);
     // navigate('/login');
   };
   const logout = async () => {
     try {
+      setPageLoading(true)
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/logout`,
         {
@@ -347,11 +378,12 @@ export default function MyAccount() {
 
       if (res.status === 'success') {
         setLoading(false);
+        setPageLoading(false)
         alert.success("You have been logged out.")
         navigate('/');
         return;
       }
-    } catch (err) {}
+    } catch (err) { setPageLoading(false)}
     setLoading(false);
     navigate('/login');
   };
@@ -986,7 +1018,14 @@ export default function MyAccount() {
             {MyAccountDisplay()}
           </div>
         </div>
+        <div style={{
+        width: "100%",
+        height: "70vh"
+      }}>
+
       </div>
+      </div>
+      
     </>
   );
 }

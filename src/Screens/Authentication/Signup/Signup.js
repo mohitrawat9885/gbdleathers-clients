@@ -7,9 +7,11 @@ import Header from '../../Header/Header';
 import Footer from '../../Footer/Footer';
 
 import { useAlert } from "react-alert";
+import { Loading } from '../../../GlobalState';
 
 
 export default function Signup() {
+  const [, setPageLoading] = React.useContext(Loading)
   const alert = useAlert();
   let navigate = useNavigate();
   useEffect(() => {
@@ -23,6 +25,7 @@ export default function Signup() {
 
   const signup = async () => {
     try {
+      setPageLoading(true)
       const response = await fetch(
         '/api/v1/gbdleathers/client/customer/signup',
         {
@@ -42,11 +45,14 @@ export default function Signup() {
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
         alert.success("Welcome! Your Accound has been created succesfully.")
+        setPageLoading(false)
         navigate('/');
       } else {
+        setPageLoading(false)
         alert.error(res.message);
       }
     } catch (error) {
+      setPageLoading(false)
       alert.error('Something went wrong!');
     }
   };

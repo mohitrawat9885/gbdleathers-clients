@@ -31,7 +31,10 @@ import GlobalState from '../../GlobalState';
 
 import Reviews from './Reviews/Reviews';
 
+import { Loading } from '../../GlobalState';
+
 export default function Product() {
+  const [, setPageLoading] = React.useContext(Loading)
   const alert = useAlert();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -63,6 +66,7 @@ export default function Product() {
 
   const getProduct = async () => {
     try {
+      setPageLoading(true)
       const response = await fetch(
         `${global.api}/client/product/${productId}`,
         {
@@ -116,13 +120,15 @@ export default function Product() {
           setPropertiesList(proList);
         }
         setLoading(false);
+        setPageLoading(false)
         // getVariants();
         // console.log(fiV);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error)
       setProduct({});
       setLoading(false);
+      setPageLoading(false)
     }
   };
   if (loading) {
@@ -132,6 +138,7 @@ export default function Product() {
 
   const getVariants = async () => {
     try {
+      setPageLoading(true)
       let query = '';
       let values = document.querySelectorAll('select');
       for (let i = 0; i < values.length; i++) {
@@ -193,11 +200,14 @@ export default function Product() {
           // console.log('Key = ', x, ' Value = ', prd.properties[x]);
         }
         // console.log('Tis', prd.properties);
+        setPageLoading(false)
       } else {
         alert.error(res.message);
+        setPageLoading(false)
       }
     } catch (error) {
-      console.log('ERRPR VARIANT', error);
+      setPageLoading(false)
+      // console.log('ERRPR VARIANT', error);
     }
     //
   };

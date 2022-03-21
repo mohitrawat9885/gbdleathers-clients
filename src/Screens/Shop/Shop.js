@@ -5,7 +5,10 @@ import Rating from '@mui/material/Rating';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
+import { Loading } from '../../GlobalState';
+
 export default function Shop() {
+  const [, setPageLoading] = React.useContext(Loading)
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -15,6 +18,7 @@ export default function Shop() {
 
   const getAllProduct = async (queryString) => {
     try {
+      setPageLoading(true)
       const response = await fetch(
         `${global.api}/client/product/${queryString}`,
         {
@@ -27,9 +31,11 @@ export default function Shop() {
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
         setProductList(res.data);
+        setPageLoading(false)
       }
     } catch (error) {
       setProductList([]);
+      setPageLoading(false)
     }
     setLoading(false);
   };

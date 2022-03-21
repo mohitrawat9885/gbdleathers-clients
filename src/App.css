@@ -28,5 +28,10 @@ body::-webkit-scrollbar-thumb {
 }
 
 a {
-  -webkit-tap-highlight-color: transparent !important;  
+  -webkit-tap-highlight-color: transparent !important;
+ 
+}
+
+a:hover{
+  color: inherit;
 }

@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import './Categorys.css';
 
+
 import { Link } from 'react-router-dom';
+import {Loading} from "../../../GlobalState"
 
 export default function Categorys() {
   const [loading, setLoading] = useState(true);
   const [categoryList1, setCategoryList1] = useState([]);
   const [categoryList2, setCategoryList2] = useState([]);
+  const [, setPageLoading] = React.useContext(Loading)
 
   const getAllCategorys = async (quaryString, list) => {
     try {
+      setPageLoading(true)
       const response = await fetch(
         `${global.api}/client/category?${quaryString}`,
         {
@@ -26,10 +30,12 @@ export default function Categorys() {
         } else {
           setCategoryList2(res.data);
         }
+        setPageLoading(false)
       }
     } catch (error) {
       setCategoryList1([]);
       setCategoryList2([]);
+      setPageLoading(false)
     }
     setLoading(false);
   };

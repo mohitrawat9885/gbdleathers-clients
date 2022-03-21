@@ -4,7 +4,10 @@ import { Link } from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
+import { Loading } from '../../GlobalState';
+
 export default function Categorys() {
+  const [, setPageLoading] = React.useContext(Loading)
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -14,6 +17,7 @@ export default function Categorys() {
 
   const getAllCategorys = async (quaryString) => {
     try {
+      setPageLoading(true)
       const response = await fetch(
         `${global.api}/client/category?${quaryString}`,
         {
@@ -26,9 +30,11 @@ export default function Categorys() {
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
         setCategoryList(res.data);
+        setPageLoading(false)
       }
     } catch (error) {
       setCategoryList([]);
+      setPageLoading(false)
     }
     setLoading(false);
   };

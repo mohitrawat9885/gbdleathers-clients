@@ -7,9 +7,11 @@ import Header from '../../Header/Header';
 import Footer from '../../Footer/Footer';
 
 import { useAlert } from "react-alert";
+import { Loading } from '../../../GlobalState';
 
 
 export default function Login() {
+  const [, setPageLoading] = React.useContext(Loading)
   const alert = useAlert();
   const [forgotPassword, setForgotPassword] = useState(false);
   useEffect(() => {
@@ -25,6 +27,7 @@ export default function Login() {
 
   const login = async () => {
     try {
+      setPageLoading(true)
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/login`,
         {
@@ -41,22 +44,27 @@ export default function Login() {
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
         alert.success("Welcome! You are now login.")
+        setPageLoading(false)
         navigate('/');
         // console.log(res);
       } else {
         alert.error(res.message);
+        setPageLoading(false)
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      setPageLoading(false)
       alert.error('Something went wrong please try again!');
     }
   };
   const ForgotPassword = async () => {
     try {
+      
       if (!email) {
         alert.show('Please provide email!');
         return;
       }
+      setPageLoading(true)
       setForgotSubmit('Loading...');
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/forgotPassword`,
@@ -73,13 +81,16 @@ export default function Login() {
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
         alert.show("Password Reset link is send to your entered email account!")
+        setPageLoading(false)
         navigate('/');
         // console.log(res);
       } else {
         alert.error(res.message)
+        setPageLoading(false)
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      setPageLoading(false)
       
       alert.show('Something went wrong please try again!');
     }

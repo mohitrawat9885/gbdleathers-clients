@@ -5,7 +5,10 @@ import Rating from '@mui/material/Rating';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
+import { Loading } from '../../GlobalState';
+
 export default function Category() {
+  const [, setPageLoading] = React.useContext(Loading)
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -17,6 +20,7 @@ export default function Category() {
 
   const getCategory = async (quaryString, list) => {
     try {
+      setPageLoading(true)
       const response = await fetch(
         `${global.api}/client/category/${categoryId}`,
         {
@@ -30,10 +34,13 @@ export default function Category() {
       if (res.status === 'success') {
         setCategory(res.data);
         setProductList(res.data.products);
-        console.log(res.data);
+        // console.log(res.data);
+        setPageLoading(false)
+
       }
     } catch (error) {
       setCategory([]);
+      setPageLoading(false)
     }
     setLoading(false);
   };

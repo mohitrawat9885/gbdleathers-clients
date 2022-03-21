@@ -16,7 +16,8 @@ import ContactUs from './Screens/ContactUs/ContactUs';
 import CheckOut from './Screens/CheckOut/CheckOut';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Shop from './Screens/Shop/Shop';
-import GlobalState from './GlobalState';
+import GlobalState, {Loading} from './GlobalState';
+
 
 import { positions, Provider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
@@ -39,9 +40,11 @@ global.image_path = '/images/';
 global.isLogin = false;
 function App() {
   const [cartMenu, setCartMenu] = useState(false);
+  const [pageLoading, setPageLoading] = useState(false);
   return (
     <>
       <GlobalState.Provider value={[cartMenu, setCartMenu]}>
+        <Loading.Provider value={[pageLoading, setPageLoading]} >
       <Provider template={AlertTemplate} {...options}>
         <Router>
           {/* <ScrollToTop> */}
@@ -163,6 +166,7 @@ function App() {
       
   
   </Provider>
+  </Loading.Provider>
   </GlobalState.Provider>
     </>
   );
