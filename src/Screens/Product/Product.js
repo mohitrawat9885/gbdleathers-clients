@@ -60,7 +60,7 @@ export default function Product() {
 
   let { productId } = useParams();
   function refreshPage() {
-    setLoading(true);
+    setLoading(true); 
     window.scroll(0, 0);
   }
 
@@ -430,7 +430,7 @@ export default function Product() {
 
         <div className="product-details-section">
           <div className="product-detail-heading">
-            <p>{product.name}</p>
+            <p>{product.name?.toUpperCase()}</p>
           </div>
           <div className="product-detail-price">
             <p>QR {product.price} </p>
@@ -438,23 +438,15 @@ export default function Product() {
               <Rating
                 className="product-detail-rating-rate"
                 name="simple-controlled"
-                style={{
-                  // border: "1px solid",
-                  paddingLeft: '0px',
-                  marginLeft: '0px',
-                  marginRight: '.8rem',
-                  // justifyContent: "space-between",
-                }}
                 precision={0.5}
                 value={parseFloat(product.ratingsAverage)}
-                // size="small"
+                size="small"
+                style={{
+                  paddingLeft: '0.7rem'
+                }}
                 readOnly
               />
-              <p
-                style={{
-                  color: 'green',
-                }}
-              >
+              <p>
                 {product.ratingsQuantity} reviews
               </p>
             </div>
@@ -472,10 +464,8 @@ export default function Product() {
           <div className="product-detail-indicators">
             <FiberManualRecordIcon style={{ color: 'green' }} />
             <p>{product.stock} Stock</p>
-            {/* <br /> */}
-            {/* <p>90 Day Returns</p>
-            <p></p> */}
           </div>
+          {AddToCartButton()}
 
           <div className="product-detail-description">
             <h5>Summary:-</h5>
@@ -483,7 +473,7 @@ export default function Product() {
             <p>{product.summary}</p>
           </div>
 
-          {AddToCartButton()}
+          
 
           <div className="product-detail-description">
             <h5>Description:-</h5>

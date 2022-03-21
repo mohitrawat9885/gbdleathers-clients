@@ -1,28 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './FooterDiv1.css';
 
 import CallRoundedIcon from '@mui/icons-material/CallRounded';
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 
-import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
-import SendRoundedIcon from '@mui/icons-material/SendRounded';
-import { Link } from 'react-router-dom';
+// import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
+// import SendRoundedIcon from '@mui/icons-material/SendRounded';
+// import { Link } from 'react-router-dom';
 export default function FooterDiv1() {
-  const [footerMenu1, setFooterMenu1] = useState('down');
-  const footerDivDropdownMenu1 = () => {
-    if (footerMenu1 === 'up') {
-      document
-        .getElementById('footer-div-1-2-nav-1-open')
-        .classList.remove('footer-div-1-2-nav-1-open-active');
-      setFooterMenu1('down');
-    } else {
-      document
-        .getElementById('footer-div-1-2-nav-1-open')
-        .classList.add('footer-div-1-2-nav-1-open-active');
-      setFooterMenu1('up');
-    }
-  };
+  // const [footerMenu1, setFooterMenu1] = useState('down');
+  // const footerDivDropdownMenu1 = () => {
+  //   if (footerMenu1 === 'up') {
+  //     document
+  //       .getElementById('footer-div-1-2-nav-1-open')
+  //       .classList.remove('footer-div-1-2-nav-1-open-active');
+  //     setFooterMenu1('down');
+  //   } else {
+  //     document
+  //       .getElementById('footer-div-1-2-nav-1-open')
+  //       .classList.add('footer-div-1-2-nav-1-open-active');
+  //     setFooterMenu1('up');
+  //   }
+  // };
   return (
     <>
       <div className="footer-div-1">
@@ -44,7 +44,7 @@ export default function FooterDiv1() {
           </ul>
         </div>
 
-        <div className="footer-div-1-2">
+        {/* <div className="footer-div-1-2">
           <ul>
             <li
               className="footer-div-1-2-heading"
@@ -111,7 +111,7 @@ export default function FooterDiv1() {
               </div>
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
     </>
   );

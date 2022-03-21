@@ -1,6 +1,7 @@
 .product-body {
   width: 100%;
-  padding: 1rem;
+  padding: 2rem;
+  /* border: 1px solid red; */
   margin-top: 1.5rem;
   margin-bottom: 4rem;
   display: grid;
@@ -13,66 +14,62 @@
 }
 
 .product-gallery {
-  padding: 2rem;
+  /* padding: 2rem; */
   padding-top: 0px;
+  height: 90vh;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 1rem;
+  z-index: 100000;
+  /* border: 1px solid red; */
 }
 
 .product-details-section {
-  width: 95%;
-  height: 90vh;
-  padding-left: 3rem;
-  overflow-y: scroll;
+  padding: 0rem 1.3rem 0rem 3rem;
 }
-
-.product-details-section::-webkit-scrollbar {
-  width: 0;
-}
-
-/* .product-details-section::-webkit-scrollbar-track {
-  background: rgb(179, 179, 179);
-}
-
-.product-details-section::-webkit-scrollbar-thumb {
-  background-color: rgb(0, 0, 0);
-  border-radius: 10px;
-  border: 2px solid rgb(0, 0, 0);
-} */
 
 .product-detail-heading p {
   font-size: 2.2rem;
-  letter-spacing: 0.2rem;
+  /* letter-spacing: 0.1rem; */
   font-weight: bolder;
   font-family: Times, serif !important;
 }
 
 .product-detail-price {
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
+  align-items: center;
   padding-bottom: 2rem;
   border-bottom: 1px solid rgb(218, 218, 218);
 }
 .product-detail-price p {
-  font-size: larger;
-  /* font-weight: bold; */
+  font-size: 17px;
+  font-weight:100;
+  letter-spacing: .15rem;
   color: rgb(0, 0, 0);
 }
 .product-detail-rating {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  /* border: 1px solid; */
+  justify-content: center;
+  align-items: center;
+  /* justify-content: space-between; */
+  /* border: 1px solid red; */
+}
+.product-detail-rating p{
+  font-size: 15px;
+  padding-left: 0.4rem;
 }
 
 .product-detail-indicators {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: .4rem;
 }
 .product-detail-indicators p {
-  margin-left: 0.8rem;
+  margin-left: 0.6rem;
   color: rgb(0, 0, 0);
   font-family: Arial, Helvetica, sans-serif !important;
 }
@@ -86,7 +83,7 @@
 }
 .product-detail-add-to-cart div {
   width: 100%;
-  height: 6vh;
+  height: 5.6vh;
   padding: 1rem;
   display: flex;
   justify-content: center;
@@ -94,13 +91,14 @@
   letter-spacing: 0.2rem;
   color: white;
   cursor: pointer;
-  background-color: rgba(255, 66, 41, 0.89);
+  background-color: rgba(255, 52, 25, 0.89);
+  margin-top: 2rem;
   /* background-color: rgb(223, 80, 80); */
 }
 
 .product-detail-add-to-cart-loading {
   width: 100%;
-  height: 6vh;
+  height: 5.6vh;
   padding: 1rem;
   display: flex;
   justify-content: center;
@@ -108,7 +106,8 @@
   letter-spacing: 0.2rem;
   color: white;
   cursor: pointer;
-  background-color: rgba(255, 66, 41, 0.89);
+  background-color: rgba(255, 52, 25, 0.89);
+  margin-top: 2rem;
   /* background-color: rgb(223, 80, 80); */
 }
 .product-detail-add-to-cart-loading div div {
@@ -126,27 +125,24 @@
 
 @media only screen and (max-width: 1000px) {
   .product-body {
-    padding: 0.8rem;
+    padding: 0  ;
     margin-top: 0.5rem;
+    grid-template-columns: 100%;
   }
   .product-gallery {
     padding: 0%;
-  }
-  .product-body {
-    grid-template-columns: 100%;
-    grid-template-rows: auto auto;
-  }
-  .product-gallery {
+    margin: 0;
+    height: auto;
+    position: relative;
     margin-top: 0rem;
     margin-bottom: 3rem;
-    overflow-y: hidden;
   }
 
   .product-details-section {
-    padding: 0%;
+    padding: 1.5rem;
   }
   .product-detail-heading p {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
   }
   .product-detail-rating p {
     font-size: medium;
@@ -176,33 +172,14 @@
   padding-right: 2rem;
 }
 
-.img-zoom-container {
+/* .img-zoom-container {
   position: relative;
 }
 
 .img-zoom-lens {
   position: absolute;
   border: 1px solid #d4d4d4;
-  /*set the size of the lens:*/
   width: 40px;
   height: 40px;
-}
-
-/* .img-zoom-result {
-  border: 1px solid #d4d4d4;
-
-  width: 300px;
-  height: 300px;
 } */
-/* .react-slider__picture img {
-  width: 100% !important;
-  height: 100% !important;
-} */
-/* .react-slider__areaZoom {
-  display: flex !important;
-  flex-direction: column !important;
-}
 
-.react-slider__imgZoom {
-  position: relative !important;
-} */

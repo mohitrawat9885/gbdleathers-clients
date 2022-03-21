@@ -165,7 +165,7 @@ export default function CartMenu() {
             <Link to="/check-out">
               <Ripple className="cart-menu-product-list-check-out-btn">
                 <div>
-                  <p>CHECK OUT</p>
+                  <span>CHECK OUT</span>
                 </div>
               </Ripple>
             </Link>
@@ -185,11 +185,17 @@ export default function CartMenu() {
             onClick={() => HandleMenu(true)}
             style={{
               fontSize: 35,
-              textEmphasisColor: 'gray',
+              // textEmphasisColor: 'gray',
               cursor: 'pointer',
+              
+            }}
+            sx={{
+              "& .MuiBadge-badge": {
+                color: "white",
+                backgroundColor: "#FC5111"
+              }
             }}
             badgeContent={cartList.length}
-            color="success"
           >
             <ShoppingCartOutlinedIcon style={{ fontSize: 28 }} />
           </Badge>

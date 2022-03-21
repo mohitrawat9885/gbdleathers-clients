@@ -132,9 +132,10 @@
   background-color: #FC5111;
   /* margin-top: .8rem; */
   margin-bottom: 5rem;
+  cursor: pointer;
 }
 
-.cart-menu-product-list-check-out-btn p {
+.cart-menu-product-list-check-out-btn span {
   letter-spacing: 0.3rem;
   color: white;
   font-size: 15px;
