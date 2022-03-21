@@ -74,26 +74,23 @@ export default function Category() {
                     alt=""
                   />
                 </div>
-                <br />
+           
                 <div className="category-page-detail">
-                  <p>{product.name}</p>
+                  <p>{product.name.toUpperCase()}</p>
                   <div className="category-page-price">
                     <p>QR {product.price}</p>
                   </div>
+
                   <div className="category-page-review">
-                    <p>{product.ratingsQuantity} reviews</p>
-                    {/* <br /> */}
                     <Rating
                       className="category-page-review-rating"
-                      name="simple-controlled"
-                      style={{
-                        paddingLeft: '0px',
-                        marginLeft: '0px',
-                        // marginRight: ".8rem",
-                      }}
+                      name="read-only"
+                      size="small"
+                      precision={0.5}
                       value={parseFloat(product.ratingsAverage)}
                       readOnly
                     />
+                    <p>{product.ratingsQuantity} reviews</p>
                   </div>
                 </div>
               </Link>
@@ -101,6 +98,10 @@ export default function Category() {
           ))}
         </div>
       </div>
+      <div style={{
+        width:"100%",
+        height: '40vh'
+      }}></div>
       <Footer />
     </>
   );

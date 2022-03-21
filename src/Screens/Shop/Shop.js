@@ -70,29 +70,26 @@ export default function Shop() {
                     alt=""
                   />
                 </div>
-                <br />
+                {/* <br /> */}
                 <div className="shop-page-detail">
-                  <p>{product.name}</p>
+                  <p>{product.name.toUpperCase()}</p>
                   <div className="shop-page-price">
                     <p>QR {product.price}</p>
                   </div>
 
                   <div className="shop-page-review">
-                    <p>{product.ratingsQuantity} Reviews</p>
+                    
                     {/* <br /> */}
 
                     <Rating
                       className="shop-page-review-rating"
                       name="read-only"
-                      style={{
-                        paddingLeft: '0px',
-                        marginLeft: '0px',
-                        // fontSize: ".9rem",
-                      }}
+                      size="small"
                       precision={0.5}
                       value={parseFloat(product.ratingsAverage)}
                       readOnly
                     />
+                    <p>{product.ratingsQuantity} reviews</p>
                   </div>
                 </div>
               </Link>
@@ -100,6 +97,10 @@ export default function Shop() {
           ))}
         </div>
       </div>
+      <div style={{
+        width:"100%",
+        height: '40vh'
+      }}></div>
       <Footer />
     </>
   );

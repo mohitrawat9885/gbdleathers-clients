@@ -126,7 +126,7 @@ export default function CartMenu() {
               </div>
 
               <div className="cart-menu-product-detail-price">
-                <p>QTR {(props.product.price * props.quantity).toFixed(2)}</p>
+                <p>QR {(props.product.price * props.quantity).toFixed(2)}</p>
               </div>
             </div>
           </div>
@@ -152,16 +152,14 @@ export default function CartMenu() {
         <>
           {cartList.map((cart, index) => (
             <li className="cart-menu-product-list-product" key={index}>
-              {/* <Link to="/"> */}
               <CartProduct product={cart.product} quantity={cart.quantity} />
-              {/* </Link> */}
             </li>
           ))}
 
           <li className="cart-menu-product-list-check-out">
             <div className="cart-menu-product-list-check-out-total">
               <p>SUBTOTAL</p>
-              <span>QTR {calculateTotal()}</span>
+              <span>QR {calculateTotal()}</span>
             </div>
 
             <Link to="/check-out">
@@ -215,7 +213,7 @@ export default function CartMenu() {
                 <p>CART</p>
                 <ClearIcon
                   onClick={() => HandleMenu(false)}
-                  style={{ fontSize: 35, cursor: 'pointer' }}
+                  style={{fontWeight: '100', marginTop: '.6rem', fontSize: 26, cursor: 'pointer' }}
                 />
               </div>
             </li>

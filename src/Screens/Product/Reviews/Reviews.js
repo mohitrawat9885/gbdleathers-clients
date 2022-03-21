@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './Reviews.css';
 import Rating from '@mui/material/Rating';
 import { useAlert } from "react-alert";
-
 export default function Reviews(props) {
   const alert = useAlert();
   const [rating, setRating] = useState();
