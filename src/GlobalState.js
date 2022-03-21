@@ -1,5 +1,5 @@
 import React from 'react';
 
-const GlobalState = React.createContext([{}, () => {}]);
+const GlobalState = React.createContext();
 
 export default GlobalState;

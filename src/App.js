@@ -41,9 +41,8 @@ function App() {
   const [cartMenu, setCartMenu] = useState(false);
   return (
     <>
-    <Provider template={AlertTemplate} {...options}>
-
       <GlobalState.Provider value={[cartMenu, setCartMenu]}>
+      <Provider template={AlertTemplate} {...options}>
         <Router>
           {/* <ScrollToTop> */}
           {/* <Header /> */}
@@ -161,9 +160,10 @@ function App() {
             />
           </Routes>
         </Router>
-      </GlobalState.Provider>
+      
   
   </Provider>
+  </GlobalState.Provider>
     </>
   );
 }

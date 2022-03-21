@@ -202,9 +202,13 @@ export default function Product() {
     //
   };
 
+
+
   const addToCart = async () => {
     try {
       setAddToCartLoading(true);
+      // setCartMenu((v) => !v)
+
       const response = await fetch(`/api/v1/gbdleathers/client/customer/cart`, {
         method: 'POST',
         headers: {
@@ -216,7 +220,7 @@ export default function Product() {
       });
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
-        setCartMenu(true);
+        setCartMenu(true)
         setAddToCartLoading(false);
       } else {
         alert.error(res.message);

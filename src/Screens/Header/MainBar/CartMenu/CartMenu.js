@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './CartMenu.css';
 import { Link } from 'react-router-dom';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -14,19 +14,24 @@ import GlobalState from '../../../../GlobalState';
 import './CartProduct.css';
 //import { Turn as Hamburger } from "hamburger-react";
 
+import { useAlert } from "react-alert";
+
 export default function CartMenu() {
-  const [cartMenu, setCartMenu] = React.useContext(GlobalState);
+  const alert = useAlert();
+  const [cartMenu, setCartMenu] = useContext(GlobalState);
 
   const [loading, setLoading] = useState(true);
   const [sidebar, setSidebar] = useState(false);
   const [cartList, setCartList] = useState([]);
 
   useEffect(() => {
-    HandleMenu(cartMenu);
-  }, cartMenu);
-  // const [total, setTotal] = useState(0);
-
+    if(cartMenu === true){
+      HandleMenu(true)
+    }
+    setCartMenu(false)
+  }, [cartMenu]);
   const HandleMenu = function (toggled) {
+    // alert("triggered")
     if (toggled) {
       getCartProducts();
       document.body.classList.add('cart-menu-fixed-position');
@@ -34,7 +39,6 @@ export default function CartMenu() {
       document.body.classList.remove('cart-menu-fixed-position');
     }
     setSidebar(toggled);
-    setCartMenu(toggled);
   };
 
   const getCartProducts = async () => {
@@ -48,7 +52,6 @@ export default function CartMenu() {
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
         setCartList(res.data);
-
         // console.log(res.data);
       }
     } catch (error) {
@@ -214,7 +217,6 @@ export default function CartMenu() {
                 />
               </div>
             </li>
-
             <CartItems />
           </ul>
         </nav>
