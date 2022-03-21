@@ -41,14 +41,14 @@ export default function Product() {
   }, []);
 
   // const { addItemToList } = useContext(GlobalContext);
-  const [cartMenu, setCartMenu] = useContext(GlobalState);
+  const [, setCartMenu] = useContext(GlobalState);
 
   const [parentProduct, setParentProduct] = useState({});
   const [product, setProduct] = useState({});
   const [images, setImages] = useState([{ image: '' }]);
   const [loading, setLoading] = useState(true);
   const [variantsList, setVariantList] = useState([]);
-  const [variantsSelected, setVariantsSelected] = useState();
+  // const [variantsSelected, setVariantsSelected] = useState();
 
   const [productList, setProductList] = useState([]);
   const [categoryId, setCategoryId] = useState();
@@ -261,8 +261,12 @@ export default function Product() {
     } catch (error) {}
     // setLoading(false);
   };
+
+  
+
   useEffect(() => {
     getVariants();
+    // eslint-disable-next-line
   }, [variantsList]);
 
   function ShowVariants() {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {  useEffect } from 'react';
 import './UpDownKey.scss';
 
 export default function UpDownKey(params) {
@@ -13,10 +13,10 @@ export default function UpDownKey(params) {
   return (
     <>
       {/* <div className="UpDownKey-div"> */}
-      <a class="arrow-icon">
+      <span class="arrow-icon">
         <span class="left-bar"></span>
         <span class="right-bar"></span>
-      </a>
+      </span>
       {/* </div> */}
     </>
   );

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './Login.css';
-// import { makeStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
 import Header from '../../Header/Header';
 import Footer from '../../Footer/Footer';
 import { useAlert } from "react-alert";

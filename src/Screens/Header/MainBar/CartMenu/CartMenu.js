@@ -14,22 +14,17 @@ import GlobalState from '../../../../GlobalState';
 import './CartProduct.css';
 //import { Turn as Hamburger } from "hamburger-react";
 
-import { useAlert } from "react-alert";
+// import { useAlert } from "react-alert";
 
 export default function CartMenu() {
-  const alert = useAlert();
+  // const alert = useAlert();
   const [cartMenu, setCartMenu] = useContext(GlobalState);
 
   const [loading, setLoading] = useState(true);
   const [sidebar, setSidebar] = useState(false);
   const [cartList, setCartList] = useState([]);
 
-  useEffect(() => {
-    if(cartMenu === true){
-      HandleMenu(true)
-    }
-    setCartMenu(false)
-  }, [cartMenu]);
+  
   const HandleMenu = function (toggled) {
     // alert("triggered")
     if (toggled) {
@@ -40,6 +35,13 @@ export default function CartMenu() {
     }
     setSidebar(toggled);
   };
+  useEffect(() => {
+    if(cartMenu === true){
+      HandleMenu(true)
+    }
+    setCartMenu(false)
+    // eslint-disable-next-line
+  }, [cartMenu]);
 
   const getCartProducts = async () => {
     try {

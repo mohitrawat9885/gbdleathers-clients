@@ -10,7 +10,7 @@ export default function Menu() {
   const [sidebar, setSidebar] = useState(false);
   const [islogin, setIsLogin] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [myData, setMyData] = useState({});
+  const [, setMyData] = useState({});
   const HandleMenu = (toggled) => {
     if (toggled) {
       document.body.classList.add('fixed-position');

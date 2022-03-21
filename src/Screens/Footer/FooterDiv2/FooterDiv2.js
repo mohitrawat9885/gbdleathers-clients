@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 import FacebookIcon from '@mui/icons-material/Facebook';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import TwitterIcon from '@mui/icons-material/Twitter';
+// import LinkedInIcon from '@mui/icons-material/LinkedIn';
+// import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 
 import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded';
@@ -32,7 +32,7 @@ export default function Footer() {
               </a>
             </li>
 
-            <li id="footer-social-icon-2">
+            {/* <li id="footer-social-icon-2">
               <a>
                 <LinkedInIcon style={{ fontSize: 30 }} />
               </a>
@@ -41,7 +41,7 @@ export default function Footer() {
               <a>
                 <TwitterIcon style={{ fontSize: 30 }} />
               </a>
-            </li>
+            </li> */}
 
             <li id="footer-social-icon-4">
               <a href="https://www.instagram.com/gbd.qa/" target="__blank">

@@ -37,7 +37,7 @@ const DownBar = () => {
   // alert(data.length);
   const [keyStatus, setKeyStatus] = useState('down');
   const TonggleKeyStatus = () => {
-    if (keyStatus == 'up') {
+    if (keyStatus === 'up') {
       document.getElementById('downBar-mobile-id').style.height = '0px';
       setKeyStatus('down');
     } else {
