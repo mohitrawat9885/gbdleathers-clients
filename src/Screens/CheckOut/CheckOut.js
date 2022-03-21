@@ -281,7 +281,7 @@ export default function CheckOut() {
     for (let i in cartList) {
       total = total + cartList[i].product.price * cartList[i].quantity;
     }
-    return total;
+    return total.toFixed(2);
     // alert(total);
   }
 
@@ -536,7 +536,7 @@ export default function CheckOut() {
                 <p>QTR {cart.product.price}</p>
               </div>
               <div className="checkout-product-holder-total">
-                <p>QTR {cart.product.price * cart.quantity}</p>
+                <p>QTR {(cart.product.price * cart.quantity).toFixed(2)}</p>
               </div>
             </div>
           ))}

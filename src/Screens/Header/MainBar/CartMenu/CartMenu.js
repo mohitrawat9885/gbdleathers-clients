@@ -126,7 +126,7 @@ export default function CartMenu() {
               </div>
 
               <div className="cart-menu-product-detail-price">
-                <p>QTR {props.product.price * props.quantity}</p>
+                <p>QTR {(props.product.price * props.quantity).toFixed(2)}</p>
               </div>
             </div>
           </div>
@@ -140,7 +140,7 @@ export default function CartMenu() {
     for (let i in cartList) {
       total = total + cartList[i].product.price * cartList[i].quantity;
     }
-    return total;
+    return total.toFixed(2);
     // alert(total);
   }
   function CartItems() {

@@ -250,7 +250,7 @@ export default function Reviews(props) {
               </p>
               <textarea
                 name="message"
-                rows="10"
+                rows="4"
                 style={{
                   width: '100%',
                   fontSize: '1.3rem',
