@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './CheckOut.css';
 import EditIcon from '@mui/icons-material/Edit';
 import Ripples from 'react-ripples';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ReactLoading from 'react-loading';
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 
 import { useAlert } from "react-alert";
 
@@ -253,6 +254,9 @@ export default function CheckOut() {
       // setProduct({});
     }
   };
+  useEffect(() => {
+    getCartProducts()
+  }, [])
 
   const addToCart = async (productId, quantity) => {
     try {
@@ -710,8 +714,43 @@ export default function CheckOut() {
       );
     }
   }
-
+  if(cartList.length === 0){
+    return(
+      <div style={{
+        width: "100%",
+        height: "80vh",
+        // display: 'flex',
+        // flexDirection: 'column',
+        // justifyContent: 'center',
+        // alignItems: "center"
+      }}>
+        <span style={{
+          marginTop: "4rem",
+          fontSize: "2.2rem",
+          textAlign: "center",
+          width: '100%',
+          display: "block",
+          letterSpacing: '.1rem'
+        }}>Your Cart is Empty</span>
+  <br />
+        <span
+        onClick={() => window.location = "/shop"}
+         style={{
+          fontSize: "1.4rem",
+          textAlign: "center",
+          width: '100%',
+          display: "block",
+          cursor: "pointer",
+          color: "gray"
+      
+        }}>Click here to Shop <ShoppingBasketIcon /></span>
+         
+      </div>
+    )
+  }
+else
   return (
+    <>
     <div className="checkout-div">
       {CheckoutProduct()}
       <div className="checkout-summary">
@@ -728,5 +767,6 @@ export default function CheckOut() {
         </div>
       </div>
     </div>
+    </>
   );
 }
