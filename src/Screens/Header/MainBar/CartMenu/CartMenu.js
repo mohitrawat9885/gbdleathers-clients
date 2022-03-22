@@ -14,10 +14,10 @@ import GlobalState from '../../../../GlobalState';
 import './CartProduct.css';
 //import { Turn as Hamburger } from "hamburger-react";
 
-// import { useAlert } from "react-alert";
+import { useAlert } from "react-alert";
 
 export default function CartMenu() {
-  // const alert = useAlert();
+  const alert = useAlert();
   const [cartMenu, setCartMenu] = useContext(GlobalState);
 
   const [loading, setLoading] = useState(true);
@@ -57,7 +57,7 @@ export default function CartMenu() {
         // console.log(res.data);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       // setProduct({});
     }
     setLoading(false);
@@ -74,7 +74,7 @@ export default function CartMenu() {
           quantity,
         }),
       });
-      console.log('Responce', response.status);
+      // console.log('Responce', response.status);
       if (response.status === 204) {
         getCartProducts();
         return;
@@ -83,10 +83,11 @@ export default function CartMenu() {
       if (res.status === 'success') {
         getCartProducts();
       } else {
-        // alert(res.status.message);
+        alert.error(res.message);
       }
     } catch (error) {
-      console.log(error);
+      alert.error("Something went wrong!");
+      // console.log(error);
     }
   };
 

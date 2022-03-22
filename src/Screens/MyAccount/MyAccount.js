@@ -87,7 +87,8 @@ export default function MyAccount() {
         alert.error(res.message);
       }
     } catch (err) {
-      alert.error(err);
+      console.log("ORDER ERROR ", err)
+      alert.error("Something went wrong!");
       setPageLoading(false)
     }
     setOrderLoading(false);

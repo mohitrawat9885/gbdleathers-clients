@@ -61,6 +61,7 @@ export default function CheckOut() {
   }
 
   const checkout = async () => {
+    
     try {
       setCheckoutLoading(true);
       const response = await fetch(
@@ -77,8 +78,13 @@ export default function CheckOut() {
       );
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
-        window.location = res.payment_url;
-        // alert(res.message);
+        setTimeout(()=> {
+          alert.success(res.message);
+          setTimeout(() => {
+            window.location = res.payment_url;
+          }, 2500)
+          setCheckoutLoading(false)
+        }, 2000)
       } else {
         setCheckoutLoading(false);
         alert.error(res.message);
@@ -269,7 +275,7 @@ export default function CheckOut() {
       if (res.status === 'success') {
         getCartProducts();
       } else {
-        // alert(res.status.message);
+        alert.error(res.message);
       }
     } catch (error) {
       console.log(error);
@@ -320,7 +326,7 @@ export default function CheckOut() {
           className="checkout-summary-checkout-btn"
         >
           <div>
-            <p>CHECK OUT</p>
+            <span>CHECK OUT</span>
           </div>
         </Ripples>
       </>
@@ -425,7 +431,7 @@ export default function CheckOut() {
               }}
             >
               <div>
-                <p>ADD SHIPPING ADDRESS</p>
+                <span>ADD SHIPPING ADDRESS</span>
               </div>
             </Ripples>
           </div>
