@@ -15,7 +15,7 @@ import Ripple from 'react-ripples';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import ImageGallery from 'react-image-gallery';
 // import SideExample from './ProductImages/ReactImageMagnify';
-// import Zoom from 'react-medium-image-zoom';
+import Zoom from 'react-medium-image-zoom';
 
 import 'react-image-gallery/styles/css/image-gallery.css';
 
@@ -42,9 +42,9 @@ import { getDroppedOrSelectedFiles } from 'html5-file-selector'
 export default function Product() {
   const [, setPageLoading] = React.useContext(Loading)
   const alert = useAlert();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
 
 
   const [rating, setRating] = useState();
@@ -476,6 +476,27 @@ export default function Product() {
                 {review.review}
               </p>
             </div>
+            <br />
+            <br />
+            <div style={{
+              width: '100%',
+              display: "flex",
+              flexDirection: "row",
+              // justifyContent: 'space-between',
+            }}>
+             { review?.images?.map((img, index)=> (
+               <div key={index} style={{
+                 width: '100px',
+                 height: '100px',
+                 marginRight: '1rem'
+               }}>
+                 <Zoom>
+              <img src={`${global.image_path}${img}`} alt="" />
+              </Zoom>
+              </div>
+             ))
+  }           
+            </div>
           </div>
         ))}
       </div>
@@ -500,23 +521,26 @@ export default function Product() {
             Give Your Review
           </p>
           <br />
-          <div className="review-create-review">
+          <div className="preview-create-review">
             <div
               style={{
                 display: 'flex',
                 flexDirection: 'row',
-                alignItems: 'center',
+                alignItems: 'center'
+                // justifyContent: 'center'
               }}
             >
               <p>Rating</p>
               <Rating
                 style={{
-                  marginLeft: '.6rem',
+                  marginLeft: '1rem',
+                  
                 }}
-                size="small"
-                value={rating}
+                size="medium"
+                value={parseFloat(rating)}
                 onChange={(event, newValue) => setRating(newValue)}
                 precision={0.5}
+                // readOnly
               />
             </div>
             <br />
@@ -788,7 +812,6 @@ export default function Product() {
             {...properties}
           />
         </div>
-
         <div className="product-details-section">
           <div className="product-detail-heading">
             <p>{product.name?.toUpperCase()}</p>
