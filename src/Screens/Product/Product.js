@@ -157,16 +157,17 @@ export default function Product() {
 
   const getVariants = async () => {
     try {
-      setPageLoading(true)
+      // setPageLoading(true)
+      // alert.show("Fetch vari")
       let query = '';
-      let values = document.querySelectorAll('select');
+      let values = document.getElementsByClassName("product-variant-properties")
+      // console.log("Values are ", values)
       for (let i = 0; i < values.length; i++) {
         query = query + values[i].name + '=' + values[i].value;
         if (i < values.length - 1) {
           query = query + '&';
         }
       }
-
       // document.querySelector('select').COLOR.value = 'Blue';
       // console.log('Variant Query', query);
       const response = await fetch(
@@ -191,6 +192,9 @@ export default function Product() {
         }
         if (prd.stock) {
           newPrd.stock = prd.stock;
+        }
+        else{
+          newPrd.stock = 0;
         }
         if (prd.summary) {
           newPrd.summary = prd.summary;
@@ -218,26 +222,51 @@ export default function Product() {
           document.getElementById(`${x}`).value = prd.properties[x];
           // console.log('Key = ', x, ' Value = ', prd.properties[x]);
         }
-        // console.log('Tis', prd.properties);
-        setPageLoading(false)
       } else {
         alert.error(res.message);
-        setPageLoading(false)
+        // setPageLoading(false)
       }
+      // for (let x in prd.properties) {
+      //   document.getElementById(`${x}`).value = prd.properties[x];
+      //   // console.log('Key = ', x, ' Value = ', prd.properties[x]);
+      // }
     } catch (error) {
-      setPageLoading(false)
-      // console.log('ERRPR VARIANT', error);
+      // setPageLoading(false)
+      console.log('ERRPR VARIANT', error);
     }
     //
   };
 
-
-
   const addToCart = async () => {
+    
     try {
-      setAddToCartLoading(true);
       // setCartMenu((v) => !v)
+      let multi_properties = [];
+      let single_properties = [];
+      let values = document.getElementsByClassName("product-variant-multi_properties")
+      // console.log("Values are ", values)
+      for (let i = 0; i < values.length; i++) {
+        // query = query + values[i].name + '=' + values[i].value;
+        let proObj = {
+          name: values[i].name,
+          value: values[i].value
+        }
+        multi_properties.push(proObj)
+      }
 
+      let values2 = document.getElementsByClassName("product-variant-properties")
+      // console.log("Values are ", values)
+      for (let i = 0; i < values2.length; i++) {
+        let proObj2 = {
+          name: values2[i].name,
+          value: values2[i].value
+        }
+        single_properties.push(proObj2)
+      }
+
+
+      console.log(single_properties)
+      setAddToCartLoading(true);
       const response = await fetch(`/api/v1/gbdleathers/client/customer/cart`, {
         method: 'POST',
         headers: {
@@ -245,20 +274,31 @@ export default function Product() {
         },
         body: JSON.stringify({
           product: product._id,
+          multi_properties
         }),
       });
       const res = JSON.parse(await response.text());
       if (res.status === 'success') {
         setCartMenu(true)
-        setAddToCartLoading(false);
+        setAddToCartLoading(false)
+
       } else {
         alert.error(res.message);
         setAddToCartLoading(false);
       }
+      // console.log(multi_properties[0])
+      for (let x in multi_properties) {
+        // console.log('Key = ', x, ' Value = ', multi_properties[x]);
+        document.getElementById(`${multi_properties[x].name}`).value = multi_properties[x].value;
+      }
+      for (let x in  single_properties) {
+        document.getElementById(`${single_properties[x].name}`).value = single_properties[x].value;
+      }
     } catch (error) {
-      // console.log(error);
+      console.log(error);
       setAddToCartLoading(false);
     }
+    
   };
   const getCategory = async () => {
     try {
@@ -284,7 +324,7 @@ export default function Product() {
 
 
   const getFilesFromEvent = e => {
-    console.log("Uppdse Change", e)
+    // console.log("Uppdse Change", e)
       return new Promise(resolve => {
           getDroppedOrSelectedFiles(e).then(chosenFiles => {
               resolve(chosenFiles.map(f => f.fileObject))
@@ -316,7 +356,7 @@ export default function Product() {
       )
   }
 
-  
+
   const createReview = async (files) => {
     try {
       if (!rating) {  
@@ -402,6 +442,7 @@ export default function Product() {
           setMyReview('done');
         }
       }
+      
     } catch (error) {
       console.log('Error Fetching reviews', error);
       setReviewListLoading(false);
@@ -663,6 +704,7 @@ export default function Product() {
               <label htmlFor={variant.name}>{variant.name}</label>
               <br />
               <select
+              className='product-variant-properties'
                 name={variant.name}
                 id={variant.name}
                 onChange={() => getVariants()}
@@ -688,9 +730,12 @@ export default function Product() {
               <label for={properti.name}>{properti.name}</label>
               <br />
               <select
+              className='product-variant-multi_properties'
                 name={properti.name}
                 id={properti.name}
-                // onChange={() => getVariants()}
+                // onChange={(e) => {
+                //   // console.log(this.name)
+                // }}
               >
                 {properti.values.map((value, i) => (
                   <option key={i} value={value}>
@@ -729,8 +774,13 @@ export default function Product() {
       return <>Loading...</>;
     }
     return (
-      <div className="category-page-parent">
-        <div className="category-page-heading">
+      <div className="category-page-parent" style={{
+        marginTop: "16rem",
+        // marginBottom: '15rem'
+      }}>
+        <div className="category-page-heading" style={{
+          marginBottom: '6rem'
+        }}>
           <span>PRODUCTS WITH SAME CATEGORY</span>
         </div>
         <div className="category-page-body">

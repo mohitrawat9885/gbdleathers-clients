@@ -54,7 +54,6 @@ export default function Shop() {
     getAllProduct('?limit=50&page=1');
     setLoading(false);
   }
-
   const handlePagination = (event, value)=> {
     // alert.show(value);
     getAllProduct(`?limit=50&page=${value}`);

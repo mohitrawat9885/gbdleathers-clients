@@ -42,7 +42,18 @@
     grid-template-columns: 50% 50%;
     /* grid-template-rows: repeat(5, 20%); */
   }
-}
+  p{
+    font-size: 12px
+  }
+  .shop-page-review span{
+    font-size: 9px;
+    /* padding: 1rem; */
+  }
+  .shop-page-review p{
+    font-size: 8px;
+  }
+
+} 
 
 .shop-page-holder {
   width: 100%;

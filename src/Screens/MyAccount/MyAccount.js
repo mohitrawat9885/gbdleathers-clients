@@ -855,6 +855,18 @@ export default function MyAccount() {
                   </div>
                   <div className="myaccount-myorders-product-detail">
                     <p>{product.name}</p>
+                   <div>
+                     {
+                       product.properties?.map((v, i) => (
+                         <p style={{
+                           color: "gray",
+                           fontSize: 'small'
+                         }} index={i}>
+                           {v.name} : {v.value}
+                         </p>
+                       ))
+                     }
+                   </div>
                     <p>
                       Quantity:- <b>{product.quantity}</b>
                     </p>
