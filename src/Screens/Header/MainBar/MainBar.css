@@ -25,11 +25,13 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 .logo p {
   letter-spacing: 0.1rem;
   font-family: 'Times New Roman', Times, serif !important;
   font-weight: bolder !important;
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 568px) {
