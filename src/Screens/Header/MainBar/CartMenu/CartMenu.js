@@ -25,7 +25,6 @@ export default function CartMenu() {
   const [sidebar, setSidebar] = useState(false);
   const [cartList, setCartList] = useState([]);
 
-  
   const HandleMenu = function (toggled) {
     // alert("triggered")
     if (toggled) {

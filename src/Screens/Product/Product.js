@@ -51,7 +51,9 @@ export default function Product() {
   const [review, setReview] = useState();
   const [reviewList, setReviewList] = useState([]);
   const [reviewListLoading, setReviewListLoading] = useState(true);
-  const [myreview, setMyReview] = useState('nodata');
+  // const [myreview, setMyReview] = useState('nodata');
+  const [myReview, setMyReview] = useState(undefined);
+  const [myReviewLoading, setMyReviewLoading] = useState(true)
 
   // const { addItemToList } = useContext(GlobalContext);
   const [, setCartMenu] = useContext(GlobalState);
@@ -85,6 +87,7 @@ export default function Product() {
       setPageLoading(true)
       setMyReview('nodata')
       setReviewListLoading(true)
+      setMyReviewLoading(true)
       const response = await fetch(
         `${global.api}/client/product/${productId}`,
         {
@@ -231,7 +234,7 @@ export default function Product() {
       // }
     } catch (error) {
       // setPageLoading(false)
-      console.log('ERRPR VARIANT', error);
+      // console.log('ERRPR VARIANT', error);
     }
     //
   };
@@ -264,7 +267,7 @@ export default function Product() {
       }
 
 
-      console.log(single_properties)
+      // console.log(single_properties)
       setAddToCartLoading(true);
       const response = await fetch(`/api/v1/gbdleathers/client/customer/cart`, {
         method: 'POST',
@@ -280,7 +283,6 @@ export default function Product() {
       if (res.status === 'success') {
         setCartMenu(true)
         setAddToCartLoading(false)
-
       } else {
         alert.error(res.message);
         setAddToCartLoading(false);
@@ -294,7 +296,7 @@ export default function Product() {
         document.getElementById(`${single_properties[x].name}`).value = single_properties[x].value;
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setAddToCartLoading(false);
     }
   };
@@ -315,7 +317,7 @@ export default function Product() {
         setProductListLoading(false);
         // console.log(res.data);
       }
-      console.log(res)
+      // console.log(res)
     } catch (error) {
       // console.log(res)
     }
@@ -427,7 +429,7 @@ export default function Product() {
   const getMyReviews = async () => {
     try {
       const response = await fetch(
-        `/api/v1/gbdleathers/client/reviews/${productId}`,
+        `/api/v1/gbdleathers/client/customer/reviews/${productId}`,
         {
           method: 'GET',
           headers: {
@@ -435,18 +437,24 @@ export default function Product() {
           },
         }
       );
+      // console.log("MyREVIEW ERROR", response)
       const res = JSON.parse(await response.text());
+      // console.log(res)
       if (res.status === 'success') {
-        if (!res.data || res.data.length < 1) {
-          setMyReview('notyet');
-        } else {
-          setMyReview('done');
-        }
+        // console.log("My Review", res.data)
+        setMyReview(res.data)
+        // setReview(res.data)
+      }
+      else{
+        setMyReview(undefined)
       }
       
+      setMyReviewLoading(false)
     } catch (error) {
-      console.log('Error Fetching reviews', error);
-      setReviewListLoading(false);
+      // console.log('Error Fetching reviews', error);
+
+      setMyReviewLoading(false)
+      setMyReview(undefined)
     }
   };
 
@@ -546,12 +554,11 @@ export default function Product() {
   }
 
   function RenderGiveReview() {
-    if (myreview === 'nodata') {
+    if (myReviewLoading) {
       getMyReviews();
+      return<p>Loading...</p>
     }
-    if (myreview === 'nodata' || myreview === 'given') {
-      return <></>;
-    } else if (myreview === 'notyet') {
+    else if(myReview && (Object.keys(myReview).length === 0)){
       return (
         <div className="review-create-review-div">
           <p
@@ -640,8 +647,12 @@ export default function Product() {
           <br />
         </div>
       );
+            }
+            else{
+              return<></>
     }
-  }
+}
+
 
   function Reviews(numberOfReviews,  rating){
     return (
