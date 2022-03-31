@@ -42,9 +42,9 @@ import { getDroppedOrSelectedFiles } from 'html5-file-selector'
 export default function Product() {
   const [, setPageLoading] = React.useContext(Loading)
   const alert = useAlert();
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  // }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
 
   const [rating, setRating] = useState();
@@ -76,7 +76,7 @@ export default function Product() {
   // const [productid, setProductid] = useState(productId)
   function refreshPage() {
     setLoading(true); 
-    // window.location.reload()
+    // window.location.reload()`
     window.scroll(0, 0);
   }
 
@@ -99,12 +99,11 @@ export default function Product() {
         // setProductid(productId)
         setProduct(res.data);
         setParentProduct(res.data);
-        setCategoryId(res.data.category._id);
+        setCategoryId(res.data.category?._id);
         setImages(res.data.images);
         const myVariants = res.data.variants;
         // console.log(myVariants);
         let v = [];
-
         for (let i = 0; i < myVariants.length; i++) {
           for (let j in myVariants[i].properties) {
             if (!v[j]) {
@@ -298,7 +297,6 @@ export default function Product() {
       console.log(error);
       setAddToCartLoading(false);
     }
-    
   };
   const getCategory = async () => {
     try {
@@ -317,7 +315,10 @@ export default function Product() {
         setProductListLoading(false);
         // console.log(res.data);
       }
-    } catch (error) {}
+      console.log(res)
+    } catch (error) {
+      // console.log(res)
+    }
     // setLoading(false);
   };
 
@@ -773,6 +774,9 @@ export default function Product() {
       getCategory(categoryId);
       return <>Loading...</>;
     }
+    else if(!categoryId){
+      return<></>
+    }
     return (
       <div className="category-page-parent" style={{
         marginTop: "16rem",
@@ -780,8 +784,10 @@ export default function Product() {
       }}>
         <div className="category-page-heading" style={{
           marginBottom: '6rem'
-        }}>
+        }}>{ categoryId ? 
           <span>PRODUCTS WITH SAME CATEGORY</span>
+          : ""
+        }
         </div>
         <div className="category-page-body">
           {productList.map((product, index) => (

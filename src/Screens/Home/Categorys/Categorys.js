@@ -28,6 +28,7 @@ export default function Categorys() {
       if (res.status === 'success') {
         // alert.show(res.status)
         setProductList(res.data);
+        console.log("products", res.data)
         // setNumberOfDocument(res.totalDocument)
         setPageLoading(false)
         setProductListLoading(false)

@@ -14,6 +14,7 @@ import GlobalState from '../../../../GlobalState';
 import './CartProduct.css';
 //import { Turn as Hamburger } from "hamburger-react";
 
+// import ReactLoading from 'react-loading';
 import { useAlert } from "react-alert";
 
 export default function CartMenu() {
@@ -116,6 +117,7 @@ export default function CartMenu() {
                     -
                   </div>
                   <p>{props.quantity}</p>
+                  
                   <div
                     style={{ cursor: 'pointer' }}
                     className="cart-menu-quantity-btn"
@@ -123,6 +125,7 @@ export default function CartMenu() {
                   >
                     +
                   </div>
+                  
                 </div>
               </div>
 
