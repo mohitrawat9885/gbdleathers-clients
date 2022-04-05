@@ -1,23 +1,23 @@
-import React, { useState, useEffect, useContext } from 'react';
-import './Product.css';
+import React, { useState, useEffect, useContext } from "react";
+import "./Product.css";
 // import ImageGallery from 'react-image-gallery';
 // import 'react-image-gallery/styles/css/image-gallery.css';
-import { useParams, Link } from 'react-router-dom';
-import ReactLoading from 'react-loading';
+import { useParams, Link } from "react-router-dom";
+import ReactLoading from "react-loading";
 // import Button from '@mui/material/Button';
 
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
 // import Box from "@mui/material/Box";
-import Rating from '@mui/material/Rating';
-import Ripple from 'react-ripples';
+import Rating from "@mui/material/Rating";
+import Ripple from "react-ripples";
 // import Typography from "@mui/material/Typography";
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import ImageGallery from 'react-image-gallery';
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import ImageGallery from "react-image-gallery";
 // import SideExample from './ProductImages/ReactImageMagnify';
-import Zoom from 'react-medium-image-zoom';
+import Zoom from "react-medium-image-zoom";
 
-import 'react-image-gallery/styles/css/image-gallery.css';
+import "react-image-gallery/styles/css/image-gallery.css";
 
 import { useAlert } from "react-alert";
 
@@ -25,27 +25,31 @@ import { useAlert } from "react-alert";
 
 // import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
-import 'react-medium-image-zoom/dist/styles.css';
+import "react-medium-image-zoom/dist/styles.css";
 
-import GlobalState from '../../GlobalState';
+import GlobalState from "../../GlobalState";
 
 // import Reviews from './Reviews/Reviews';
 
-import { Loading } from '../../GlobalState';
+import { Loading } from "../../GlobalState";
 
-import './Reviews/Reviews.css';
+import "./Reviews/Reviews.css";
 
-import Dropzone from 'react-dropzone-uploader'
-import { getDroppedOrSelectedFiles } from 'html5-file-selector'
-
+// import Dropzone from "react-dropzone-uploader";
+// import { getDroppedOrSelectedFiles } from "html5-file-selector";
 
 export default function Product() {
-  const [, setPageLoading] = React.useContext(Loading)
+  const [, setPageLoading] = React.useContext(Loading);
   const alert = useAlert();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
 
+  // const [reviewImages, setReviewImages] = useState([]);
+  const [reviewImages, setReviewImages] = useState([]);
+  const [reviewImagesLoading, setReviewImagesLoading] = useState(false);
+  const [reviewSubmitButtonLoading, setReviewSubmitButtonLoading] =
+    useState(false);
 
   const [rating, setRating] = useState();
   const [review, setReview] = useState();
@@ -53,14 +57,14 @@ export default function Product() {
   const [reviewListLoading, setReviewListLoading] = useState(true);
   // const [myreview, setMyReview] = useState('nodata');
   const [myReview, setMyReview] = useState(undefined);
-  const [myReviewLoading, setMyReviewLoading] = useState(true)
+  const [myReviewLoading, setMyReviewLoading] = useState(true);
 
   // const { addItemToList } = useContext(GlobalContext);
   const [, setCartMenu] = useContext(GlobalState);
 
   const [parentProduct, setParentProduct] = useState({});
   const [product, setProduct] = useState({});
-  const [images, setImages] = useState([{ image: '' }]);
+  const [images, setImages] = useState([{ image: "" }]);
   const [loading, setLoading] = useState(true);
   const [variantsList, setVariantList] = useState([]);
   // const [variantsSelected, setVariantsSelected] = useState();
@@ -77,28 +81,28 @@ export default function Product() {
   // alert.show(productId)
   // const [productid, setProductid] = useState(productId)
   function refreshPage() {
-    setLoading(true); 
+    setLoading(true);
     // window.location.reload()`
     window.scroll(0, 0);
   }
 
   const getProduct = async () => {
     try {
-      setPageLoading(true)
-      setMyReview('nodata')
-      setReviewListLoading(true)
-      setMyReviewLoading(true)
+      setPageLoading(true);
+      setMyReview("nodata");
+      setReviewListLoading(true);
+      setMyReviewLoading(true);
       const response = await fetch(
         `${global.api}/client/product/${productId}`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
       const res = JSON.parse(await response.text());
-      if (res.status === 'success') {
+      if (res.status === "success") {
         // setProductid(productId)
         setProduct(res.data);
         setParentProduct(res.data);
@@ -118,7 +122,7 @@ export default function Product() {
           }
         }
         let fiV = [];
-        let tepFiV = { name: '', values: [] };
+        let tepFiV = { name: "", values: [] };
         for (let i in v) {
           tepFiV = {
             name: i,
@@ -141,7 +145,7 @@ export default function Product() {
           setPropertiesList(proList);
         }
         setLoading(false);
-        setPageLoading(false)
+        setPageLoading(false);
         // getVariants();
         // console.log(fiV);
       }
@@ -149,7 +153,7 @@ export default function Product() {
       // console.log(error)
       setProduct({});
       setLoading(false);
-      setPageLoading(false)
+      setPageLoading(false);
     }
   };
   if (loading) {
@@ -161,13 +165,15 @@ export default function Product() {
     try {
       // setPageLoading(true)
       // alert.show("Fetch vari")
-      let query = '';
-      let values = document.getElementsByClassName("product-variant-properties")
+      let query = "";
+      let values = document.getElementsByClassName(
+        "product-variant-properties"
+      );
       // console.log("Values are ", values)
       for (let i = 0; i < values.length; i++) {
-        query = query + values[i].name + '=' + values[i].value;
+        query = query + values[i].name + "=" + values[i].value;
         if (i < values.length - 1) {
-          query = query + '&';
+          query = query + "&";
         }
       }
       // document.querySelector('select').COLOR.value = 'Blue';
@@ -175,14 +181,14 @@ export default function Product() {
       const response = await fetch(
         `${global.api}/client/product/${productId}/variant?${query}`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
       const res = JSON.parse(await response.text());
-      if (res.status === 'success') {
+      if (res.status === "success") {
         let prd = res.data.data;
         let newPrd = { ...parentProduct };
         newPrd._id = prd._id;
@@ -194,8 +200,7 @@ export default function Product() {
         }
         if (prd.stock) {
           newPrd.stock = prd.stock;
-        }
-        else{
+        } else {
           newPrd.stock = 0;
         }
         if (prd.summary) {
@@ -240,49 +245,51 @@ export default function Product() {
   };
 
   const addToCart = async () => {
-    
     try {
       // setCartMenu((v) => !v)
       let multi_properties = [];
       let single_properties = [];
-      let values = document.getElementsByClassName("product-variant-multi_properties")
+      let values = document.getElementsByClassName(
+        "product-variant-multi_properties"
+      );
       // console.log("Values are ", values)
       for (let i = 0; i < values.length; i++) {
         // query = query + values[i].name + '=' + values[i].value;
         let proObj = {
           name: values[i].name,
-          value: values[i].value
-        }
-        multi_properties.push(proObj)
+          value: values[i].value,
+        };
+        multi_properties.push(proObj);
       }
 
-      let values2 = document.getElementsByClassName("product-variant-properties")
+      let values2 = document.getElementsByClassName(
+        "product-variant-properties"
+      );
       // console.log("Values are ", values)
       for (let i = 0; i < values2.length; i++) {
         let proObj2 = {
           name: values2[i].name,
-          value: values2[i].value
-        }
-        single_properties.push(proObj2)
+          value: values2[i].value,
+        };
+        single_properties.push(proObj2);
       }
-
 
       // console.log(single_properties)
       setAddToCartLoading(true);
       const response = await fetch(`/api/v1/gbdleathers/client/customer/cart`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           product: product._id,
-          multi_properties
+          multi_properties,
         }),
       });
       const res = JSON.parse(await response.text());
-      if (res.status === 'success') {
-        setCartMenu(true)
-        setAddToCartLoading(false)
+      if (res.status === "success") {
+        setCartMenu(true);
+        setAddToCartLoading(false);
       } else {
         alert.error(res.message);
         setAddToCartLoading(false);
@@ -290,10 +297,12 @@ export default function Product() {
       // console.log(multi_properties[0])
       for (let x in multi_properties) {
         // console.log('Key = ', x, ' Value = ', multi_properties[x]);
-        document.getElementById(`${multi_properties[x].name}`).value = multi_properties[x].value;
+        document.getElementById(`${multi_properties[x].name}`).value =
+          multi_properties[x].value;
       }
-      for (let x in  single_properties) {
-        document.getElementById(`${single_properties[x].name}`).value = single_properties[x].value;
+      for (let x in single_properties) {
+        document.getElementById(`${single_properties[x].name}`).value =
+          single_properties[x].value;
       }
     } catch (error) {
       // console.log(error);
@@ -305,14 +314,14 @@ export default function Product() {
       const response = await fetch(
         `${global.api}/client/category/${categoryId}`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
       const res = JSON.parse(await response.text());
-      if (res.status === 'success') {
+      if (res.status === "success") {
         setProductList(res.data.products);
         setProductListLoading(false);
         // console.log(res.data);
@@ -324,64 +333,39 @@ export default function Product() {
     // setLoading(false);
   };
 
-
-
-  const getFilesFromEvent = e => {
-    // console.log("Uppdse Change", e)
-      return new Promise(resolve => {
-          getDroppedOrSelectedFiles(e).then(chosenFiles => {
-              resolve(chosenFiles.map(f => f.fileObject))
-          })
-      })
-  }
-  const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
-      const textMsg = 'ADD PHOTOS'
-      return (
-        <>
-          <label className="review-add-photo-btn">
-              {textMsg}
-              <input
-                  style={{ display: 'none' }}
-                  type="file"
-                  accept={accept}
-                  multiple
-                  onChange={e => {
-                      getFilesFromEvent(e).then(chosenFiles => {
-                          onFiles(chosenFiles)
-                      })
-                  }}
-              />
-          </label>
-          {/* <div className='ab' id="dzu-submitButtonContainer2">
-            <button class="dzu-submitButton">SUBMIT 2</button>
-          </div> */}
-          </>
-      )
-  }
-
-
   const createReview = async (files) => {
     try {
-      if (!rating) {  
-        alert.show('Please give some rating!');
+      if (!rating) {
+        alert.show("Please give some rating!");
         return;
       }
       if (!review) {
-        alert.show('Please give review!');
+        alert.show("Please give review!");
         return;
       }
+      setReviewSubmitButtonLoading(true);
       const data = new FormData();
       // alert.show(`Ratings ${rating}`)
-      data.append("rating", rating)
-      data.append("review", review)
+      data.append("rating", rating);
+      data.append("review", review);
 
-      for(let i in files){
-        data.append("images", files[i].file)
+      // files = document.querySelectorAll(".dzu-previewImage");
+      // console.log(files)
+
+      for (let i in reviewImages) {
+        console.log(reviewImages[i]);
+        data.append("images", reviewImages[i].file);
       }
+
+      // for(let i in files){
+      //   data.append("images", files[i].src)
+      // }
+
+      // return;
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/reviews/${productId}`,
         {
-          method: 'POST',
+          method: "POST",
           // headers: {
           //   'Accept': 'application/json',
           //   'Content-Type': 'multipart/form-data',
@@ -390,18 +374,116 @@ export default function Product() {
         }
       );
       const res = JSON.parse(await response.text());
-      if (res.status === 'success') {
+      if (res.status === "success") {
         // alert(res.message);
+        setReviewImages(null);
+        setRating(null);
         getMyReviews();
         getAllReviews();
+        setReviewSubmitButtonLoading(false);
       } else {
-        alert.error('Something went wrong please try again.');
+        alert.error("Something went wrong please try again.");
+        setReviewSubmitButtonLoading(false);
       }
     } catch (error) {
-      alert.error('Something Went wrong try again');
+      alert.error("Something Went wrong try again");
+      setReviewSubmitButtonLoading(false);
       // console.log(error);
     }
   };
+  // const getFilesFromEvent = (e) => {
+  //   // console.log("Uppdse Change", e)
+  //   return new Promise((resolve) => {
+  //     getDroppedOrSelectedFiles(e).then((chosenFiles) => {
+  //       resolve(chosenFiles.map((f) => f.fileObject));
+  //     });
+  //   });
+  // };
+  // const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
+  //     const textMsg = 'ADD PHOTOS'
+  //     return (
+  //       <>
+  //         <label className="review-add-photo-btn">
+  //             {textMsg}
+  //             <input
+  //                 style={{ display: 'none' }}
+  //                 type="file"
+  //                 accept={accept}
+  //                 multiple
+  //                 onChange={e => {
+  //                     getFilesFromEvent(e).then(chosenFiles => {
+  //                         onFiles(chosenFiles)
+  //                     })
+  //                 }}
+  //             />
+  //         </label>
+  //         <div className='ab' id="dzu-submitButtonContainer2">
+  //           <button onClick={createReview} class="dzu-submitButton">SUBMIT 2</button>
+  //         </div>
+  //         </>
+  //     )
+  // }
+
+  async function imageHandler(e) {
+    setReviewImagesLoading(true);
+    var files = e.target.files;
+    // blob = new Blob(files[0], { type: "text/plain" });
+    // let link = URL.createObjectURL(blob);
+    // let datas = await getFilesFromEvent(e );
+    // let datas = URL.createObjectURL(files[0]);
+    // console.log(datas);
+    // let link = await new Promise(files[0].toBlob(resolve, "image/png"));
+
+    // console.log("Image link is ", link);
+
+    if (files.length + reviewImages.length > 5) {
+      alert.show("Maximum 5 Images are allowed!");
+      return;
+    }
+    let newImageArray = [];
+    for (let j in reviewImages) {
+      newImageArray.push(reviewImages[j]);
+    }
+
+    // console.log(files.length);
+    for (let i = 0; i < files.length; i++) {
+      // console.log(i);
+      let fileObj = {
+        data: URL.createObjectURL(files[i]),
+        file: files[i],
+      };
+      newImageArray.push(fileObj);
+    }
+    // console.log("done loading.. Images");
+    setReviewImages(newImageArray);
+    setReviewImagesLoading(false);
+
+    // function extractImageData(index) {
+    //   if (index === files.length) {
+    //     setReviewImages(newImageArray);
+    //     // alert.show("Loaded Images");
+    //     setReviewImagesLoading(false);
+    //     return;
+    //   }
+    //   let file = files[index];
+    //   let picReader = new FileReader();
+    //   picReader.readAsDataURL(file);
+    //   picReader.onload = function (oFREvent) {
+    //     let picFile = oFREvent.target;
+    //     let fileObj = {
+    //       data: URL.createObjectURL(file),
+    //       file: file,
+    //     };
+    //     newImageArray.push(fileObj);
+    //     extractImageData(++index);
+    //   };
+    // }
+
+    // extractImageData(0);
+  }
+  // useEffect(() => {
+  //   setReviewImagesLoading(false);
+  // }, [reviewImages]);
 
   const getAllReviews = async () => {
     // alert.show("Rev fetch")
@@ -409,14 +491,14 @@ export default function Product() {
       const response = await fetch(
         `/api/v1/gbdleathers/client/reviews/${productId}`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
       const res = JSON.parse(await response.text());
-      if (res.status === 'success') {
+      if (res.status === "success") {
         setReviewList(res.data);
         // console.log('Reviews', res.data);
         setReviewListLoading(false);
@@ -431,30 +513,29 @@ export default function Product() {
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/reviews/${productId}`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
       // console.log("MyREVIEW ERROR", response)
       const res = JSON.parse(await response.text());
       // console.log(res)
-      if (res.status === 'success') {
+      if (res.status === "success") {
         // console.log("My Review", res.data)
-        setMyReview(res.data)
+        setMyReview(res.data);
         // setReview(res.data)
+      } else {
+        setMyReview(undefined);
       }
-      else{
-        setMyReview(undefined)
-      }
-      
-      setMyReviewLoading(false)
+
+      setMyReviewLoading(false);
     } catch (error) {
       // console.log('Error Fetching reviews', error);
 
-      setMyReviewLoading(false)
-      setMyReview(undefined)
+      setMyReviewLoading(false);
+      setMyReview(undefined);
     }
   };
 
@@ -471,33 +552,33 @@ export default function Product() {
     return (
       <div
         style={{
-          width: '100%',
+          width: "100%",
         }}
       >
         {reviewList.map((review, i) => (
           <div
             key={i}
             style={{
-              width: '100%',
-              padding: '.5rem',
-              marginTop: '1rem',
-              borderTop: '1px solid lightgray',
+              width: "100%",
+              padding: ".5rem",
+              marginTop: "1rem",
+              borderTop: "1px solid lightgray",
             }}
           >
             <div
               style={{
-                width: '100%',
-                display: 'flex',
-                marginTop: '.6rem',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
+                width: "100%",
+                display: "flex",
+                marginTop: ".6rem",
+                flexDirection: "row",
+                justifyContent: "space-between",
               }}
             >
               <div>
                 <p
                   style={{
                     fontSize: 18,
-                    fontWeight: 'bold',
+                    fontWeight: "bold",
                   }}
                 >
                   {review.customer.first_name} {review.customer.last_name}
@@ -505,7 +586,7 @@ export default function Product() {
                 <br />
                 <Rating
                   style={{
-                    marginLeft: '.6rem',
+                    marginLeft: ".6rem",
                   }}
                   size="small"
                   value={review.rating}
@@ -520,7 +601,7 @@ export default function Product() {
               <p
                 style={{
                   fontSize: 16,
-                  color: 'rgb(80, 80, 80)',
+                  color: "rgb(80, 80, 80)",
                 }}
               >
                 {review.review}
@@ -528,24 +609,28 @@ export default function Product() {
             </div>
             <br />
             <br />
-            <div style={{
-              width: '100%',
-              display: "flex",
-              flexDirection: "row",
-              // justifyContent: 'space-between',
-            }}>
-             { review?.images?.map((img, index)=> (
-               <div key={index} style={{
-                 width: '100px',
-                 height: '100px',
-                 marginRight: '1rem'
-               }}>
-                 <Zoom>
-              <img src={`${global.image_path}${img}`} alt="" />
-              </Zoom>
-              </div>
-             ))
-  }           
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "row",
+                // justifyContent: 'space-between',
+              }}
+            >
+              {review?.images?.map((img, index) => (
+                <div
+                  key={index}
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    marginRight: "1rem",
+                  }}
+                >
+                  <Zoom>
+                    <img src={`${global.image_path}${img}`} alt="" />
+                  </Zoom>
+                </div>
+              ))}
             </div>
           </div>
         ))}
@@ -553,18 +638,45 @@ export default function Product() {
     );
   }
 
+  function GetImageUploadButton() {
+    if (reviewImagesLoading === true) {
+      return (
+        <span>
+          <ReactLoading type="spin" color="black" height={25} width={25} />
+        </span>
+      );
+    }
+    return <span>ADD PHOTOS</span>;
+  }
+  function GetReviewSubmitImage() {
+    if (reviewSubmitButtonLoading === true) {
+      return (
+        <button
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ReactLoading type="spin" color="white" height={28} width={25} />
+        </button>
+      );
+    }
+
+    return <button onClick={() => createReview()}>SUBMIT</button>;
+  }
+
   function RenderGiveReview() {
     if (myReviewLoading) {
       getMyReviews();
-      return<p>Loading...</p>
-    }
-    else if(myReview && (Object.keys(myReview).length === 0)){
+      return <p>Loading...</p>;
+    } else if (myReview && Object.keys(myReview).length === 0) {
       return (
         <div className="review-create-review-div">
           <p
             style={{
-              fontSize: '1.6rem',
-              color: 'rgb(80, 80, 80)',
+              fontSize: "1.6rem",
+              color: "rgb(80, 80, 80)",
             }}
           >
             Give Your Review
@@ -573,17 +685,16 @@ export default function Product() {
           <div className="preview-create-review">
             <div
               style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center'
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
                 // justifyContent: 'center'
               }}
             >
               <p>Rating</p>
               <Rating
                 style={{
-                  marginLeft: '1rem',
-                  
+                  marginLeft: "1rem",
                 }}
                 size="medium"
                 value={parseFloat(rating)}
@@ -596,7 +707,7 @@ export default function Product() {
             <div>
               <p
                 style={{
-                  marginBottom: '.8rem',
+                  marginBottom: ".8rem",
                 }}
               >
                 Review
@@ -605,56 +716,101 @@ export default function Product() {
                 name="message"
                 rows="4"
                 style={{
-                  width: '100%',
-                  fontSize: '1.3rem',
-                  padding: '.4rem',
-                  fontStyle: 'revert',
-                  border: '1px solid lightgray',
+                  width: "100%",
+                  fontSize: "1.3rem",
+                  padding: ".4rem",
+                  fontStyle: "revert",
+                  border: "1px solid lightgray",
                 }}
                 onChange={(e) => setReview(e.target.value)}
               ></textarea>
             </div>
             <br />
-           
-            <Dropzone
-            onSubmit={createReview}
-            InputComponent={selectFileInput}
-            // getUploadParams={fileParams}
-            // onChangeStatus={OnChangePreviewImages}
-            getFilesFromEvent={getFilesFromEvent}
-            accept="image/*"
-            maxFiles={5}
-            // SubmitButtonComponent={ReviewSubmitButton}
-            submitButtonContent="SUBMIT"
-            // inputContent="Drop A File"
-            // submitButtonDisabled
-        />
-            {/* </div> */}
+
             <div
-              id="result"
-              // className='review-upload-images-div'
+              className="review-submit"
               style={{
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'row',
-                height: '6rem',
+                width: "100%",
+                display: "flex",
+                flexDirection: "row-reverse",
+                // border: "1px solid blue"
               }}
             >
-              <output id="result" />
+              <div
+                style={{
+                  width: "22rem",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  // border: "1px solid red"
+                }}
+              >
+                <label htmlFor="review-upload-image">
+                  <input
+                    name="review-upload-image"
+                    id="review-upload-image"
+                    type="file"
+                    style={{
+                      display: "none",
+                    }}
+                    accept="image/*"
+                    multiple
+                    onChange={imageHandler}
+                  />
+                  <div className="review-upload-image-button">
+                    <GetImageUploadButton />
+                  </div>
+                </label>
+                <div className="review-upload-image-submit-button">
+                  <GetReviewSubmitImage />
+                </div>
+              </div>
+            </div>
+            <div
+              id="result"
+              // className="review-upload-images-div"
+              style={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "row",
+                height: "6rem",
+              }}
+            >
+              {reviewImages?.map((file, index) => (
+                <div class="preview-image-div" key={index}>
+                  <span
+                    style={{
+                      float: "right",
+                      fontSize: "1.2rem",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      let newImageArray = [];
+                      for (let i in reviewImages) {
+                        // console.log(i, " ", index);
+                        if (Number(i) === Number(index)) continue;
+                        newImageArray.push(reviewImages[i]);
+                      }
+                      setReviewImages(newImageArray);
+                    }}
+                  >
+                    ×
+                  </span>
+                  <img class="review-upload-images" src={file.data} alt="" />
+                </div>
+              ))}
+              {/* <output id="result" /> */}
             </div>
           </div>
           <br />
           <br />
         </div>
       );
-            }
-            else{
-              return<></>
+    } else {
+      return <></>;
     }
-}
+  }
 
-
-  function Reviews(numberOfReviews,  rating){
+  function Reviews(numberOfReviews, rating) {
     return (
       <div className="review-div">
         <div className="review-holder">
@@ -662,20 +818,20 @@ export default function Product() {
             <div className="review-header-rating">
               <div
                 style={{
-                  display: 'flex',
-                  flexFlow: 'row',
-                  alignItems: 'center',
+                  display: "flex",
+                  flexFlow: "row",
+                  alignItems: "center",
                 }}
               >
                 <p
                   style={{
-                    fontSize: '2.2rem',
+                    fontSize: "2.2rem",
                   }}
                 >
                   {rating}
                 </p>
                 <Rating
-                  style={{ marginLeft: '1rem' }}
+                  style={{ marginLeft: "1rem" }}
                   value={parseFloat(rating)}
                   size="large"
                   precision={0.5}
@@ -691,16 +847,14 @@ export default function Product() {
         </div>
         <div
           style={{
-            width: '100%',
-            height: '16vh',
-            borderBottom: '1px solid lightgray',
+            width: "100%",
+            height: "16vh",
+            borderBottom: "1px solid lightgray",
           }}
         ></div>
       </div>
     );
-  
   }
-  
 
   useEffect(() => {
     getVariants();
@@ -716,7 +870,7 @@ export default function Product() {
               <label htmlFor={variant.name}>{variant.name}</label>
               <br />
               <select
-              className='product-variant-properties'
+                className="product-variant-properties"
                 name={variant.name}
                 id={variant.name}
                 onChange={() => getVariants()}
@@ -742,7 +896,7 @@ export default function Product() {
               <label for={properti.name}>{properti.name}</label>
               <br />
               <select
-              className='product-variant-multi_properties'
+                className="product-variant-multi_properties"
                 name={properti.name}
                 id={properti.name}
                 // onChange={(e) => {
@@ -764,7 +918,7 @@ export default function Product() {
 
   function AddToCartButton() {
     if (addToCartLoading) {
-      return ( 
+      return (
         <div className="product-detail-add-to-cart-loading">
           <ReactLoading color="white" type="spin" height={30} width={30} />
         </div>
@@ -784,21 +938,24 @@ export default function Product() {
     if (productListLoading && categoryId) {
       getCategory(categoryId);
       return <>Loading...</>;
-    }
-    else if(!categoryId){
-      return<></>
+    } else if (!categoryId) {
+      return <></>;
     }
     return (
-      <div className="category-page-parent" style={{
-        marginTop: "16rem",
-        // marginBottom: '15rem'
-      }}>
-        <div className="category-page-heading" style={{
-          marginBottom: '6rem'
-        }}>{ categoryId ? 
-          <span>PRODUCTS WITH SAME CATEGORY</span>
-          : ""
-        }
+      <div
+        className="category-page-parent"
+        style={{
+          marginTop: "16rem",
+          // marginBottom: '15rem'
+        }}
+      >
+        <div
+          className="category-page-heading"
+          style={{
+            marginBottom: "6rem",
+          }}
+        >
+          {categoryId ? <span>PRODUCTS WITH SAME CATEGORY</span> : ""}
         </div>
         <div className="category-page-body">
           {productList.map((product, index) => (
@@ -806,7 +963,7 @@ export default function Product() {
               <Link
                 onClick={() => refreshPage()}
                 to={`/product/${product._id}`}
-                style={{ textDecoration: 'none' }}
+                style={{ textDecoration: "none" }}
               >
                 <div className="category-page-img">
                   <img
@@ -820,7 +977,7 @@ export default function Product() {
                     alt=""
                   />
                 </div>
-                
+
                 <div className="category-page-detail">
                   <p>{product.name.toUpperCase()}</p>
                   <div className="category-page-price">
@@ -843,10 +1000,12 @@ export default function Product() {
             </div>
           ))}
         </div>
-        <div style={{
-          width: "100%",
-          height: "20vh"
-        }}></div>
+        <div
+          style={{
+            width: "100%",
+            height: "20vh",
+          }}
+        ></div>
       </div>
     );
   }
@@ -856,7 +1015,7 @@ export default function Product() {
   // }
 
   const properties = {
-    thumbnailPosition: 'bottom',
+    thumbnailPosition: "bottom",
     useBrowserFullscreen: false,
     slideOnThumbnailOver: true,
     showPlayButton: false,
@@ -893,27 +1052,25 @@ export default function Product() {
                 value={parseFloat(product.ratingsAverage)}
                 size="small"
                 style={{
-                  paddingLeft: '0.7rem'
+                  paddingLeft: "0.7rem",
                 }}
                 readOnly
               />
-              <p>
-                {product.ratingsQuantity} reviews
-              </p>
+              <p>{product.ratingsQuantity} reviews</p>
             </div>
           </div>
           <div
             style={{
-              width: '70%',
-              display: 'flex',
-              justifyContent: 'space-between',
+              width: "70%",
+              display: "flex",
+              justifyContent: "space-between",
             }}
           >
             <ShowVariants />
             <ShowProperties />
           </div>
           <div className="product-detail-indicators">
-            <FiberManualRecordIcon style={{ color: 'green' }} />
+            <FiberManualRecordIcon style={{ color: "green" }} />
             <p>{product.stock} Stock</p>
           </div>
           {AddToCartButton()}
@@ -931,11 +1088,11 @@ export default function Product() {
         </div>
       </div>
       {GetProductsWithSamecategory()}
-      {Reviews(product.ratingsQuantity,product.ratingsAverage)}
+      {Reviews(product.ratingsQuantity, product.ratingsAverage)}
       <div
         style={{
-          width: '100%',
-          height: '30vh',
+          width: "100%",
+          height: "30vh",
         }}
       ></div>
       <Footer />

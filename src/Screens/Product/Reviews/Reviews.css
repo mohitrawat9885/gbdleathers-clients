@@ -1,4 +1,4 @@
- .review-div {
+.review-div {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -27,9 +27,7 @@
   color: rgb(94, 94, 94);
 }
 
-
-
-.dzu-dropzone{
+/* .dzu-dropzone{
   margin: 0% !important;
   padding: 0% !important;
   width: 100% !important;
@@ -39,17 +37,14 @@
   justify-content: space-around;
 
   grid-auto-rows: auto auto auto;
-  /* border: 1px solid red !important; */
-  /* display: grid;
+  border: 1px solid red !important;
+  display: grid;
   grid-template-columns: repeat(auto, 12);
-  grid-template-rows: auto auto; */
-}
+  grid-template-rows: auto auto;
+} */
 
-
-.review-add-photo-btn{
+/* .review-add-photo-btn {
   grid-row: 2;
-  /* padding: 0%;
-  margin: 0%; */
   display: flex;
   width: 10rem;
   height: 2.6rem;
@@ -63,21 +58,22 @@
   cursor: pointer;
   margin-top: 1rem;
   margin-bottom: 1rem;
-}
+} */
 /* .review-add-photo-btn:hover{
   background-color: white;
   color: black;
 } */
-.dzu-submitButtonContainer{
+/* .dzu-submitButtonContainer {
   grid-row: 3;
   width: 10rem !important;
   height: 2.6rem !important;
   padding: 0% !important;
   margin: 0% !important;
   margin-top: 1rem;
-}
-.dzu-submitButtonContainer button{
-  /* visibility: visible !important; */
+  display: none;
+} */
+/* .dzu-submitButtonContainer button {
+  visibility: visible !important;
   display: block !important;
   font-size: 0.9rem !important;
   width: 10rem !important;
@@ -92,14 +88,14 @@
   margin: 0% !important;
   margin-top: 1rem;
 }
-#dzu-submitButtonContainer2{
+#dzu-submitButtonContainer2 {
   width: 10rem !important;
   height: 2.6rem !important;
   padding: 0% !important;
   margin: 0% !important;
-}
-#dzu-submitButtonContainer2 button{
-  /* visibility: visible !important; */
+} */
+/* #dzu-submitButtonContainer2 button {
+  visibility: visible !important;
   display: block !important;
   font-size: 0.9rem !important;
   width: 10rem !important;
@@ -112,65 +108,23 @@
   cursor: pointer;
   padding: 0% !important;
   margin: 0% !important;
-}
-.hidden{
+} */
+.hidden {
   display: none;
 }
-.dzu-previewContainer{
-  grid-row: 1 ;
-  
-  padding: 0% !important;
-  margin: 0% !important;
-  display: flex;
-  flex-direction: row;
-  /* padding-top: 1re; */
-  /* width: 100px !important;
-  height: 100px !important; */
-  /* margin-top: 5rem !important; */
-}
-.dzu-previewContainer img{
-  width: 100px !important;
-  height: 100px !important;
-} 
-.dzu-previewStatusContainer{
-/* background-color: rgb(0, 0, 0); */
-position: relative;
-right: 20px;
- /* border: 1px solid red; */
-}
 
-
-.dzu-previewButton{
-  /* filter: invert(100%) !important; */
-  /* border: 1px solid blue; */
-  cursor: pointer !important;
-  display: inline-block !important;
-  width: 1rem !important;
-  height: 1rem !important;
-  background-color: rgb(255, 255, 255) !important;
-  /* font-size: larger; */
-}
-
-/* 
- .dzu-previewStatusContainer{
-  display: block !important;
-} */
-/* .dzu-previewStatusContainer{
-display: block !important;
-} */
-/* 
 #result img {
   width: 100%;
   height: 100%;
-} 
- #result div {
+}
+#result div {
   width: 7rem;
   padding: 0.3rem;
   flex-direction: row;
   flex-wrap: wrap;
-}  */
+}
 
-/* .review-upload-image-button span {
+.review-upload-image-button span {
   display: flex;
   width: 10rem;
   height: 2.6rem;
@@ -181,9 +135,9 @@ display: block !important;
   font-size: 0.9rem;
   letter-spacing: 0.2rem;
   cursor: pointer;
-} */
+}
 
-/* .review-upload-image-submit-button button {
+.review-upload-image-submit-button button {
   width: 10rem;
   height: 2.6rem;
   border: none;
@@ -192,10 +146,10 @@ display: block !important;
   letter-spacing: 0.2rem;
   color: white;
   cursor: pointer;
-} */
+}
 
 @media only screen and (max-width: 460px) {
-  /* .review-upload-image-submit-button button {
+  .review-upload-image-submit-button button {
     width: 5rem;
     font-size: 0.7rem;
   }
@@ -204,5 +158,5 @@ display: block !important;
     width: 5rem;
     font-size: 0.6rem;
     text-align: center;
-  } */
+  }
 }
