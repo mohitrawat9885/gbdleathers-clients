@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useContext } from 'react';
-import './CartMenu.css';
-import { Link } from 'react-router-dom';
-import ClearIcon from '@mui/icons-material/Clear';
+import React, { useState, useEffect, useContext } from "react";
+import "./CartMenu.css";
+import { Link } from "react-router-dom";
+import ClearIcon from "@mui/icons-material/Clear";
 
-import Badge from '@mui/material/Badge';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import Badge from "@mui/material/Badge";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 // import CartQuantity from '../../../Components/CartQuantity/CartQuantity';
-import Ripple from 'react-ripples';
-import './CartQuantity.css';
+import Ripple from "react-ripples";
+import "./CartQuantity.css";
 // import Button from '@mui/material/Button';
 // import CartProduct from './CartProduct/CartProduct';
-import GlobalState from '../../../../GlobalState';
-import './CartProduct.css';
+import GlobalState from "../../../../GlobalState";
+import "./CartProduct.css";
 //import { Turn as Hamburger } from "hamburger-react";
 
 // import ReactLoading from 'react-loading';
@@ -29,30 +29,33 @@ export default function CartMenu() {
     // alert("triggered")
     if (toggled) {
       getCartProducts();
-      document.body.classList.add('cart-menu-fixed-position');
+      document.body.classList.add("cart-menu-fixed-position");
     } else {
-      document.body.classList.remove('cart-menu-fixed-position');
+      document.body.classList.remove("cart-menu-fixed-position");
     }
     setSidebar(toggled);
   };
   useEffect(() => {
-    if(cartMenu === true){
-      HandleMenu(true)
+    if (cartMenu === true) {
+      HandleMenu(true);
     }
-    setCartMenu(false)
+    setCartMenu(false);
     // eslint-disable-next-line
   }, [cartMenu]);
+  useEffect(() => {
+    getCartProducts();
+  }, []);
 
   const getCartProducts = async () => {
     try {
       const response = await fetch(`/api/v1/gbdleathers/client/customer/cart`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
       const res = JSON.parse(await response.text());
-      if (res.status === 'success') {
+      if (res.status === "success") {
         setCartList(res.data);
         // console.log(res.data);
       }
@@ -65,9 +68,9 @@ export default function CartMenu() {
   const addToCart = async (productId, quantity) => {
     try {
       const response = await fetch(`/api/v1/gbdleathers/client/customer/cart`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           product: productId,
@@ -80,7 +83,7 @@ export default function CartMenu() {
         return;
       }
       const res = JSON.parse(await response.text());
-      if (res.status === 'success') {
+      if (res.status === "success") {
         getCartProducts();
       } else {
         alert.error(res.message);
@@ -110,21 +113,20 @@ export default function CartMenu() {
                 <div className="cart-menu-quantity">
                   <div
                     className="cart-menu-quantity-btn"
-                    style={{ cursor: 'pointer' }}
+                    style={{ cursor: "pointer" }}
                     onClick={() => addToCart(props.product._id, -1)}
                   >
                     -
                   </div>
                   <p>{props.quantity}</p>
-                  
+
                   <div
-                    style={{ cursor: 'pointer' }}
+                    style={{ cursor: "pointer" }}
                     className="cart-menu-quantity-btn"
                     onClick={() => addToCart(props.product._id, 1)}
                   >
                     +
                   </div>
-                  
                 </div>
               </div>
 
@@ -148,7 +150,6 @@ export default function CartMenu() {
   }
   function CartItems() {
     if (loading) {
-      getCartProducts();
       return <>Loading...</>;
     } else if (cartList.length > 0) {
       return (
@@ -189,14 +190,13 @@ export default function CartMenu() {
             style={{
               fontSize: 35,
               // textEmphasisColor: 'gray',
-              cursor: 'pointer',
-              
+              cursor: "pointer",
             }}
             sx={{
               "& .MuiBadge-badge": {
                 color: "white",
-                backgroundColor: "#FC5111"
-              }
+                backgroundColor: "#FC5111",
+              },
             }}
             badgeContent={cartList.length}
           >
@@ -205,15 +205,15 @@ export default function CartMenu() {
         </div>
         <div
           className={
-            sidebar ? 'cart-menu-navDiv cart-menu-active' : 'cart-menu-navDiv'
+            sidebar ? "cart-menu-navDiv cart-menu-active" : "cart-menu-navDiv"
           }
           onClick={() => HandleMenu(false)}
         ></div>
         <nav
           className={
             sidebar
-              ? 'cart-menu-nav-menu cart-menu-active'
-              : 'cart-menu-nav-menu'
+              ? "cart-menu-nav-menu cart-menu-active"
+              : "cart-menu-nav-menu"
           }
         >
           <ul className="cart-menu-nav-menu-items">
@@ -222,7 +222,12 @@ export default function CartMenu() {
                 <p>CART</p>
                 <ClearIcon
                   onClick={() => HandleMenu(false)}
-                  style={{fontWeight: '100', marginTop: '.6rem', fontSize: 26, cursor: 'pointer' }}
+                  style={{
+                    fontWeight: "100",
+                    marginTop: ".6rem",
+                    fontSize: 26,
+                    cursor: "pointer",
+                  }}
                 />
               </div>
             </li>

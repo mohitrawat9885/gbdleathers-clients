@@ -1,64 +1,66 @@
-import React, { useEffect, useState } from 'react';
-import './Shop.css';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import "./Shop.css";
+import { Link } from "react-router-dom";
 
-import Rating from '@mui/material/Rating';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+import Rating from "@mui/material/Rating";
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
 
-import Pagination from '@mui/material/Pagination';
+import Pagination from "@mui/material/Pagination";
 
-import { Loading } from '../../GlobalState';
+import { Loading } from "../../GlobalState";
 
 // import { useAlert } from "react-alert";
 
 export default function Shop() {
   // const alert = useAlert();
-  const [, setPageLoading] = React.useContext(Loading)
+  const [, setPageLoading] = React.useContext(Loading);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   // const [value, setValue] = React.useState(4.5);
   const [loading, setLoading] = useState(true);
   const [productList, setProductList] = useState([]);
-  const [numberOfDocument, setNumberOfDocument] = useState()
+  const [numberOfDocument, setNumberOfDocument] = useState();
 
   const getAllProduct = async (queryString) => {
     try {
-      setPageLoading(true)
+      setPageLoading(true);
       // setLoading(true)
       const response = await fetch(
         `${global.api}/client/product/${queryString}`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
       const res = JSON.parse(await response.text());
-      if (res.status === 'success') {
+      if (res.status === "success") {
         // alert.show(res.status)
         setProductList(res.data);
-        setNumberOfDocument(res.totalDocument)
-        setPageLoading(false)
-        // console.log(res.data)
+        setNumberOfDocument(res.totalDocument);
+        setPageLoading(false);
+        console.log(res.data);
       }
     } catch (error) {
       setProductList([]);
-      setPageLoading(false)
+      setPageLoading(false);
     }
     setLoading(false);
   };
-  if (loading) {
-    getAllProduct('?limit=50&page=1');
-    setLoading(false);
-  }
-  const handlePagination = (event, value)=> {
+  // if (loading) {
+  //   setLoading(false);
+  // }
+  useEffect(() => {
+    getAllProduct("?limit=50&page=1");
+  }, []);
+  const handlePagination = (event, value) => {
     // alert.show(value);
     getAllProduct(`?limit=50&page=${value}`);
     window.scrollTo(0, 0);
-  }
+  };
 
   return (
     <>
@@ -68,11 +70,11 @@ export default function Shop() {
           <span>SHOP</span>
         </div>
         <div className="shop-page-body">
-          {productList.map((product) => (
-            <div className="shop-page-holder">
+          {productList.map((product, index) => (
+            <div className="shop-page-holder" key={index}>
               <Link
                 to={`/product/${product._id}`}
-                style={{ textDecoration: 'none' }}
+                style={{ textDecoration: "none" }}
               >
                 <div className="shop-page-img">
                   <img
@@ -94,7 +96,6 @@ export default function Shop() {
                   </div>
 
                   <div className="shop-page-review">
-                    
                     {/* <br /> */}
 
                     <Rating
@@ -112,19 +113,25 @@ export default function Shop() {
             </div>
           ))}
         </div>
-        <div className='shop-pagination' style={{
-        marginTop: "2rem"
-        }}>
-                <Pagination size='medium' count={numberOfDocument / 50}
-                onChange={handlePagination}
-                />
-
+        <div
+          className="shop-pagination"
+          style={{
+            marginTop: "2rem",
+          }}
+        >
+          <Pagination
+            size="medium"
+            count={numberOfDocument / 50}
+            onChange={handlePagination}
+          />
         </div>
       </div>
-      <div style={{
-        width:"100%",
-        height: '40vh'
-      }}></div>
+      <div
+        style={{
+          width: "100%",
+          height: "40vh",
+        }}
+      ></div>
       <Footer />
     </>
   );

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import './Menu.css';
-import { Link } from 'react-router-dom';
-import ClearIcon from '@mui/icons-material/Clear';
-import MenuIcon from '@mui/icons-material/Menu';
+import React, { useEffect, useState } from "react";
+import "./Menu.css";
+import { Link } from "react-router-dom";
+import ClearIcon from "@mui/icons-material/Clear";
+import MenuIcon from "@mui/icons-material/Menu";
 // import { SentimentVeryDissatisfiedSharp } from '@mui/icons-material';
 //import { Turn as Hamburger } from "hamburger-react";
 
@@ -13,29 +13,29 @@ export default function Menu() {
   const [, setMyData] = useState({});
   const HandleMenu = (toggled) => {
     if (toggled) {
-      document.body.classList.add('fixed-position');
+      document.body.classList.add("fixed-position");
     } else {
-      document.body.classList.remove('fixed-position');
+      document.body.classList.remove("fixed-position");
     }
     setSidebar(toggled);
   };
 
   const getMe = async () => {
-    console.log('Getting  me...');
+    console.log("Getting  me...");
     try {
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/getme`,
         {
-          method: 'GET',
+          method: "GET",
           // credentials: 'include',
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
       const res = JSON.parse(await response.text());
       // alert(res.status);
-      if (res.status === 'success') {
+      if (res.status === "success") {
         setIsLogin(true);
         setMyData(res.data);
         // alert(res.status);
@@ -46,10 +46,13 @@ export default function Menu() {
     }
     setLoading(false);
   };
+  useEffect(() => {
+    getMe();
+  }, []);
 
   function MyAccount() {
     if (loading) {
-      getMe();
+      // getMe();
       return <></>;
     }
 
@@ -75,21 +78,21 @@ export default function Menu() {
   return (
     <>
       <div>
-        <div style={{ padding: '.8rem' }}>
+        <div style={{ padding: ".8rem" }}>
           <MenuIcon
             onClick={() => HandleMenu(true)}
-            style={{ fontSize: 35, cursor: 'pointer' }}
+            style={{ fontSize: 35, cursor: "pointer" }}
           />
         </div>
         <div
-          className={sidebar ? 'navDiv active' : 'navDiv'}
+          className={sidebar ? "navDiv active" : "navDiv"}
           onClick={() => HandleMenu(false)}
         ></div>
-        <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
+        <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
           <ul className="nav-menu-items" onClick={() => HandleMenu(false)}>
             <li className="navbar-toggle">
               <div className="menu-bars">
-                <ClearIcon style={{ fontSize: 35, cursor: 'pointer' }} />
+                <ClearIcon style={{ fontSize: 35, cursor: "pointer" }} />
               </div>
             </li>
 

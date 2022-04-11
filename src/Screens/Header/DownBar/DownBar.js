@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import UpDownKey from './UpDownKey/UpDownKey';
-import './DownBar.css';
-import './DownBarMobile.css';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import UpDownKey from "./UpDownKey/UpDownKey";
+import "./DownBar.css";
+import "./DownBarMobile.css";
 
 const DownBar = () => {
   const [loading, setLoading] = useState(true);
@@ -13,14 +13,14 @@ const DownBar = () => {
       const response = await fetch(
         `${global.api}/client/category?${quaryString}`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
       const res = JSON.parse(await response.text());
-      if (res.status === 'success') {
+      if (res.status === "success") {
         setCategoryList(res.data);
       }
     } catch (error) {
@@ -28,22 +28,21 @@ const DownBar = () => {
     }
     setLoading(false);
   };
-  if (loading) {
-    getAllCategorys('?page=1&limit=6');
 
-    setLoading(false);
-  }
+  useEffect(() => {
+    getAllCategorys("?page=1&limit=6");
+  }, []);
 
   // alert(data.length);
-  const [keyStatus, setKeyStatus] = useState('down');
+  const [keyStatus, setKeyStatus] = useState("down");
   const TonggleKeyStatus = () => {
-    if (keyStatus === 'up') {
-      document.getElementById('downBar-mobile-id').style.height = '0px';
-      setKeyStatus('down');
+    if (keyStatus === "up") {
+      document.getElementById("downBar-mobile-id").style.height = "0px";
+      setKeyStatus("down");
     } else {
-      document.getElementById('downBar-mobile-id').style.height =
-        categoryList.length * 3.5 + 'rem';
-      setKeyStatus('up');
+      document.getElementById("downBar-mobile-id").style.height =
+        categoryList.length * 3.5 + "rem";
+      setKeyStatus("up");
     }
   };
   function refreshPage() {
@@ -88,6 +87,7 @@ const DownBar = () => {
                   refreshPage();
                   // TonggleKeyStatus();
                 }}
+                key={index}
               >
                 <li className="down-text-mobile">
                   <p>{category.name.toUpperCase()}</p>

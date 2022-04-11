@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import './Categorys.css';
-import { Link } from 'react-router-dom';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+import React, { useEffect, useState } from "react";
+import "./Categorys.css";
+import { Link } from "react-router-dom";
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
 
-import { Loading } from '../../GlobalState';
+import { Loading } from "../../GlobalState";
 
 export default function Categorys() {
-  const [, setPageLoading] = React.useContext(Loading)
+  const [, setPageLoading] = React.useContext(Loading);
   useEffect(() => {
     window.scrollTo(0, 0);
+    getAllCategorys("");
   }, []);
 
   const [loading, setLoading] = useState(true);
@@ -17,30 +18,28 @@ export default function Categorys() {
 
   const getAllCategorys = async (quaryString) => {
     try {
-      setPageLoading(true)
+      setPageLoading(true);
       const response = await fetch(
         `${global.api}/client/category?${quaryString}`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
       const res = JSON.parse(await response.text());
-      if (res.status === 'success') {
+      if (res.status === "success") {
         setCategoryList(res.data);
-        setPageLoading(false)
+        setPageLoading(false);
       }
     } catch (error) {
       setCategoryList([]);
-      setPageLoading(false)
+      setPageLoading(false);
     }
     setLoading(false);
   };
   if (loading) {
-    getAllCategorys('');
-
     setLoading(false);
   }
   return (
@@ -56,7 +55,7 @@ export default function Categorys() {
             <div className="categorys-category-holder-2" key={index}>
               <Link
                 to={`/category/${category._id}`}
-                style={{ textDecoration: 'none' }}
+                style={{ textDecoration: "none" }}
               >
                 <div className="categorys-category-img-2">
                   <img src={`${global.image_path}${category.image}`} alt="" />

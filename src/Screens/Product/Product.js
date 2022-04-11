@@ -41,9 +41,9 @@ import "./Reviews/Reviews.css";
 export default function Product() {
   const [, setPageLoading] = React.useContext(Loading);
   const alert = useAlert();
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  // }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // const [reviewImages, setReviewImages] = useState([]);
   const [reviewImages, setReviewImages] = useState([]);
@@ -71,7 +71,7 @@ export default function Product() {
 
   const [productList, setProductList] = useState([]);
   const [categoryId, setCategoryId] = useState();
-  const [productListLoading, setProductListLoading] = useState(true);
+  const [productListLoading, setProductListLoading] = useState(false);
 
   const [addToCartLoading, setAddToCartLoading] = useState(false);
 
@@ -107,6 +107,11 @@ export default function Product() {
         setProduct(res.data);
         setParentProduct(res.data);
         setCategoryId(res.data.category?._id);
+        let catId = res.data.category?._id;
+        if (catId) {
+          getCategory(res.data.category?._id);
+        }
+
         setImages(res.data.images);
         const myVariants = res.data.variants;
         // console.log(myVariants);
@@ -156,8 +161,13 @@ export default function Product() {
       setPageLoading(false);
     }
   };
+  useEffect(() => {
+    setLoading(true);
+  }, []);
+
   if (loading) {
     getProduct();
+
     setLoading(false);
   }
 
@@ -309,10 +319,11 @@ export default function Product() {
       setAddToCartLoading(false);
     }
   };
-  const getCategory = async () => {
+  async function getCategory(catId) {
+    // alert.show("Cat fetch");
     try {
       const response = await fetch(
-        `${global.api}/client/category/${categoryId}`,
+        `${global.api}/client/category/${catId ? catId : categoryId}`,
         {
           method: "GET",
           headers: {
@@ -321,17 +332,16 @@ export default function Product() {
         }
       );
       const res = JSON.parse(await response.text());
+      console.log("Category detched", res);
       if (res.status === "success") {
         setProductList(res.data.products);
         setProductListLoading(false);
-        // console.log(res.data);
       }
-      // console.log(res)
     } catch (error) {
-      // console.log(res)
+      // console.log("Category fetch error", error);
     }
     // setLoading(false);
-  };
+  }
 
   const createReview = async (files) => {
     try {
@@ -391,50 +401,10 @@ export default function Product() {
       // console.log(error);
     }
   };
-  // const getFilesFromEvent = (e) => {
-  //   // console.log("Uppdse Change", e)
-  //   return new Promise((resolve) => {
-  //     getDroppedOrSelectedFiles(e).then((chosenFiles) => {
-  //       resolve(chosenFiles.map((f) => f.fileObject));
-  //     });
-  //   });
-  // };
-  // const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
-  //     const textMsg = 'ADD PHOTOS'
-  //     return (
-  //       <>
-  //         <label className="review-add-photo-btn">
-  //             {textMsg}
-  //             <input
-  //                 style={{ display: 'none' }}
-  //                 type="file"
-  //                 accept={accept}
-  //                 multiple
-  //                 onChange={e => {
-  //                     getFilesFromEvent(e).then(chosenFiles => {
-  //                         onFiles(chosenFiles)
-  //                     })
-  //                 }}
-  //             />
-  //         </label>
-  //         <div className='ab' id="dzu-submitButtonContainer2">
-  //           <button onClick={createReview} class="dzu-submitButton">SUBMIT 2</button>
-  //         </div>
-  //         </>
-  //     )
-  // }
 
   async function imageHandler(e) {
     setReviewImagesLoading(true);
     var files = e.target.files;
-    // blob = new Blob(files[0], { type: "text/plain" });
-    // let link = URL.createObjectURL(blob);
-    // let datas = await getFilesFromEvent(e );
-    // let datas = URL.createObjectURL(files[0]);
-    // console.log(datas);
-    // let link = await new Promise(files[0].toBlob(resolve, "image/png"));
-
-    // console.log("Image link is ", link);
 
     if (files.length + reviewImages.length > 5) {
       alert.show("Maximum 5 Images are allowed!");
@@ -457,29 +427,6 @@ export default function Product() {
     // console.log("done loading.. Images");
     setReviewImages(newImageArray);
     setReviewImagesLoading(false);
-
-    // function extractImageData(index) {
-    //   if (index === files.length) {
-    //     setReviewImages(newImageArray);
-    //     // alert.show("Loaded Images");
-    //     setReviewImagesLoading(false);
-    //     return;
-    //   }
-    //   let file = files[index];
-    //   let picReader = new FileReader();
-    //   picReader.readAsDataURL(file);
-    //   picReader.onload = function (oFREvent) {
-    //     let picFile = oFREvent.target;
-    //     let fileObj = {
-    //       data: URL.createObjectURL(file),
-    //       file: file,
-    //     };
-    //     newImageArray.push(fileObj);
-    //     extractImageData(++index);
-    //   };
-    // }
-
-    // extractImageData(0);
   }
   // useEffect(() => {
   //   setReviewImagesLoading(false);
@@ -936,7 +883,6 @@ export default function Product() {
 
   function GetProductsWithSamecategory() {
     if (productListLoading && categoryId) {
-      getCategory(categoryId);
       return <>Loading...</>;
     } else if (!categoryId) {
       return <></>;

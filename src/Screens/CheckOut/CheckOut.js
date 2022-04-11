@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import './CheckOut.css';
-import EditIcon from '@mui/icons-material/Edit';
-import Ripples from 'react-ripples';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ReactLoading from 'react-loading';
-import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import React, { useEffect, useState } from "react";
+import "./CheckOut.css";
+import EditIcon from "@mui/icons-material/Edit";
+import Ripples from "react-ripples";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ReactLoading from "react-loading";
+import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 
 import { useAlert } from "react-alert";
 
 export default function CheckOut() {
   const alert = useAlert();
-  const [addEditAddress, setAddEditAddress] = useState('product');
+  const [addEditAddress, setAddEditAddress] = useState("product");
 
   const [loadingCart, setLoadingCart] = useState(true);
   const [cartList, setCartList] = useState([]);
@@ -62,15 +62,14 @@ export default function CheckOut() {
   }
 
   const checkout = async () => {
-    
     try {
       setCheckoutLoading(true);
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/checkout`,
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             address: checkoutAddress,
@@ -78,20 +77,20 @@ export default function CheckOut() {
         }
       );
       const res = JSON.parse(await response.text());
-      if (res.status === 'success') {
-        setTimeout(()=> {
+      if (res.status === "success") {
+        setTimeout(() => {
           alert.success(res.message);
           setTimeout(() => {
             window.location = res.payment_url;
-          }, 2500)
-          setCheckoutLoading(false)
-        }, 2000)
+          }, 2500);
+          setCheckoutLoading(false);
+        }, 2000);
       } else {
         setCheckoutLoading(false);
         alert.error(res.message);
       }
     } catch (err) {
-      alert.error('Something went wrong try again later!');
+      alert.error("Something went wrong try again later!");
       setCheckoutLoading(false);
     }
   };
@@ -101,9 +100,9 @@ export default function CheckOut() {
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/address`,
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             first_name,
@@ -121,13 +120,13 @@ export default function CheckOut() {
       );
       const res = JSON.parse(await response.text());
       // alert(res.status);
-      if (res.status === 'success') {
+      if (res.status === "success") {
         // alert(res.status);
         // setLoading(false);
-        alert.success(res.message)
+        alert.success(res.message);
         resetData();
         getAddress();
-        setAddEditAddress('product');
+        setAddEditAddress("product");
         // setAddressPage('show');
         return;
       } else {
@@ -143,9 +142,9 @@ export default function CheckOut() {
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/address/${addressId}`,
         {
-          method: 'PATCH',
+          method: "PATCH",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             first_name,
@@ -164,20 +163,20 @@ export default function CheckOut() {
 
       const res = JSON.parse(await response.text());
       // alert(res.status);
-      if (res.status === 'success') {
+      if (res.status === "success") {
         // alert(res.status);
         // setLoading(false);
-        alert.success(res.message)
+        alert.success(res.message);
         resetData();
         getAddress();
-        setAddEditAddress('product');
+        setAddEditAddress("product");
         return;
       } else {
         alert.error(res.message);
       }
     } catch (err) {
       console.log(err);
-      alert.error('Something went wrong!');
+      alert.error("Something went wrong!");
     }
     // setLoading(false);
     // navigate('/login');
@@ -188,22 +187,22 @@ export default function CheckOut() {
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/address/${id}`,
         {
-          method: 'DELETE',
+          method: "DELETE",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
       if (response.status === 204) {
         // alert('Deleted');
-        alert.success("Deleted!")
+        alert.success("Deleted!");
         getAddress();
         return;
       }
-      alert.error('Something went wrong! try again.');
+      alert.error("Something went wrong! try again.");
     } catch (err) {
       // console.log(err);
-      alert.error('Something went wrong!');
+      alert.error("Something went wrong!");
     }
     // setLoading(false);
     // navigate('/login');
@@ -214,19 +213,19 @@ export default function CheckOut() {
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/address`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
       const res = JSON.parse(await response.text());
       // alert(res.status);
-      if (res.status === 'success') {
-        
+      if (res.status === "success") {
         setAddressList(res.data);
+
         setAddressListFetched(true);
-        // console.log(res.data);
+        console.log(res.data);
       } else {
         // alert(res.message);
       }
@@ -238,16 +237,16 @@ export default function CheckOut() {
   const getCartProducts = async () => {
     try {
       const response = await fetch(`/api/v1/gbdleathers/client/customer/cart`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
       const res = JSON.parse(await response.text());
-      if (res.status === 'success') {
+      if (res.status === "success") {
         setCartList(res.data);
-        
-        // console.log(res.data);
+
+        console.log(res.data);
       }
     } catch (error) {
       console.log(error);
@@ -255,28 +254,29 @@ export default function CheckOut() {
     }
   };
   useEffect(() => {
-    getCartProducts()
-  }, [])
+    getCartProducts();
+    getAddress();
+  }, []);
 
   const addToCart = async (productId, quantity) => {
     try {
       const response = await fetch(`/api/v1/gbdleathers/client/customer/cart`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           product: productId,
           quantity,
         }),
       });
-      console.log('Responce', response.status);
+      // console.log("Responce", response.status);
       if (response.status === 204) {
         getCartProducts();
         return;
       }
       const res = JSON.parse(await response.text());
-      if (res.status === 'success') {
+      if (res.status === "success") {
         getCartProducts();
       } else {
         alert.error(res.message);
@@ -308,11 +308,11 @@ export default function CheckOut() {
         >
           <div
             style={{
-              display: 'flex',
-              width: '100%',
+              display: "flex",
+              width: "100%",
               // height: '100%',
-              justifyContent: 'center',
-              alignItems: 'center',
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
             <ReactLoading type="spin" color="white" height={22} width={22} />
@@ -339,7 +339,6 @@ export default function CheckOut() {
 
   function Addresses() {
     if (!addressListFetched) {
-      getAddress();
       return <p>Loading...</p>;
     } else {
       return (
@@ -354,14 +353,14 @@ export default function CheckOut() {
               <div key={index}>
                 <div
                   style={{
-                    width: '100%',
-                    display: 'flex',
-                    justifyContent: 'space-between',
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
                   }}
                 >
                   <input
                     style={{
-                      cursor: 'pointer',
+                      cursor: "pointer",
                     }}
                     type="radio"
                     name="address"
@@ -370,30 +369,30 @@ export default function CheckOut() {
                   />
                   <div
                     style={{
-                      width: '30%',
-                      display: 'flex',
-                      justifyContent: 'space-between',
+                      width: "30%",
+                      display: "flex",
+                      justifyContent: "space-between",
                       // flexDirection: 'row-reverse',
                     }}
                   >
                     <EditIcon
                       fontSize="small"
                       style={{
-                        cursor: 'pointer',
+                        cursor: "pointer",
                       }}
                       onClick={() => {
                         setData(address);
-                        setAddEditAddress('edit');
+                        setAddEditAddress("edit");
                       }}
                     />
                     <DeleteIcon
                       fontSize="small"
                       style={{
-                        cursor: 'pointer',
+                        cursor: "pointer",
                       }}
                       onClick={() => {
                         deleteAddress(address._id);
-                        setAddEditAddress('product');
+                        setAddEditAddress("product");
                       }}
                     />
                   </div>
@@ -402,7 +401,7 @@ export default function CheckOut() {
                 <div
                   style={{
                     paddingLeft: 20,
-                    borderBottom: '1px solid gray',
+                    borderBottom: "1px solid gray",
                     paddingBottom: 10,
                     marginBottom: 10,
                   }}
@@ -427,10 +426,10 @@ export default function CheckOut() {
               color="white"
               className="checkout-summary-add-address-btn"
               onClick={() => {
-                setAddEditAddress('add');
+                setAddEditAddress("add");
                 window.scrollTo({
                   top: 0,
-                  behavior: 'smooth',
+                  behavior: "smooth",
                 });
               }}
             >
@@ -464,7 +463,7 @@ export default function CheckOut() {
   }
 
   function AddressSubmitButton() {
-    if (addEditAddress === 'edit') {
+    if (addEditAddress === "edit") {
       return (
         <>
           <Ripples>
@@ -473,7 +472,7 @@ export default function CheckOut() {
                 editAddress();
                 window.scrollTo({
                   top: 0,
-                  behavior: 'smooth',
+                  behavior: "smooth",
                 });
               }}
             >
@@ -490,7 +489,7 @@ export default function CheckOut() {
               addAddress();
               window.scrollTo({
                 top: 0,
-                behavior: 'smooth',
+                behavior: "smooth",
               });
             }}
           >
@@ -537,7 +536,7 @@ export default function CheckOut() {
                 </div>
                 <DeleteIcon
                   style={{
-                    cursor: 'pointer',
+                    cursor: "pointer",
                   }}
                   onClick={() => addToCart(cart.product._id, -cart.quantity)}
                 />
@@ -555,7 +554,7 @@ export default function CheckOut() {
     }
   }
   function CheckoutProduct() {
-    if (addEditAddress === 'add' || addEditAddress === 'edit') {
+    if (addEditAddress === "add" || addEditAddress === "edit") {
       return (
         <>
           <div className="checkout-products">
@@ -564,9 +563,9 @@ export default function CheckOut() {
               <p
                 style={{
                   fontSize: 18,
-                  cursor: 'pointer',
+                  cursor: "pointer",
                 }}
-                onClick={() => setAddEditAddress('product')}
+                onClick={() => setAddEditAddress("product")}
               >
                 Cancel
               </p>
@@ -680,7 +679,7 @@ export default function CheckOut() {
                 <input
                   style={{
                     width: 20,
-                    cursor: 'pointer',
+                    cursor: "pointer",
                   }}
                   id="set_default"
                   type="checkbox"
@@ -714,63 +713,71 @@ export default function CheckOut() {
       );
     }
   }
-  if(cartList.length === 0){
-    return(
-      <div style={{
-        width: "100%",
-        height: "80vh",
-        // display: 'flex',
-        // flexDirection: 'column',
-        // justifyContent: 'center',
-        // alignItems: "center"
-      }}>
-        <span style={{
-          marginTop: "4rem",
-          fontSize: "2.2rem",
-          textAlign: "center",
-          width: '100%',
-          display: "block",
-          letterSpacing: '.1rem'
-        }}>Your Cart is Empty</span>
-  <br />
+  if (cartList.length === 0) {
+    return (
+      <div
+        style={{
+          width: "100%",
+          height: "80vh",
+          // display: 'flex',
+          // flexDirection: 'column',
+          // justifyContent: 'center',
+          // alignItems: "center"
+        }}
+      >
         <span
-        onClick={() => window.location = "/shop"}
-         style={{
-          fontSize: "1.4rem",
-          textAlign: "center",
-          width: '100%',
-          display: "block",
-          cursor: "pointer",
-          color: "gray"
-      
-        }}>Click here to Shop <ShoppingBasketIcon /></span>
-         
+          style={{
+            marginTop: "4rem",
+            fontSize: "2.2rem",
+            textAlign: "center",
+            width: "100%",
+            display: "block",
+            letterSpacing: ".1rem",
+          }}
+        >
+          Your Cart is Empty
+        </span>
+        <br />
+        <span
+          onClick={() => (window.location = "/shop")}
+          style={{
+            fontSize: "1.4rem",
+            textAlign: "center",
+            width: "100%",
+            display: "block",
+            cursor: "pointer",
+            color: "gray",
+          }}
+        >
+          Click here to Shop <ShoppingBasketIcon />
+        </span>
       </div>
-    )
-  }
-else
-  return (
-    <>
-    <div className="checkout-div">
-      {CheckoutProduct()}
-      <div className="checkout-summary">
-        <div className="checkout-summary-holder">
-          <div className="checkout-summary-heading">
-            <p>ORDER SUMMARY</p>
+    );
+  } else
+    return (
+      <>
+        <div className="checkout-div">
+          {CheckoutProduct()}
+          <div className="checkout-summary">
+            <div className="checkout-summary-holder">
+              <div className="checkout-summary-heading">
+                <p>ORDER SUMMARY</p>
+              </div>
+              {Addresses()}
+              <div className="checkout-summary-total">
+                <p>TOTAL COST</p>
+                <p>QTR {calculateTotal()}</p>
+              </div>
+              {GetCheckoutButton()}
+            </div>
           </div>
-          {Addresses()}
-          <div className="checkout-summary-total">
-            <p>TOTAL COST</p>
-            <p>QTR {calculateTotal()}</p>
-          </div>
-          {GetCheckoutButton()}
         </div>
-      </div>
-    </div>
-    <div style={{
-      width: "100%",
-      height: "50vh"
-    }}></div>
-    </>
-  );
+        <div
+          style={{
+            width: "100%",
+            height: "50vh",
+          }}
+        ></div>
+      </>
+    );
 }

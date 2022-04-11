@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import './Category.css';
-import { useParams, Link } from 'react-router-dom';
-import Rating from '@mui/material/Rating';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+import React, { useState, useEffect } from "react";
+import "./Category.css";
+import { useParams, Link } from "react-router-dom";
+import Rating from "@mui/material/Rating";
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
 
-import { Loading } from '../../GlobalState';
+import { Loading } from "../../GlobalState";
 
 export default function Category() {
-  const [, setPageLoading] = React.useContext(Loading)
+  const [, setPageLoading] = React.useContext(Loading);
   useEffect(() => {
+    getCategory();
     window.scrollTo(0, 0);
   }, []);
   const { categoryId } = useParams();
@@ -20,32 +21,30 @@ export default function Category() {
 
   const getCategory = async (quaryString, list) => {
     try {
-      setPageLoading(true)
+      setPageLoading(true);
       const response = await fetch(
         `${global.api}/client/category/${categoryId}`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
       const res = JSON.parse(await response.text());
-      if (res.status === 'success') {
+      if (res.status === "success") {
         setCategory(res.data);
         setProductList(res.data.products);
         // console.log(res.data);
-        setPageLoading(false)
-
+        setPageLoading(false);
       }
     } catch (error) {
       setCategory([]);
-      setPageLoading(false)
+      setPageLoading(false);
     }
     setLoading(false);
   };
   if (loading) {
-    getCategory();
     setLoading(false);
   }
   return (
@@ -60,7 +59,7 @@ export default function Category() {
             <div className="category-page-holder" key={index}>
               <Link
                 to={`/product/${product._id}`}
-                style={{ textDecoration: 'none' }}
+                style={{ textDecoration: "none" }}
               >
                 <div className="category-page-img">
                   <img
@@ -74,7 +73,7 @@ export default function Category() {
                     alt=""
                   />
                 </div>
-           
+
                 <div className="category-page-detail">
                   <p>{product.name.toUpperCase()}</p>
                   <div className="category-page-price">
@@ -98,10 +97,12 @@ export default function Category() {
           ))}
         </div>
       </div>
-      <div style={{
-        width:"100%",
-        height: '40vh'
-      }}></div>
+      <div
+        style={{
+          width: "100%",
+          height: "40vh",
+        }}
+      ></div>
       <Footer />
     </>
   );
