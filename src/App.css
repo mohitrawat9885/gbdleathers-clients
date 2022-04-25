@@ -29,9 +29,11 @@ body::-webkit-scrollbar-thumb {
 
 a {
   -webkit-tap-highlight-color: transparent !important;
- 
 }
 
-a:hover{
+a:hover {
   color: inherit;
+}
+.lock-screen {
+  overflow: hidden;
 }

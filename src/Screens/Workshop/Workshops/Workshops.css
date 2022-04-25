@@ -1,0 +1,110 @@
+.workshops-div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.workshops-page {
+  width: 95%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+.workshops-holder {
+  margin-bottom: 3rem;
+  padding: 1rem;
+  cursor: pointer;
+}
+.workshops-img {
+  width: 20rem;
+  height: 20rem;
+}
+.workshops-detail {
+  padding: 0.3rem;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.workshops-name {
+  font-size: 1.3rem;
+  color: rgb(48, 47, 47);
+}
+
+.workshops-d {
+  font-size: 0.8rem;
+  color: gray;
+  text-align: center;
+}
+.workshops-register-btn {
+  width: 100%;
+  margin: 0.4rem;
+}
+.workshops-register-btn button {
+  width: 100%;
+  border: none;
+  padding: 0.3rem;
+  background-color: rgb(223, 223, 223);
+  color: gray;
+  border: 1px solid rgb(233, 230, 230);
+}
+
+.workshops-popup {
+  position: fixed;
+  top: 0;
+  z-index: 50;
+  background-color: rgba(0, 0, 0, 0.316);
+  width: 100%;
+  height: 100vh;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.workshop-popup-page {
+  display: flex;
+  width: 20rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+  padding: 1rem;
+}
+.open-popup {
+  display: flex;
+}
+
+.workshops-register-heading p {
+  font-size: 1.4rem;
+  color: rgb(62, 47, 47);
+  text-align: center;
+  padding: 0.4rem;
+  margin-bottom: 0.8rem;
+}
+
+.workshops-register-detail {
+  display: block;
+  width: 100%;
+}
+.workshops-register-detail input {
+  padding: 0.2rem;
+  font-size: 14px;
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.workshops-register-submit {
+  width: 100%;
+}
+.workshops-register-submit button {
+  width: 100%;
+  border: none;
+  padding: 0.4rem;
+  margin-top: 1.4rem;
+  margin-bottom: 1rem;
+  color: white;
+  background-color: rgb(245, 121, 20);
+}

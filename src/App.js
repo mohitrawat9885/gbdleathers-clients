@@ -14,6 +14,8 @@ import ResetPassword from "./Screens/Authentication/Login/ResetPassword";
 import MyAccount from "./Screens/MyAccount/MyAccount";
 import ContactUs from "./Screens/ContactUs/ContactUs";
 import CheckOut from "./Screens/CheckOut/CheckOut";
+// import Workshop from "./Screens/Workshop/Workshop/Workshop";
+import Workshops from "./Screens/Workshop/Workshops/Workshops";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Shop from "./Screens/Shop/Shop";
 import GlobalState, { Loading } from "./GlobalState";
@@ -157,6 +159,26 @@ function App() {
                     </>
                   }
                 />
+                <Route
+                  path="/workshops/:type"
+                  element={
+                    <>
+                      <Header />
+                      <Workshops />
+                      <Footer />
+                    </>
+                  }
+                />
+                {/* <Route
+                  path="/workshop/:id"
+                  element={
+                    <>
+                      <Header />
+                      <Workshop />
+                      <Footer />
+                    </>
+                  }
+                /> */}
               </Routes>
             </Router>
           </Provider>

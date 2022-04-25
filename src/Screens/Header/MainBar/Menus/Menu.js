@@ -114,22 +114,22 @@ export default function Menu() {
               </Link>
             </li>
 
-            {/* <li className="nav-text">
-              <Link to="/up-coming-workshops">
-                <span>UP COMING WORKSHOPS</span>
+            <li className="nav-text">
+              <Link to="/workshops/upcoming">
+                <span>UPCOMING WORKSHOPS</span>
               </Link>
             </li>
             <li className="nav-text">
-              <Link to="/previous-workshops">
+              <Link to="/workshops/previous">
                 <span>PREVIOUS WORKSHOPS</span>
               </Link>
             </li>
             <li className="nav-text">
-              <Link to="/all-workshops">
+              <Link to="/workshops/all">
                 <span>ALL WORKSHOPS</span>
               </Link>
             </li>
-            <li className="nav-text">
+            {/* <li className="nav-text">
               <Link to="/product-suggestion">
                 <span>PRODUCT SUGGESTION</span>
               </Link>
