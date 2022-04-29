@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import WorkshopCalendar from "../WorkshopCalendar/WorkshopCalendar";
 import "./Workshops.css";
 import { Loading } from "../../../GlobalState";
 import { useAlert } from "react-alert";
@@ -65,6 +66,9 @@ export default function Workshops() {
       const res = JSON.parse(await response.text());
       if (res.status === "success") {
         handleRegister();
+        setName("");
+        setEmail("");
+        setNumber("");
         alert.success("Thanks for Registering in this Workshop.");
       } else {
         alert.error("Please Register Again!");
@@ -115,6 +119,7 @@ export default function Workshops() {
   }
   return (
     <>
+      <WorkshopCalendar />
       <div className="workshops-div">
         <div className="workshops-page">
           {workshops?.map((workshop, i) => (
@@ -206,19 +211,10 @@ export default function Workshops() {
               type="text"
               id="fname"
               name="fname"
+              value={name}
               onChange={(event) => setName(event.target.value)}
             />
           </div>
-          {/* <div className="workshops-register-detail">
-              <label htmlFor="lname">LAST NAME</label>
-              <br />
-              <input
-                type="text"
-                id="lname"
-                name="lname"
-                // onChange={(event) => setLastName(event.target.value)}
-              />
-            </div> */}
           <div className="workshops-register-detail">
             <label htmlFor="email">E-Mail</label>
             <br />
@@ -226,6 +222,7 @@ export default function Workshops() {
               type="text"
               id="email"
               name="email"
+              value={email}
               onChange={(event) => setEmail(event.target.value)}
             />
           </div>
@@ -236,6 +233,7 @@ export default function Workshops() {
               type="text  "
               id="number"
               name="number"
+              value={number}
               onChange={(event) => setNumber(event.target.value)}
             />
           </div>

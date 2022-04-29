@@ -1,0 +1,232 @@
+[
+  {
+    "_id": "6266b71754f73b5225c0f9ef",
+    "user": "61e5283ed5e6bb7202dc8fe6",
+    "name": "workahop 12",
+    "banner": "workshop-banner-1650898711336-61e5283ed5e6bb7202dc8fe6-1650898711336.jpeg",
+    "images": [],
+    "active": true,
+    "price": 900,
+    "limit": 400,
+    "days": [
+      {
+        "start": "2022-04-15T14:58:04.434Z",
+        "end": "2022-04-15T14:58:04.434Z"
+      }
+    ],
+    "start": "2022-04-15T14:58:04.434Z",
+    "end": "2022-04-15T14:58:04.434Z",
+    "created_at": "2022-04-25T14:58:31.417Z",
+    "updated_at": "2022-04-25T14:58:31.417Z",
+    "slug": "workahop-12",
+    "id": "6266b71754f73b5225c0f9ef"
+  },
+  {
+    "_id": "6266b6fa54f73b5225c0f9ec",
+    "user": "61e5283ed5e6bb7202dc8fe6",
+    "name": "workshop 11",
+    "banner": "workshop-banner-1650898682866-61e5283ed5e6bb7202dc8fe6-1650898682866.jpeg",
+    "images": [],
+    "active": true,
+    "price": 400,
+    "limit": 50,
+    "days": [
+      {
+        "start": "2022-04-10T14:57:37.861Z",
+        "end": "2022-04-10T14:57:37.861Z"
+      }
+    ],
+    "start": "2022-04-10T14:57:37.861Z",
+    "end": "2022-04-10T14:57:37.861Z",
+    "created_at": "2022-04-25T14:58:02.949Z",
+    "updated_at": "2022-04-25T14:58:02.949Z",
+    "slug": "workshop-11",
+    "id": "6266b6fa54f73b5225c0f9ec"
+  },
+  {
+    "_id": "6266b6ca54f73b5225c0f9e5",
+    "user": "61e5283ed5e6bb7202dc8fe6",
+    "name": "workshop 10",
+    "banner": "workshop-banner-1650898634734-61e5283ed5e6bb7202dc8fe6-1650898634734.jpeg",
+    "images": [],
+    "active": true,
+    "price": 700,
+    "limit": 20,
+    "days": [
+      {
+        "start": "2022-04-27T14:56:50.848Z",
+        "end": "2022-04-27T14:56:50.848Z"
+      }
+    ],
+    "start": "2022-04-27T14:56:50.848Z",
+    "end": "2022-04-27T14:56:50.848Z",
+    "created_at": "2022-04-25T14:57:14.807Z",
+    "updated_at": "2022-04-25T14:57:14.807Z",
+    "slug": "workshop-10",
+    "id": "6266b6ca54f73b5225c0f9e5"
+  },
+  {
+    "_id": "6266b68a54f73b5225c0f9da",
+    "user": "61e5283ed5e6bb7202dc8fe6",
+    "name": "Workshop 8",
+    "banner": "workshop-banner-1650898570852-61e5283ed5e6bb7202dc8fe6-1650898570852.jpeg",
+    "images": [],
+    "active": true,
+    "price": 90,
+    "limit": 700,
+    "days": [
+      {
+        "start": "2022-04-10T14:55:35.492Z",
+        "end": "2022-04-10T14:55:35.492Z"
+      }
+    ],
+    "start": "2022-04-10T14:55:35.492Z",
+    "end": "2022-04-10T14:55:35.492Z",
+    "created_at": "2022-04-25T14:56:10.930Z",
+    "updated_at": "2022-04-25T14:56:10.930Z",
+    "slug": "workshop-8",
+    "id": "6266b68a54f73b5225c0f9da"
+  },
+  {
+    "_id": "6266b66554f73b5225c0f9d7",
+    "user": "61e5283ed5e6bb7202dc8fe6",
+    "name": "workshop 6",
+    "banner": "workshop-banner-1650898533755-61e5283ed5e6bb7202dc8fe6-1650898533755.jpeg",
+    "images": [],
+    "active": true,
+    "price": 90,
+    "limit": 40,
+    "days": [
+      {
+        "start": "2022-05-05T14:55:07.373Z",
+        "end": "2022-05-05T14:55:07.373Z"
+      }
+    ],
+    "start": "2022-05-05T14:55:07.373Z",
+    "end": "2022-05-05T14:55:07.373Z",
+    "created_at": "2022-04-25T14:55:33.944Z",
+    "updated_at": "2022-04-25T14:55:33.945Z",
+    "slug": "workshop-6",
+    "id": "6266b66554f73b5225c0f9d7"
+  },
+  {
+    "_id": "6266b62054f73b5225c0f9b7",
+    "user": "61e5283ed5e6bb7202dc8fe6",
+    "name": "workshop 5",
+    "banner": "workshop-banner-1650898464826-61e5283ed5e6bb7202dc8fe6-1650898464827.jpeg",
+    "images": [],
+    "active": true,
+    "price": 40,
+    "limit": 20,
+    "days": [
+      {
+        "start": "2022-04-30T14:53:53.221Z",
+        "end": "2022-04-30T14:53:53.221Z"
+      }
+    ],
+    "start": "2022-04-30T14:53:53.221Z",
+    "end": "2022-04-30T14:53:53.221Z",
+    "created_at": "2022-04-25T14:54:24.906Z",
+    "updated_at": "2022-04-25T14:54:24.906Z",
+    "slug": "workshop-5",
+    "id": "6266b62054f73b5225c0f9b7"
+  },
+  {
+    "_id": "6266b5ef54f73b5225c0f9ac",
+    "user": "61e5283ed5e6bb7202dc8fe6",
+    "name": "workshop 4",
+    "banner": "workshop-banner-1650898414999-61e5283ed5e6bb7202dc8fe6-1650898415000.jpeg",
+    "images": [],
+    "active": true,
+    "price": 90,
+    "limit": 60,
+    "days": [
+      {
+        "start": "2022-04-25T14:52:59.902Z",
+        "end": "2022-04-25T14:52:59.902Z"
+      }
+    ],
+    "start": "2022-04-25T14:52:59.902Z",
+    "end": "2022-04-25T14:52:59.902Z",
+    "created_at": "2022-04-25T14:53:35.087Z",
+    "updated_at": "2022-04-25T14:53:35.087Z",
+    "slug": "workshop-4",
+    "id": "6266b5ef54f73b5225c0f9ac"
+  },
+  {
+    "_id": "62663b71f9010bb22de02135",
+    "user": "61e5283ed5e6bb7202dc8fe6",
+    "name": "Workshop previous-1",
+    "summary": "summary",
+    "banner": "workshop-banner-1650867057350-61e5283ed5e6bb7202dc8fe6-1650867057350.jpeg",
+    "images": [],
+    "active": true,
+    "price": 60,
+    "limit": 600,
+    "days": [
+      {
+        "start": "2022-04-20T06:09:51.287Z",
+        "end": "2022-04-19T18:30:51.287Z"
+      }
+    ],
+    "start": "2022-04-20T06:09:51.287Z",
+    "end": "2022-04-19T18:30:51.287Z",
+    "location": "location",
+    "created_at": "2022-04-25T06:10:57.400Z",
+    "updated_at": "2022-04-25T06:10:57.400Z",
+    "slug": "workshop-previous-1",
+    "id": "62663b71f9010bb22de02135"
+  },
+  {
+    "_id": "6266234e4ac154426c6f22c3",
+    "user": "61e5283ed5e6bb7202dc8fe6",
+    "name": "Workshop 2",
+    "summary": "summary",
+    "banner": "workshop-banner-1650860878230-61e5283ed5e6bb7202dc8fe6-1650860878230.jpeg",
+    "images": [],
+    "active": true,
+    "price": 400,
+    "limit": 70,
+    "days": [
+      {
+        "start": "2022-05-01T04:26:56.016Z",
+        "end": "2022-05-01T04:26:56.016Z"
+      },
+      {
+        "start": "2022-05-02T04:27:22.970Z",
+        "end": "2022-05-02T04:27:22.970Z"
+      }
+    ],
+    "start": "2022-05-01T04:26:56.016Z",
+    "end": "2022-05-02T04:27:22.970Z",
+    "location": "Najibabad",
+    "created_at": "2022-04-25T04:27:58.281Z",
+    "updated_at": "2022-04-25T04:27:58.281Z",
+    "slug": "workshop-2",
+    "id": "6266234e4ac154426c6f22c3"
+  },
+  {
+    "_id": "626622c34ac154426c6f22bc",
+    "user": "61e5283ed5e6bb7202dc8fe6",
+    "name": "Workshop 1",
+    "summary": "SUMMARY",
+    "banner": "workshop-banner-1650860739375-61e5283ed5e6bb7202dc8fe6-1650860739375.jpeg",
+    "images": [],
+    "active": true,
+    "price": 900,
+    "limit": 40,
+    "days": [
+      {
+        "start": "2022-04-28T04:24:35.272Z",
+        "end": "2022-04-28T04:24:35.272Z"
+      }
+    ],
+    "start": "2022-04-28T04:24:35.272Z",
+    "end": "2022-04-28T04:24:35.272Z",
+    "location": "Najibabad",
+    "created_at": "2022-04-25T04:25:39.423Z",
+    "updated_at": "2022-04-25T04:25:39.423Z",
+    "slug": "workshop-1",
+    "id": "626622c34ac154426c6f22bc"
+  }
+]

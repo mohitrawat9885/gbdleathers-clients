@@ -1,42 +1,24 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./Product.css";
-// import ImageGallery from 'react-image-gallery';
-// import 'react-image-gallery/styles/css/image-gallery.css';
 import { useParams, Link } from "react-router-dom";
 import ReactLoading from "react-loading";
-// import Button from '@mui/material/Button';
-
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-// import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import Ripple from "react-ripples";
-// import Typography from "@mui/material/Typography";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import ImageGallery from "react-image-gallery";
-// import SideExample from './ProductImages/ReactImageMagnify';
 import Zoom from "react-medium-image-zoom";
 
 import "react-image-gallery/styles/css/image-gallery.css";
 
 import { useAlert } from "react-alert";
-
-// import MyImageGallery from './ProductImages/ImageGallary';
-
-// import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
-
 import "react-medium-image-zoom/dist/styles.css";
 
 import GlobalState from "../../GlobalState";
-
-// import Reviews from './Reviews/Reviews';
-
 import { Loading } from "../../GlobalState";
 
 import "./Reviews/Reviews.css";
-
-// import Dropzone from "react-dropzone-uploader";
-// import { getDroppedOrSelectedFiles } from "html5-file-selector";
 
 export default function Product() {
   const [, setPageLoading] = React.useContext(Loading);
@@ -243,10 +225,6 @@ export default function Product() {
         alert.error(res.message);
         // setPageLoading(false)
       }
-      // for (let x in prd.properties) {
-      //   document.getElementById(`${x}`).value = prd.properties[x];
-      //   // console.log('Key = ', x, ' Value = ', prd.properties[x]);
-      // }
     } catch (error) {
       // setPageLoading(false)
       // console.log('ERRPR VARIANT', error);
