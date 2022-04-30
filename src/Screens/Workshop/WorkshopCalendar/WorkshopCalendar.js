@@ -74,7 +74,18 @@ export default function WorkshopCalendar() {
   };
   useEffect(() => {
     getAllWorkshop();
+    document
+      .querySelector(".fc-daygrid-day")
+      .addEventListener("click", function () {
+        console.log("Event");
+      });
   }, []);
+  // var d = document.querySelectorAll(".fc-daygrid-day");
+  // // d.className += " ripple";
+  // for (let i = 0; i < d.length; i++) {
+  //   d[i].className += " ripple";
+  //   console.log(d[i].classList);
+  // }
 
   const registerWorkshop = async () => {
     try {
@@ -129,7 +140,7 @@ export default function WorkshopCalendar() {
     } else {
       setDateWorkshops([]);
     }
-    console.log(workshopList[index]);
+    // console.log(workshopList[index]);
   }
   function getDateTime(d, op) {
     const date = new Date(d);
