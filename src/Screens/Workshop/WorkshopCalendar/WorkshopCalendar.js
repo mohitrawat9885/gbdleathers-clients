@@ -252,7 +252,12 @@ export default function WorkshopCalendar() {
               ))}
             </div>
             <div className="calendar-workshops-register-btn">
-              <button onClick={() => handleRegister(workshop)}>Register</button>
+              <button
+                className="ripple"
+                onClick={() => handleRegister(workshop)}
+              >
+                Register
+              </button>
             </div>
           </div>
         ))}
@@ -349,7 +354,9 @@ export default function WorkshopCalendar() {
             />
           </div>
           <div className="workshops-register-submit">
-            <button onClick={registerWorkshop}>Register</button>
+            <button className="ripple" onClick={registerWorkshop}>
+              Register
+            </button>
           </div>
         </div>
       </div>
