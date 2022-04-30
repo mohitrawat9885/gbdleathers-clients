@@ -16,7 +16,7 @@ export default function Header() {
         <div className="all-page-loading">
           <ReactLoading
             type="spin"
-            color="rgb(253, 80, 30)"
+            color="rgb(253, 110, 110)"
             height={45}
             width={45}
           />

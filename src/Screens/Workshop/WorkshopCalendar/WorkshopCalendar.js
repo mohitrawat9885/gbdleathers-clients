@@ -10,6 +10,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
 import "./WorkshopCalendar.css";
+import "./CalendarCustom.css";
 
 // import "@fullcalendar/core/main.css";
 import "@fullcalendar/daygrid/main.css";
@@ -109,7 +110,7 @@ export default function WorkshopCalendar() {
     // setLoading(false);
   };
   function handleRegister(workshop) {
-    document.getElementById("workshops-popup").classList.toggle("open-popup");
+    document.getElementById("workshops-popup-1").classList.toggle("open-popup");
     document.body.classList.toggle("lock-screen");
     setRegWorkshop(() => {
       let nw = { name: "", id: "" };
@@ -167,15 +168,32 @@ export default function WorkshopCalendar() {
   function getWorkshopBanner() {
     if (dateWorkshops.length === 0) {
       return (
-        <div className="shop-calendar-details">
-          <p>No Workshops found</p>
+        <div
+          className="shop-calendar-details"
+          style={{
+            width: "100%",
+            // height: "70vh  ",
+            border: "1px solid",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: "1.2rem",
+            color: "gray",
+            borderColor: "lightgray",
+          }}
+        >
+          <p>No Workshop on this date</p>
         </div>
       );
     }
     return (
       <>
         {dateWorkshops.map((workshop, index) => (
-          <div key={index}>
+          <div
+            key={index}
+            style={{
+              marginBottom: "4rem",
+            }}
+          >
             <Zoom>
               <img src={`${global.image_path}${workshop.banner}`} alt="" />
             </Zoom>
@@ -187,12 +205,14 @@ export default function WorkshopCalendar() {
                 <div
                   key={index}
                   style={{
+                    // width: "100%",
                     display: "flex",
                     flexDirection: "row",
                     alignItems: "center",
                     justifyContent: "space-between",
                     // border: "1px solid red",
-                    width: "90%",
+                    width: "100%",
+                    marginBottom: "1rem",
                     // marginTop: ".3rem"
                   }}
                 >
@@ -220,7 +240,7 @@ export default function WorkshopCalendar() {
                 </div>
               ))}
             </div>
-            <div className="workshops-register-btn">
+            <div className="calendar-workshops-register-btn">
               <button onClick={() => handleRegister(workshop)}>Register</button>
             </div>
           </div>
@@ -254,18 +274,7 @@ export default function WorkshopCalendar() {
             }))}
             dateClick={(e) => setWorkshopByDate(e.date)}
             eventClick={(e) => setWorkshopByDate(e.event.start)}
-            // height=
           />
-          {/* <Calendar
-            // dateClick={() => alert("k")}
-            localizer={localizer}
-            events={myEvents}
-            startAccessor="start"
-            endAccessor="end"
-            style={{ height: 500 }}
-            onSelectEvent={(e) => console.log(e.message)}
-            onSelecting={() => console.log("h")}
-          /> */}
         </div>
         <div className="shop-calendar-detail">
           <div className="shop-calendar-date">
@@ -274,7 +283,7 @@ export default function WorkshopCalendar() {
           {getWorkshopBanner()}
         </div>
       </div>
-      <div id="workshops-popup" className="workshops-popup">
+      <div id="workshops-popup-1" className="workshops-popup">
         <div className="workshop-popup-page">
           <div
             style={{
@@ -283,7 +292,6 @@ export default function WorkshopCalendar() {
           >
             <span
               style={{
-                // position: "relative",
                 float: "right",
                 cursor: "pointer",
               }}

@@ -5,6 +5,7 @@ import "./Workshops.css";
 import { Loading } from "../../../GlobalState";
 import { useAlert } from "react-alert";
 
+import Zoom from "react-medium-image-zoom";
 export default function Workshops() {
   const { type } = useParams();
   const alert = useAlert();
@@ -124,12 +125,14 @@ export default function Workshops() {
         <div className="workshops-page">
           {workshops?.map((workshop, i) => (
             <div className="workshops-holder" key={i}>
-              <div className="workshops-img img-wrapper">
-                <img
-                  className="hover-zoom"
-                  src={`${global.image_path}${workshop.banner}`}
-                  alt=""
-                />
+              <div className="workshops-img">
+                <Zoom>
+                  <img
+                    // className="hover-zoom"
+                    src={`${global.image_path}${workshop.banner}`}
+                    alt=""
+                  />
+                </Zoom>
               </div>
               <div className="workshops-detail">
                 <span className="workshops-name">{workshop.name}</span>

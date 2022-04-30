@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
-import Categorys from './Categorys/Categorys';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+import React, { useEffect } from "react";
+import Categorys from "./Categorys/Categorys";
+import Header from "../Header/Header";
+import WorkshopCalendar from "../Workshop/WorkshopCalendar/WorkshopCalendar";
+import Footer from "../Footer/Footer";
 
 export default function Home() {
   useEffect(() => {
@@ -10,6 +11,7 @@ export default function Home() {
   return (
     <>
       <Header />
+      <WorkshopCalendar />
       <Categorys />
       <Footer />
     </>
