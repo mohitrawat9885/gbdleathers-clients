@@ -76,7 +76,7 @@ export default function WorkshopCalendar() {
     try {
       setPageLoading(true);
       const response = await fetch(
-        `${global.api}/client/workshop/upcoming?limit=1&sort=-start`,
+        `${global.api}/client/workshop/upcoming?limit=1&sort=start`,
         {
           method: "GET",
           headers: {
