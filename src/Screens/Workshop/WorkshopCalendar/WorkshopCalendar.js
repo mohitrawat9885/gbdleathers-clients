@@ -72,13 +72,34 @@ export default function WorkshopCalendar() {
     }
     // setLoading(false);
   };
+  const setComingWorkshop = async () => {
+    try {
+      setPageLoading(true);
+      const response = await fetch(
+        `${global.api}/client/workshop/upcoming?limit=1&sort=-start`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const res = JSON.parse(await response.text());
+      if (res.status === "success") {
+        console.log(res.data);
+        setTodayDate(new Date(res.data[0].start));
+        setDateWorkshops(res.data);
+      }
+      setPageLoading(false);
+    } catch (error) {
+      setPageLoading(false);
+      // console.log(error);
+    }
+    // setLoading(false);
+  };
   useEffect(() => {
     getAllWorkshop();
-    document
-      .querySelector(".fc-daygrid-day")
-      .addEventListener("click", function () {
-        console.log("Event");
-      });
+    setComingWorkshop();
   }, []);
   // var d = document.querySelectorAll(".fc-daygrid-day");
   // // d.className += " ripple";
@@ -142,7 +163,7 @@ export default function WorkshopCalendar() {
     }
     // console.log(workshopList[index]);
   }
-  function getDateTime(d, op) {
+  function getDateTime(d, op, fm) {
     const date = new Date(d);
     if (op === "time") {
       let hours = date.getHours();
@@ -158,21 +179,39 @@ export default function WorkshopCalendar() {
       if (date.getDate() < 10) {
         _date = `${"0" + date.getDate()}`;
       } else _date = date.getDate();
+      let months = [];
+      if (fm) {
+        months = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+      } else {
+        months = [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ];
+      }
 
-      let months = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ];
       return `${_date}-${months[date.getMonth()]}-${date.getFullYear()}`;
     }
   }
@@ -211,7 +250,7 @@ export default function WorkshopCalendar() {
             <div className="shop-calendar-details">
               <span className="shop-workshops-name">{workshop?.name}</span>
               <span className="shop-workshops-d">{workshop?.location}</span>
-              <span className="shop-workshops-d">QTR:- {workshop?.price}</span>
+              <span className="shop-workshops-d">QTR: {workshop?.price}</span>
               {workshop?.days.map((day, index) => (
                 <div
                   key={index}
@@ -294,7 +333,9 @@ export default function WorkshopCalendar() {
         </div>
         <div className="shop-calendar-detail">
           <div className="shop-calendar-date">
-            <p className="shop-calendar-d">{todayDate.toDateString()}</p>
+            <p className="shop-calendar-d">
+              {getDateTime(todayDate, "date", true)}
+            </p>
           </div>
           {getWorkshopBanner()}
         </div>
