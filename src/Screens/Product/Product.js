@@ -20,6 +20,8 @@ import { Loading } from "../../GlobalState";
 
 import "./Reviews/Reviews.css";
 
+import RippleIndicator from "./RippleIndicator/RippleIndicator";
+
 export default function Product() {
   const [, setPageLoading] = React.useContext(Loading);
   const alert = useAlert();
@@ -93,7 +95,6 @@ export default function Product() {
         if (catId) {
           getCategory(res.data.category?._id);
         }
-
         setImages(res.data.images);
         const myVariants = res.data.variants;
         // console.log(myVariants);
@@ -144,14 +145,14 @@ export default function Product() {
     }
   };
   useEffect(() => {
-    setLoading(true);
-  }, []);
-
-  if (loading) {
     getProduct();
+  }, [productId]);
 
-    setLoading(false);
-  }
+  // if (loading) {
+  //   getProduct();
+
+  //   setLoading(false);
+  // }
 
   const getVariants = async () => {
     try {
@@ -261,7 +262,6 @@ export default function Product() {
         };
         single_properties.push(proObj2);
       }
-
       // console.log(single_properties)
       setAddToCartLoading(true);
       const response = await fetch(`/api/v1/gbdleathers/client/customer/cart`, {
@@ -994,11 +994,10 @@ export default function Product() {
             <ShowProperties />
           </div>
           <div className="product-detail-indicators">
-            <FiberManualRecordIcon style={{ color: "green" }} />
+            <RippleIndicator stock={product.stock} />
             <p>{product.stock} Stock</p>
           </div>
           {AddToCartButton()}
-
           <div className="product-detail-description">
             <h5>Summary:-</h5>
             <br />
