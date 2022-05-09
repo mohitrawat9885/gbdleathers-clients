@@ -145,14 +145,14 @@ export default function Product() {
     }
   };
   useEffect(() => {
+    setLoading(true);
+  }, []);
+
+  if (loading) {
     getProduct();
-  }, [productId]);
 
-  // if (loading) {
-  //   getProduct();
-
-  //   setLoading(false);
-  // }
+    setLoading(false);
+  }
 
   const getVariants = async () => {
     try {
