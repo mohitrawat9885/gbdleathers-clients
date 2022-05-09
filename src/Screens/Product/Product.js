@@ -1018,7 +1018,6 @@ export default function Product() {
           height: "30vh",
         }}
       ></div>
-      <Footer />
     </>
   );
 }
