@@ -1,60 +1,15 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import "./Product.css";
-import { useParams, Link } from "react-router-dom";
-import ReactLoading from "react-loading";
 import Header from "../Header/Header";
+import ProductDisplay from "./ProductDisplay/ProductDisplay";
+import ReviewDisplay from "./ReviewDisplay/ReviewDisplay";
+import CategoryDisplay from "./CategoryDisplay/CategoryDisplay";
 import Footer from "../Footer/Footer";
-import Rating from "@mui/material/Rating";
-import Ripple from "react-ripples";
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import ImageGallery from "react-image-gallery";
-import Zoom from "react-medium-image-zoom";
-
-import "react-image-gallery/styles/css/image-gallery.css";
-
-import { useAlert } from "react-alert";
-import "react-medium-image-zoom/dist/styles.css";
-
-import GlobalState from "../../GlobalState";
-import { Loading } from "../../GlobalState";
-
-import "./Reviews/Reviews.css";
-
-import RippleIndicator from "./RippleIndicator/RippleIndicator";
 
 export default function Product() {
-  const [, setPageLoading] = React.useContext(Loading);
-  const alert = useAlert();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  // const [reviewImages, setReviewImages] = useState([]);
-  const [reviewImages, setReviewImages] = useState([]);
-  const [reviewImagesLoading, setReviewImagesLoading] = useState(false);
-  const [reviewSubmitButtonLoading, setReviewSubmitButtonLoading] =
-    useState(false);
-
-  const [rating, setRating] = useState();
-  const [review, setReview] = useState();
-  const [reviewList, setReviewList] = useState([]);
-  const [reviewListLoading, setReviewListLoading] = useState(true);
-  // const [myreview, setMyReview] = useState('nodata');
-  const [myReview, setMyReview] = useState(undefined);
-  const [myReviewLoading, setMyReviewLoading] = useState(true);
-
-  // const { addItemToList } = useContext(GlobalContext);
-  const [, setCartMenu] = useContext(GlobalState);
-
-  const [parentProduct, setParentProduct] = useState({});
-  const [product, setProduct] = useState({});
-  const [images, setImages] = useState([{ image: "" }]);
-  const [loading, setLoading] = useState(true);
-  const [variantsList, setVariantList] = useState([]);
-  // const [variantsSelected, setVariantsSelected] = useState();
-
-  const [productList, setProductList] = useState([]);
+  const [productVariantId, setProductVariantId] = useState();
   const [categoryId, setCategoryId] = useState();
+<<<<<<< HEAD
   const [productListLoading, setProductListLoading] = useState(false);
 
   const [addToCartLoading, setAddToCartLoading] = useState(false);
@@ -949,75 +904,17 @@ export default function Product() {
   if (loading) {
     return <Header />;
   }
+=======
+>>>>>>> slave
   return (
     <>
       <Header />
-      <div className="product-body">
-        <div className="product-gallery">
-          <ImageGallery
-            items={images.map((img, index) => ({
-              original: `${global.image_path}/${img}`,
-              thumbnail: `${global.image_path}/${img}`,
-            }))}
-            {...properties}
-          />
-        </div>
-        <div className="product-details-section">
-          <div className="product-detail-heading">
-            <p>{product.name?.toUpperCase()}</p>
-          </div>
-          <div className="product-detail-price">
-            <p>QR {product.price} </p>
-            <div className="product-detail-rating">
-              <Rating
-                className="product-detail-rating-rate"
-                name="simple-controlled"
-                precision={0.5}
-                value={parseFloat(product.ratingsAverage)}
-                size="small"
-                style={{
-                  paddingLeft: "0.7rem",
-                }}
-                readOnly
-              />
-              <p>{product.ratingsQuantity} reviews</p>
-            </div>
-          </div>
-          <div
-            style={{
-              width: "70%",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <ShowVariants />
-            <ShowProperties />
-          </div>
-          <div className="product-detail-indicators">
-            <RippleIndicator stock={product.stock} />
-            <p>{product.stock} Stock</p>
-          </div>
-          {AddToCartButton()}
-          <div className="product-detail-description">
-            <h5>Summary:-</h5>
-            <br />
-            <p>{product.summary}</p>
-          </div>
-          <div className="product-detail-description">
-            <h5>Description:-</h5>
-            <br />
-            <p>{product.description}</p>
-          </div>
-        </div>
-      </div>
-      {GetProductsWithSamecategory()}
-      {Reviews(product.ratingsQuantity, product.ratingsAverage)}
-      <div
-        style={{
-          width: "100%",
-          height: "30vh",
-        }}
-      ></div>
+      <ProductDisplay
+        setProductVariantId={setProductVariantId}
+        setCategoryId={setCategoryId}
+      />
+      <CategoryDisplay categoryId={categoryId} />
+      <ReviewDisplay productVariantId={productVariantId} />
       <Footer />
     </>
   );

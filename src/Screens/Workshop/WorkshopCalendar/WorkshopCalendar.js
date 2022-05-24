@@ -1,7 +1,7 @@
 // import { Calendar, momentLocalizer } from "react-big-calendar";
 // import moment from "moment";
 // import "react-big-calendar/lib/css/react-big-calendar.css";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import "./WorkshopCalendar.css";
 import Zoom from "react-medium-image-zoom";
 import FullCalendar from "@fullcalendar/react";
@@ -86,7 +86,7 @@ export default function WorkshopCalendar() {
       );
       const res = JSON.parse(await response.text());
       if (res.status === "success") {
-        console.log(res.data);
+        // console.log(res.data);
         setTodayDate(new Date(res.data[0].start));
         setDateWorkshops(res.data);
       }
@@ -100,6 +100,7 @@ export default function WorkshopCalendar() {
   useEffect(() => {
     getAllWorkshop();
     setComingWorkshop();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // var d = document.querySelectorAll(".fc-daygrid-day");
   // // d.className += " ripple";
@@ -137,7 +138,7 @@ export default function WorkshopCalendar() {
       setPageLoading(false);
     } catch (error) {
       setPageLoading(false);
-      console.log(error);
+      // console.log(error);
     }
     // setLoading(false);
   };
@@ -309,7 +310,7 @@ export default function WorkshopCalendar() {
         <div className="shop-calendar">
           <p className="shop-calendar-heading">Workshop Calendar</p>
           <FullCalendar
-            defaultView="dayGridMonth"
+            // defaultView="dayGridMonth"
             headerToolbar={{
               left: "prev,next today",
               center: "title",

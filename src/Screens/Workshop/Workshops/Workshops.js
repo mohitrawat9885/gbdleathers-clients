@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import WorkshopCalendar from "../WorkshopCalendar/WorkshopCalendar";
 import "./Workshops.css";
 import { Loading } from "../../../GlobalState";
@@ -45,7 +45,7 @@ export default function Workshops() {
       setPageLoading(false);
     } catch (error) {
       setPageLoading(false);
-      console.log(error);
+      // console.log(error);
     }
     // setLoading(false);
   };
@@ -77,12 +77,13 @@ export default function Workshops() {
       setPageLoading(false);
     } catch (error) {
       setPageLoading(false);
-      console.log(error);
+      // console.log(error);
     }
     // setLoading(false);
   };
   useEffect(() => {
     getAllWorkshop();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type]);
   function getDateTime(d, op) {
     const date = new Date(d);
