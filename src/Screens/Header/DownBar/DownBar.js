@@ -5,7 +5,7 @@ import "./DownBar.css";
 import "./DownBarMobile.css";
 
 const DownBar = () => {
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [categoryList, setCategoryList] = useState([]);
 
   const getAllCategorys = async (quaryString) => {

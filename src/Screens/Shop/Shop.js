@@ -19,7 +19,7 @@ export default function Shop() {
     window.scrollTo(0, 0);
   }, []);
   // const [value, setValue] = React.useState(4.5);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [productList, setProductList] = useState([]);
   const [numberOfDocument, setNumberOfDocument] = useState();
 
@@ -42,7 +42,7 @@ export default function Shop() {
         setProductList(res.data);
         setNumberOfDocument(res.totalDocument);
         setPageLoading(false);
-        console.log(res.data);
+        // console.log(res.data);
       }
     } catch (error) {
       setProductList([]);
@@ -55,6 +55,7 @@ export default function Shop() {
   // }
   useEffect(() => {
     getAllProduct("?limit=50&page=1");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handlePagination = (event, value) => {
     // alert.show(value);

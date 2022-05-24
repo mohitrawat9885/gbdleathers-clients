@@ -5,7 +5,7 @@ import { Loading } from "../../../GlobalState";
 import Rating from "@mui/material/Rating";
 
 export default function Categorys() {
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [categoryList, setCategoryList] = useState([]);
   const [productList, setProductList] = useState([]);
   const [productListLoading, setProductListLoading] = useState(true);
@@ -66,13 +66,14 @@ export default function Categorys() {
     }
     // setLoading(false);
   };
-  if (loading) {
-    // getAllCategorys('skip=6', 2);
-    setLoading(false);
-  }
+  // if (loading) {
+  //   // getAllCategorys('skip=6', 2);
+  //   setLoading(false);
+  // }
   useEffect(() => {
     getAllCategorys("page=1&limit=6", 1);
     getProductList("?page=1&limit=20");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function GetProducts() {

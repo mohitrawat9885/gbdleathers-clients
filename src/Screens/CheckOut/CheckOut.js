@@ -175,7 +175,7 @@ export default function CheckOut() {
         alert.error(res.message);
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       alert.error("Something went wrong!");
     }
     // setLoading(false);
@@ -225,7 +225,7 @@ export default function CheckOut() {
         setAddressList(res.data);
 
         setAddressListFetched(true);
-        console.log(res.data);
+        // console.log(res.data);
       } else {
         // alert(res.message);
       }
@@ -246,10 +246,10 @@ export default function CheckOut() {
       if (res.status === "success") {
         setCartList(res.data);
 
-        console.log(res.data);
+        // console.log(res.data);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       // setProduct({});
     }
   };
@@ -282,7 +282,7 @@ export default function CheckOut() {
         alert.error(res.message);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 

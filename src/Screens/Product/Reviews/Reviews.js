@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
-import './Reviews.css';
-import Rating from '@mui/material/Rating';
+import React, { useState } from "react";
+import "./Reviews.css";
+import Rating from "@mui/material/Rating";
 import { useAlert } from "react-alert";
 // import CloseIcon from '@mui/icons-material/Close';
 // import 'react-dropzone-uploader/dist/styles.css'
-import Dropzone from 'react-dropzone-uploader'
-import { getDroppedOrSelectedFiles } from 'html5-file-selector'
-
+import Dropzone from "react-dropzone-uploader";
+import { getDroppedOrSelectedFiles } from "html5-file-selector";
 
 export default function Reviews(props) {
-
   const alert = useAlert();
   // alert.show(props.productId)
 
@@ -22,102 +20,100 @@ export default function Reviews(props) {
   // const review_images = [];
   let ProductIdChanged = "";
 
-  const [myreview, setMyReview] = useState('nodata');
+  const [myreview, setMyReview] = useState("nodata");
 
-//   const fileParams = ({ meta }) => {
-//     const body = new FormData()
-//     // body.append('images', meta)
-//     // return { url: 'https://httpbin.org/post', body }
-//     return { url: 'https://httpbin.org/post' }
-// }
+  //   const fileParams = ({ meta }) => {
+  //     const body = new FormData()
+  //     // body.append('images', meta)
+  //     // return { url: 'https://httpbin.org/post', body }
+  //     return { url: 'https://httpbin.org/post' }
+  // }
 
+  // const onSubmit = (files, allFiles) => {
+  //     console.log("form data", files[0].file)
+  // }
 
-// const onSubmit = (files, allFiles) => {
-//     console.log("form data", files[0].file)
-// }
+  // useEffect(()=>{
+  // document.getElementById
+  // }, [])
 
-// useEffect(()=>{
-// document.getElementById
-// }, [])
-
-const getFilesFromEvent = e => {
-  console.log("Uppdse Change", e)
-    return new Promise(resolve => {
-        getDroppedOrSelectedFiles(e).then(chosenFiles => {
-            resolve(chosenFiles.map(f => f.fileObject))
-        })
-    })
-}
-const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
-    const textMsg = 'ADD PHOTOS'
+  const getFilesFromEvent = (e) => {
+    // console.log("Uppdse Change", e)
+    return new Promise((resolve) => {
+      getDroppedOrSelectedFiles(e).then((chosenFiles) => {
+        resolve(chosenFiles.map((f) => f.fileObject));
+      });
+    });
+  };
+  const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
+    const textMsg = "ADD PHOTOS";
     return (
       <>
         <label className="review-add-photo-btn">
-            {textMsg}
-            <input
-                style={{ display: 'none' }}
-                type="file"
-                accept={accept}
-                multiple
-                onChange={e => {
-                    getFilesFromEvent(e).then(chosenFiles => {
-                        onFiles(chosenFiles)
-                    })
-                }}
-            />
+          {textMsg}
+          <input
+            style={{ display: "none" }}
+            type="file"
+            accept={accept}
+            multiple
+            onChange={(e) => {
+              getFilesFromEvent(e).then((chosenFiles) => {
+                onFiles(chosenFiles);
+              });
+            }}
+          />
         </label>
         {/* <div className='ab' id="dzu-submitButtonContainer2">
           <button class="dzu-submitButton">SUBMIT 2</button>
         </div> */}
-        </>
-    )
-}
+      </>
+    );
+  };
 
-
-// function OnChangePreviewImages(e){
+  // function OnChangePreviewImages(e){
   // console.log("Change", e.file)
-//   console.log("submit", document.getElementsByClassName("dzu-previewContainer"))
-//   console.log("submit length", document.getElementsByClassName("dzu-previewContainer").length)
-//  if(document.getElementsByClassName("dzu-previewContainer").length == 0){
-//   document.getElementById("dzu-submitButtonContainer2").classList.add("hidden")
-//   alert.show("0")
-//  }
-//  else{
-//   document.getElementById("dzu-submitButtonContainer2").classList.remove("hidden")
-//   alert.show("1")
-//  }
+  //   console.log("submit", document.getElementsByClassName("dzu-previewContainer"))
+  //   console.log("submit length", document.getElementsByClassName("dzu-previewContainer").length)
+  //  if(document.getElementsByClassName("dzu-previewContainer").length == 0){
+  //   document.getElementById("dzu-submitButtonContainer2").classList.add("hidden")
+  //   alert.show("0")
+  //  }
+  //  else{
+  //   document.getElementById("dzu-submitButtonContainer2").classList.remove("hidden")
+  //   alert.show("1")
+  //  }
 
-// }
-// const ReviewSubmitButton = ()=>{
-//   return (
-//     <div className="review-upload-image-submit-button">
-//     <button>SUBMIT</button>
-//   </div>
-//   )
-// }
+  // }
+  // const ReviewSubmitButton = ()=>{
+  //   return (
+  //     <div className="review-upload-image-submit-button">
+  //     <button>SUBMIT</button>
+  //   </div>
+  //   )
+  // }
 
   const createReview = async (files) => {
     try {
-      if (!rating) {  
-        alert.show('Please give some rating!');
+      if (!rating) {
+        alert.show("Please give some rating!");
         return;
       }
       if (!review) {
-        alert.show('Please give review!');
+        alert.show("Please give review!");
         return;
       }
       const data = new FormData();
       // alert.show(`Ratings ${rating}`)
-      data.append("rating", rating)
-      data.append("review", review)
+      data.append("rating", rating);
+      data.append("review", review);
 
-      for(let i in files){
-        data.append("images", files[i].file)
+      for (let i in files) {
+        data.append("images", files[i].file);
       }
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/reviews/${props.productId}`,
         {
-          method: 'POST',
+          method: "POST",
           // headers: {
           //   'Accept': 'application/json',
           //   'Content-Type': 'multipart/form-data',
@@ -126,15 +122,15 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
         }
       );
       const res = JSON.parse(await response.text());
-      if (res.status === 'success') {
+      if (res.status === "success") {
         // alert(res.message);
         getMyReviews();
         getAllReviews();
       } else {
-        alert.error('Something went wrong please try again.');
+        alert.error("Something went wrong please try again.");
       }
     } catch (error) {
-      alert.error('Something Went wrong try again');
+      alert.error("Something Went wrong try again");
       // console.log(error);
     }
   };
@@ -145,14 +141,14 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
       const response = await fetch(
         `/api/v1/gbdleathers/client/reviews/${props.productId}`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
       const res = JSON.parse(await response.text());
-      if (res.status === 'success') {
+      if (res.status === "success") {
         setReviewList(res.data);
         // console.log('Reviews', res.data);
         setReviewListLoading(false);
@@ -167,22 +163,22 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
       const response = await fetch(
         `/api/v1/gbdleathers/client/reviews/${props.productId}`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
       const res = JSON.parse(await response.text());
-      if (res.status === 'success') {
+      if (res.status === "success") {
         if (!res.data || res.data.length < 1) {
-          setMyReview('notyet');
+          setMyReview("notyet");
         } else {
-          setMyReview('done');
+          setMyReview("done");
         }
       }
     } catch (error) {
-      console.log('Error Fetching reviews', error);
+      // console.log("Error Fetching reviews", error);
       setReviewListLoading(false);
     }
   };
@@ -215,7 +211,7 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
   //       var picFile = event.target;
   //       var div = document.createElement('div');
   //       div.innerHTML =
-  //         "<div class='preview-image-div'><span>×</span><img class='review-upload-images' src='" + 
+  //         "<div class='preview-image-div'><span>×</span><img class='review-upload-images' src='" +
   //         picFile.result +
   //         "'" +
   //         "title='" +
@@ -241,33 +237,33 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
     return (
       <div
         style={{
-          width: '100%',
+          width: "100%",
         }}
       >
         {reviewList.map((review, i) => (
           <div
             key={i}
             style={{
-              width: '100%',
-              padding: '.5rem',
-              marginTop: '1rem',
-              borderTop: '1px solid lightgray',
+              width: "100%",
+              padding: ".5rem",
+              marginTop: "1rem",
+              borderTop: "1px solid lightgray",
             }}
           >
             <div
               style={{
-                width: '100%',
-                display: 'flex',
-                marginTop: '.6rem',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
+                width: "100%",
+                display: "flex",
+                marginTop: ".6rem",
+                flexDirection: "row",
+                justifyContent: "space-between",
               }}
             >
               <div>
                 <p
                   style={{
                     fontSize: 18,
-                    fontWeight: 'bold',
+                    fontWeight: "bold",
                   }}
                 >
                   {review.customer.first_name} {review.customer.last_name}
@@ -275,7 +271,7 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
                 <br />
                 <Rating
                   style={{
-                    marginLeft: '.6rem',
+                    marginLeft: ".6rem",
                   }}
                   size="small"
                   value={review.rating}
@@ -290,7 +286,7 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
               <p
                 style={{
                   fontSize: 16,
-                  color: 'rgb(80, 80, 80)',
+                  color: "rgb(80, 80, 80)",
                 }}
               >
                 {review.review}
@@ -303,18 +299,18 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
   }
 
   function RenderGiveReview() {
-    if (myreview === 'nodata') {
+    if (myreview === "nodata") {
       getMyReviews();
     }
-    if (myreview === 'nodata' || myreview === 'given') {
+    if (myreview === "nodata" || myreview === "given") {
       return <></>;
-    } else if (myreview === 'notyet') {
+    } else if (myreview === "notyet") {
       return (
         <div className="review-create-review-div">
           <p
             style={{
-              fontSize: '1.6rem',
-              color: 'rgb(80, 80, 80)',
+              fontSize: "1.6rem",
+              color: "rgb(80, 80, 80)",
             }}
           >
             Give Your Review
@@ -323,15 +319,15 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
           <div className="review-create-review">
             <div
               style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
               }}
             >
               <p>Rating</p>
               <Rating
                 style={{
-                  marginLeft: '.6rem',
+                  marginLeft: ".6rem",
                 }}
                 size="small"
                 value={rating}
@@ -343,7 +339,7 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
             <div>
               <p
                 style={{
-                  marginBottom: '.8rem',
+                  marginBottom: ".8rem",
                 }}
               >
                 Review
@@ -352,11 +348,11 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
                 name="message"
                 rows="4"
                 style={{
-                  width: '100%',
-                  fontSize: '1.3rem',
-                  padding: '.4rem',
-                  fontStyle: 'revert',
-                  border: '1px solid lightgray',
+                  width: "100%",
+                  fontSize: "1.3rem",
+                  padding: ".4rem",
+                  fontStyle: "revert",
+                  border: "1px solid lightgray",
                 }}
                 onChange={(e) => setReview(e.target.value)}
               ></textarea>
@@ -371,7 +367,7 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
                 // border: "1px solid blue"
               }}
             > */}
-              {/* <div
+            {/* <div
                 style={{
                   width: '22rem',
                   display: 'flex',
@@ -400,27 +396,27 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
                 </div>
               </div> */}
             <Dropzone
-            onSubmit={createReview}
-            InputComponent={selectFileInput}
-            // getUploadParams={fileParams}
-            // onChangeStatus={OnChangePreviewImages}
-            getFilesFromEvent={getFilesFromEvent}
-            accept="image/*"
-            maxFiles={5}
-            // SubmitButtonComponent={ReviewSubmitButton}
-            submitButtonContent="SUBMIT"
-            // inputContent="Drop A File"
-            // submitButtonDisabled
-        />
+              onSubmit={createReview}
+              InputComponent={selectFileInput}
+              // getUploadParams={fileParams}
+              // onChangeStatus={OnChangePreviewImages}
+              getFilesFromEvent={getFilesFromEvent}
+              accept="image/*"
+              maxFiles={5}
+              // SubmitButtonComponent={ReviewSubmitButton}
+              submitButtonContent="SUBMIT"
+              // inputContent="Drop A File"
+              // submitButtonDisabled
+            />
             {/* </div> */}
             <div
               id="result"
               // className='review-upload-images-div'
               style={{
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'row',
-                height: '6rem',
+                width: "100%",
+                display: "flex",
+                flexDirection: "row",
+                height: "6rem",
               }}
             >
               <output id="result" />
@@ -440,20 +436,20 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
           <div className="review-header-rating">
             <div
               style={{
-                display: 'flex',
-                flexFlow: 'row',
-                alignItems: 'center',
+                display: "flex",
+                flexFlow: "row",
+                alignItems: "center",
               }}
             >
               <p
                 style={{
-                  fontSize: '2.2rem',
+                  fontSize: "2.2rem",
                 }}
               >
                 {props.rating}
               </p>
               <Rating
-                style={{ marginLeft: '1rem' }}
+                style={{ marginLeft: "1rem" }}
                 value={parseFloat(props.rating)}
                 size="large"
                 precision={0.5}
@@ -469,9 +465,9 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
       </div>
       <div
         style={{
-          width: '100%',
-          height: '16vh',
-          borderBottom: '1px solid lightgray',
+          width: "100%",
+          height: "16vh",
+          borderBottom: "1px solid lightgray",
         }}
       ></div>
     </div>

@@ -8,12 +8,8 @@ import { Loading } from "../../GlobalState";
 
 export default function Categorys() {
   const [, setPageLoading] = React.useContext(Loading);
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    getAllCategorys("");
-  }, []);
 
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [categoryList, setCategoryList] = useState([]);
 
   const getAllCategorys = async (quaryString) => {
@@ -39,9 +35,12 @@ export default function Categorys() {
     }
     setLoading(false);
   };
-  if (loading) {
-    setLoading(false);
-  }
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    getAllCategorys("");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <Header />

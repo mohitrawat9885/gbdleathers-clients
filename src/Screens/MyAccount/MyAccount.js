@@ -1,27 +1,27 @@
-import React, { useState, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import Ripples from 'react-ripples';
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import Ripples from "react-ripples";
 
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import AddLocationOutlinedIcon from '@mui/icons-material/AddLocationOutlined';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import AddLocationOutlinedIcon from "@mui/icons-material/AddLocationOutlined";
+import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 // import SettingsApplicationsOutlinedIcon from '@mui/icons-material/SettingsApplicationsOutlined';
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 
 // import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import './MyAccount.css';
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import "./MyAccount.css";
 
-import {Loading} from "../../GlobalState"
+import { Loading } from "../../GlobalState";
 
 import { useAlert } from "react-alert";
 // import { Phone } from '@mui/icons-material';
 export default function MyAccount() {
-  const [, setPageLoading] = React.useContext(Loading)
+  const [, setPageLoading] = React.useContext(Loading);
   const alert = useAlert();
   const search = useLocation().search;
-  const option = new URLSearchParams(search).get('option');
+  const option = new URLSearchParams(search).get("option");
 
   // alert(name);
   const myRef = useRef(null);
@@ -30,9 +30,9 @@ export default function MyAccount() {
   let navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(option === 'orders' ? 'orders' : 'detail');
+  const [page, setPage] = useState(option === "orders" ? "orders" : "detail");
 
-  const [addressPage, setAddressPage] = useState('show');
+  const [addressPage, setAddressPage] = useState("show");
 
   const [addressList, setAddressList] = useState([]);
   const [addressListFetched, setAddressListFetched] = useState(false);
@@ -66,72 +66,72 @@ export default function MyAccount() {
   // END address VAriables
   const getOrders = async () => {
     try {
-      setPageLoading(true)
+      setPageLoading(true);
       // setOrderLoading(true);
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/orders`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
       const res = JSON.parse(await response.text());
-      if (res.status === 'success') {
+      if (res.status === "success") {
         setOrderList(res.data);
-        setPageLoading(false)
+        setPageLoading(false);
         // console.log('Orders', res.data);
       } else {
-        setPageLoading(false)
+        setPageLoading(false);
         alert.error(res.message);
       }
     } catch (err) {
-      console.log("ORDER ERROR ", err)
+      // console.log("ORDER ERROR ", err);
       alert.error("Something went wrong!");
-      setPageLoading(false)
+      setPageLoading(false);
     }
     setOrderLoading(false);
   };
 
   const getMe = async () => {
     try {
-      setPageLoading(false)
+      setPageLoading(false);
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/getme`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
       const res = JSON.parse(await response.text());
       // alert(res.status);
-      if (res.status === 'success') {
+      if (res.status === "success") {
         setLoading(false);
         setMyFirstName(res.data.first_name);
         setMyLastName(res.data.last_name);
         setMyEmail(res.data.email);
-        setPageLoading(false)
+        setPageLoading(false);
         return;
       }
     } catch (err) {
-      setPageLoading(false)
+      setPageLoading(false);
     }
     setLoading(false);
-    navigate('/login');
+    navigate("/login");
   };
 
   const updateMyDetails = async () => {
     try {
-      setPageLoading(true)
+      setPageLoading(true);
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/updateMe`,
         {
-          method: 'PATCH',
+          method: "PATCH",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             first_name: my_first_name,
@@ -142,28 +142,32 @@ export default function MyAccount() {
       );
       const res = JSON.parse(await response.text());
       // alert(res.status);
-      if (res.status === 'success') {
+      if (res.status === "success") {
         setEditMyDetail(false);
-        setPageLoading(false)
-        alert.success('Details Updated');
+        setPageLoading(false);
+        alert.success("Details Updated");
       } else {
-        setPageLoading(false)
-        alert.error('Opss! Something went wrong. May be email is already there.');
+        setPageLoading(false);
+        alert.error(
+          "Opss! Something went wrong. May be email is already there."
+        );
         return;
       }
-    } catch (err) { setPageLoading(false)}
+    } catch (err) {
+      setPageLoading(false);
+    }
     getMe();
   };
 
   const updateMyPassword = async () => {
     try {
-      setPageLoading(true)
+      setPageLoading(true);
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/updateMyPassword`,
         {
-          method: 'PATCH',
+          method: "PATCH",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             passwordCurrent: my_password_current,
@@ -174,18 +178,20 @@ export default function MyAccount() {
       );
       const res = JSON.parse(await response.text());
       // alert(res.status);
-      if (res.status === 'success') {
-        alert.success('Your password is Updated');
+      if (res.status === "success") {
+        alert.success("Your password is Updated");
         setEditMyPassword(false);
         setMyPassword(null);
         setMyPasswordCurrent(null);
         setMyPasswordConfirm(null);
-        setPageLoading(false)
+        setPageLoading(false);
       } else {
         alert.error(res.message);
-        setPageLoading(false)
+        setPageLoading(false);
       }
-    } catch (err) { setPageLoading(false)}
+    } catch (err) {
+      setPageLoading(false);
+    }
   };
 
   function resetData() {
@@ -217,13 +223,13 @@ export default function MyAccount() {
 
   const addAddress = async () => {
     try {
-      setPageLoading(true)
+      setPageLoading(true);
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/address`,
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             first_name,
@@ -241,20 +247,20 @@ export default function MyAccount() {
       );
       const res = JSON.parse(await response.text());
       // alert(res.status);
-      if (res.status === 'success') {
+      if (res.status === "success") {
         alert.success(res.status);
         // setLoading(false);
         resetData();
         getAddress();
-        setAddressPage('show');
-        setPageLoading(false)
+        setAddressPage("show");
+        setPageLoading(false);
         return;
       } else {
         alert.error(res.message);
-        setPageLoading(false)
+        setPageLoading(false);
       }
     } catch (err) {
-      setPageLoading(false)
+      setPageLoading(false);
     }
     // setLoading(false);
     // navigate('/login');
@@ -262,13 +268,13 @@ export default function MyAccount() {
 
   const editAddress = async () => {
     try {
-      setPageLoading(true)
+      setPageLoading(true);
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/address/${addressId}`,
         {
-          method: 'PATCH',
+          method: "PATCH",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             first_name,
@@ -287,22 +293,22 @@ export default function MyAccount() {
 
       const res = JSON.parse(await response.text());
       // alert(res.status);
-      if (res.status === 'success') {
+      if (res.status === "success") {
         alert.success(res.status);
         // setLoading(false);
         resetData();
         getAddress();
-        setAddressPage('show');
-        setPageLoading(false)
+        setAddressPage("show");
+        setPageLoading(false);
         return;
       } else {
         alert.error(res.message);
-        setPageLoading(false)
+        setPageLoading(false);
       }
     } catch (err) {
       // console.log(err);
-      setPageLoading(false)
-      alert.error('Something went wrong!');
+      setPageLoading(false);
+      alert.error("Something went wrong!");
     }
     // setLoading(false);
     // navigate('/login');
@@ -310,27 +316,27 @@ export default function MyAccount() {
 
   const deleteAddress = async (id) => {
     try {
-      setPageLoading(true)
+      setPageLoading(true);
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/address/${id}`,
         {
-          method: 'DELETE',
+          method: "DELETE",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
       if (response.status === 204) {
-        alert.success('Deleted');
+        alert.success("Deleted");
         getAddress();
-        setPageLoading(false)
+        setPageLoading(false);
         return;
       }
-      alert.error('Something went wrong! try again.');
+      alert.error("Something went wrong! try again.");
     } catch (err) {
       // console.log(err);
-      setPageLoading(false)
-      alert.error('Something went wrong!');
+      setPageLoading(false);
+      alert.error("Something went wrong!");
     }
     // setLoading(false);
     // navigate('/login');
@@ -338,68 +344,75 @@ export default function MyAccount() {
 
   const getAddress = async () => {
     try {
-      setPageLoading(true)
+      setPageLoading(true);
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/address`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
       const res = JSON.parse(await response.text());
       // alert(res.status);
-      if (res.status === 'success') {
+      if (res.status === "success") {
         setAddressList(res.data);
         setAddressListFetched(true);
         // console.log(res.data);
-        setPageLoading(false)
+        setPageLoading(false);
       } else {
         alert.error(res.message);
-        setPageLoading(false)
+        setPageLoading(false);
       }
-    } catch (err) { setPageLoading(false)}
+    } catch (err) {
+      setPageLoading(false);
+    }
     setLoading(false);
     // navigate('/login');
   };
   const logout = async () => {
     try {
-      setPageLoading(true)
+      setPageLoading(true);
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/logout`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
       const res = JSON.parse(await response.text());
 
-      if (res.status === 'success') {
+      if (res.status === "success") {
         setLoading(false);
-        setPageLoading(false)
-        alert.success("You have been logged out.")
-        navigate('/');
+        setPageLoading(false);
+        alert.success("You have been logged out.");
+        navigate("/");
         return;
       }
-    } catch (err) { setPageLoading(false)}
+    } catch (err) {
+      setPageLoading(false);
+    }
     setLoading(false);
-    navigate('/login');
+    navigate("/login");
   };
-  if (loading) {
+  useEffect(() => {
     getMe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  if (loading) {
     return <></>;
   }
 
   function AddressSubmitButton() {
-    if (addressPage === 'edit') {
+    if (addressPage === "edit") {
       return (
         <Ripples>
           <button
             style={{
-              cursor: 'pointer',
+              cursor: "pointer",
             }}
             onClick={() => {
               editAddress();
@@ -414,7 +427,7 @@ export default function MyAccount() {
         <Ripples>
           <button
             style={{
-              cursor: 'pointer',
+              cursor: "pointer",
             }}
             onClick={() => {
               addAddress();
@@ -436,7 +449,7 @@ export default function MyAccount() {
             <p
               style={{
                 fontSize: 18,
-                cursor: 'pointer',
+                cursor: "pointer",
               }}
               onClick={() => setEditMyDetail(false)}
             >
@@ -445,8 +458,8 @@ export default function MyAccount() {
           </div>
           <div
             style={{
-              display: 'grid',
-              gridTemplateColumns: '48% 4% 48%',
+              display: "grid",
+              gridTemplateColumns: "48% 4% 48%",
             }}
           >
             <div className="my-account-main-display-add-address-section-1-1">
@@ -487,7 +500,7 @@ export default function MyAccount() {
             <Ripples>
               <button
                 style={{
-                  cursor: 'pointer',
+                  cursor: "pointer",
                 }}
                 onClick={() => {
                   updateMyDetails();
@@ -507,7 +520,7 @@ export default function MyAccount() {
             <p
               style={{
                 fontSize: 18,
-                cursor: 'pointer',
+                cursor: "pointer",
               }}
               onClick={() => setEditMyPassword(false)}
             >
@@ -553,7 +566,7 @@ export default function MyAccount() {
             <Ripples>
               <button
                 style={{
-                  cursor: 'pointer',
+                  cursor: "pointer",
                 }}
                 onClick={() => {
                   updateMyPassword();
@@ -574,14 +587,14 @@ export default function MyAccount() {
             <div>
               <p
                 style={{
-                  fontSize: 'small',
+                  fontSize: "small",
                 }}
               >
                 Edit Detail
               </p>
               <EditIcon
                 style={{
-                  cursor: 'pointer',
+                  cursor: "pointer",
                 }}
                 onClick={() => setEditMyDetail(true)}
               />
@@ -589,14 +602,14 @@ export default function MyAccount() {
             <div>
               <p
                 style={{
-                  fontSize: 'small',
+                  fontSize: "small",
                 }}
               >
                 Change Password
               </p>
               <EditIcon
                 style={{
-                  cursor: 'pointer',
+                  cursor: "pointer",
                 }}
                 onClick={() => setEditMyPassword(true)}
               />
@@ -604,7 +617,7 @@ export default function MyAccount() {
           </div>
         </div>
         <div
-          style={{ padding: '0.4rem' }}
+          style={{ padding: "0.4rem" }}
           className="my-account-main-display-mydetaiils"
         >
           <p>
@@ -616,7 +629,7 @@ export default function MyAccount() {
     );
   }
   function MyAddresses() {
-    if (addressPage === 'show') {
+    if (addressPage === "show") {
       if (!addressListFetched) {
         getAddress();
         return <p>Loading...</p>;
@@ -628,9 +641,9 @@ export default function MyAccount() {
             <p
               style={{
                 fontSize: 18,
-                cursor: 'pointer',
+                cursor: "pointer",
               }}
-              onClick={() => setAddressPage('add')}
+              onClick={() => setAddressPage("add")}
             >
               Add
             </p>
@@ -638,7 +651,7 @@ export default function MyAccount() {
           {addressList.map((address, index) => (
             <div className="my-account-main-display-addresses" key={index}>
               <div>
-                {address.defaultAddress ? <p>Default Address </p> : ''}
+                {address.defaultAddress ? <p>Default Address </p> : ""}
                 <br />
                 <p>
                   {address.first_name} {address.last_name}
@@ -653,14 +666,14 @@ export default function MyAccount() {
               </div>
               <div>
                 <EditIcon
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                   onClick={() => {
                     setData(address);
-                    setAddressPage('edit');
+                    setAddressPage("edit");
                   }}
                 />
                 <DeleteForeverIcon
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                   onClick={() => deleteAddress(address._id)}
                 />
               </div>
@@ -668,7 +681,7 @@ export default function MyAccount() {
           ))}
         </>
       );
-    } else if (addressPage === 'add' || addressPage === 'edit') {
+    } else if (addressPage === "add" || addressPage === "edit") {
       return (
         <>
           <div className="my-account-main-display-heading">
@@ -676,9 +689,9 @@ export default function MyAccount() {
             <p
               style={{
                 fontSize: 18,
-                cursor: 'pointer',
+                cursor: "pointer",
               }}
-              onClick={() => setAddressPage('show')}
+              onClick={() => setAddressPage("show")}
             >
               Cancel
             </p>
@@ -791,7 +804,7 @@ export default function MyAccount() {
               <input
                 style={{
                   width: 20,
-                  cursor: 'pointer',
+                  cursor: "pointer",
                 }}
                 id="set_default"
                 type="checkbox"
@@ -816,7 +829,7 @@ export default function MyAccount() {
       let d = new Date(date).toDateString();
       let time = new Date(date).toLocaleTimeString();
 
-      return d + ' ' + time;
+      return d + " " + time;
     }
     if (orderLoading) {
       getOrders();
@@ -843,7 +856,7 @@ export default function MyAccount() {
                 </p>
                 <p>{order.address.city}</p>
                 <p>
-                  {order.address.postal_zip_code} {order.address.province}{' '}
+                  {order.address.postal_zip_code} {order.address.province}{" "}
                   {order.address.country}
                 </p>
                 <p>{order.address.phone}</p>
@@ -855,24 +868,25 @@ export default function MyAccount() {
                   </div>
                   <div className="myaccount-myorders-product-detail">
                     <p>{product.name}</p>
-                   <div>
-                     {
-                       product.properties?.map((v, i) => (
-                         <p style={{
-                           color: "gray",
-                           fontSize: 'small'
-                         }} index={i}>
-                           {v.name} : {v.value}
-                         </p>
-                       ))
-                     }
-                   </div>
+                    <div>
+                      {product.properties?.map((v, i) => (
+                        <p
+                          style={{
+                            color: "gray",
+                            fontSize: "small",
+                          }}
+                          index={i}
+                        >
+                          {v.name} : {v.value}
+                        </p>
+                      ))}
+                    </div>
                     <p>
                       Quantity:- <b>{product.quantity}</b>
                     </p>
                     <p>
                       <b>
-                        {order.total_cost.currency}{' '}
+                        {order.total_cost.currency}{" "}
                         {product.price * product.quantity}
                       </b>
                     </p>
@@ -897,9 +911,9 @@ export default function MyAccount() {
   // }
 
   function MyAccountDisplay() {
-    if (page === 'addresses') {
+    if (page === "addresses") {
       return MyAddresses();
-    } else if (page === 'orders') {
+    } else if (page === "orders") {
       return (
         <>
           <div className="my-account-main-display-heading">
@@ -935,10 +949,10 @@ export default function MyAccount() {
                   border: 1,
                   marginTop: 5,
                   marginBotton: 5,
-                  cursor: 'pointer',
+                  cursor: "pointer",
                 }}
                 onClick={() => {
-                  setPage('detail');
+                  setPage("detail");
                   executeScroll();
                 }}
               >
@@ -955,10 +969,10 @@ export default function MyAccount() {
                 style={{
                   marginTop: 5,
                   marginBotton: 5,
-                  cursor: 'pointer',
+                  cursor: "pointer",
                 }}
                 onClick={() => {
-                  setPage('addresses');
+                  setPage("addresses");
                   executeScroll();
                 }}
               >
@@ -975,10 +989,10 @@ export default function MyAccount() {
                 style={{
                   marginTop: 5,
                   marginBotton: 5,
-                  cursor: 'pointer',
+                  cursor: "pointer",
                 }}
                 onClick={() => {
-                  setPage('orders');
+                  setPage("orders");
                   executeScroll();
                 }}
               >
@@ -1014,7 +1028,7 @@ export default function MyAccount() {
                 style={{
                   marginTop: 5,
                   marginBotton: 5,
-                  cursor: 'pointer',
+                  cursor: "pointer",
                 }}
                 onClick={() => logout()}
               >
@@ -1031,14 +1045,13 @@ export default function MyAccount() {
             {MyAccountDisplay()}
           </div>
         </div>
-        <div style={{
-        width: "100%",
-        height: "70vh"
-      }}>
-
+        <div
+          style={{
+            width: "100%",
+            height: "70vh",
+          }}
+        ></div>
       </div>
-      </div>
-      
     </>
   );
 }

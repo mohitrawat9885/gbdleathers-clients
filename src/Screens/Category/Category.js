@@ -9,13 +9,10 @@ import { Loading } from "../../GlobalState";
 
 export default function Category() {
   const [, setPageLoading] = React.useContext(Loading);
-  useEffect(() => {
-    getCategory();
-    window.scrollTo(0, 0);
-  }, []);
+
   const { categoryId } = useParams();
   // const [value, setValue] = React.useState(4.5);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [productList, setProductList] = useState([]);
   const [category, setCategory] = useState([]);
 
@@ -44,9 +41,12 @@ export default function Category() {
     }
     setLoading(false);
   };
-  if (loading) {
-    setLoading(false);
-  }
+  useEffect(() => {
+    getCategory();
+    window.scrollTo(0, 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <Header />

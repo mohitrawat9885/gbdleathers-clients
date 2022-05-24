@@ -21,7 +21,7 @@ export default function Menu() {
   };
 
   const getMe = async () => {
-    console.log("Getting  me...");
+    // console.log("Getting  me...");
     try {
       const response = await fetch(
         `/api/v1/gbdleathers/client/customer/getme`,
