@@ -39,6 +39,15 @@ global.isLogin = false;
 function App() {
   const [cartMenu, setCartMenu] = useState(false);
   const [pageLoading, setPageLoading] = useState(false);
+
+  React.useEffect(() => {
+    window.scroll(0, 0);
+    const script = document.createElement("script");
+    script.src = "./script.js";
+    script.async = true;
+
+    document.body.appendChild(script);
+  }, []);
   return (
     <>
       <GlobalState.Provider value={[cartMenu, setCartMenu]}>

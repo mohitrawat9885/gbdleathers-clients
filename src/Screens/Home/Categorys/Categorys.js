@@ -73,6 +73,7 @@ export default function Categorys() {
   useEffect(() => {
     getAllCategorys("page=1&limit=6", 1);
     getProductList("?page=1&limit=20");
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -88,7 +89,7 @@ export default function Categorys() {
           // marginBottom: '15rem'
         }}
       >
-        <div className="category-page-body">
+        <div className="category-page-body section">
           {productList.map((product, index) => (
             <div className="category-page-holder" key={index}>
               <Link
@@ -143,16 +144,16 @@ export default function Categorys() {
     <>
       <div className="home-categoryBody">
         {/* <div className="categoryDiv"> */}
-        <div className="home-category-section-1">
-          {/*  */}
+        <div className="home-category-section-1 section">
           {categoryList.map((d, index) => (
             <div className="home-category-holder" key={index}>
               <Link to={`category/${d._id}`} style={{ textDecoration: "none" }}>
                 <div className="home-category-img img-wrapper">
                   <img
+                    data-src="./load-image.jpg"
                     src={`${global.image_path}${d.image}`}
                     alt=""
-                    className="hover-zoom"
+                    className="hover-zoom lazy-im"
                   />
                 </div>
 

@@ -1,9 +1,9 @@
-import React from 'react';
-import './FooterDiv1.css';
+import React from "react";
+import "./FooterDiv1.css";
 
-import CallRoundedIcon from '@mui/icons-material/CallRounded';
-import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
-import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
+import CallRoundedIcon from "@mui/icons-material/CallRounded";
+import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
+import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
 
 // import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 // import SendRoundedIcon from '@mui/icons-material/SendRounded';

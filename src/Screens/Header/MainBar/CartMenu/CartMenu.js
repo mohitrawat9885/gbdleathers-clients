@@ -25,27 +25,6 @@ export default function CartMenu() {
   const [sidebar, setSidebar] = useState(false);
   const [cartList, setCartList] = useState([]);
 
-  const HandleMenu = function (toggled) {
-    // alert("triggered")
-    if (toggled) {
-      getCartProducts();
-      document.body.classList.add("cart-menu-fixed-position");
-    } else {
-      document.body.classList.remove("cart-menu-fixed-position");
-    }
-    setSidebar(toggled);
-  };
-  useEffect(() => {
-    if (cartMenu === true) {
-      HandleMenu(true);
-    }
-    setCartMenu(false);
-    // eslint-disable-next-line
-  }, [cartMenu]);
-  useEffect(() => {
-    getCartProducts();
-  }, []);
-
   const getCartProducts = async () => {
     try {
       const response = await fetch(`/api/v1/gbdleathers/client/customer/cart`, {
@@ -57,7 +36,7 @@ export default function CartMenu() {
       const res = JSON.parse(await response.text());
       if (res.status === "success") {
         setCartList(res.data);
-        // console.log(res.data);
+        console.log(res.data);
       }
     } catch (error) {
       // console.log(error);
@@ -65,7 +44,7 @@ export default function CartMenu() {
     }
     setLoading(false);
   };
-  const addToCart = async (productId, quantity) => {
+  const addToCart = async (productId, quantity, multi_properties) => {
     try {
       const response = await fetch(`/api/v1/gbdleathers/client/customer/cart`, {
         method: "POST",
@@ -75,6 +54,7 @@ export default function CartMenu() {
         body: JSON.stringify({
           product: productId,
           quantity,
+          multi_properties,
         }),
       });
       // console.log('Responce', response.status);
@@ -93,6 +73,35 @@ export default function CartMenu() {
       // console.log(error);
     }
   };
+
+  const HandleMenu = function (toggled) {
+    let menuOptions = document.querySelectorAll(".section_2");
+    // alert("triggered")
+    if (toggled) {
+      getCartProducts();
+      document.body.classList.add("cart-menu-fixed-position");
+      menuOptions.forEach(function (menu) {
+        menu.classList.remove("section--hidden");
+      });
+    } else {
+      document.body.classList.remove("cart-menu-fixed-position");
+      menuOptions.forEach(function (menu) {
+        menu.classList.add("section--hidden");
+      });
+    }
+    setSidebar(toggled);
+  };
+  useEffect(() => {
+    if (cartMenu === true) {
+      HandleMenu(true);
+    }
+    setCartMenu(false);
+    // eslint-disable-next-line
+  }, [cartMenu]);
+
+  useEffect(() => {
+    getCartProducts();
+  }, []);
 
   function CartProduct(props) {
     return (
@@ -114,7 +123,9 @@ export default function CartMenu() {
                   <div
                     className="cart-menu-quantity-btn"
                     style={{ cursor: "pointer" }}
-                    onClick={() => addToCart(props.product._id, -1)}
+                    onClick={() =>
+                      addToCart(props.product._id, -1, props.multi_properties)
+                    }
                   >
                     -
                   </div>
@@ -123,7 +134,9 @@ export default function CartMenu() {
                   <div
                     style={{ cursor: "pointer" }}
                     className="cart-menu-quantity-btn"
-                    onClick={() => addToCart(props.product._id, 1)}
+                    onClick={() =>
+                      addToCart(props.product._id, 1, props.multi_properties)
+                    }
                   >
                     +
                   </div>
@@ -156,7 +169,11 @@ export default function CartMenu() {
         <>
           {cartList.map((cart, index) => (
             <li className="cart-menu-product-list-product" key={index}>
-              <CartProduct product={cart.product} quantity={cart.quantity} />
+              <CartProduct
+                product={cart.product}
+                quantity={cart.quantity}
+                multi_properties={cart.multi_properties}
+              />
             </li>
           ))}
 
@@ -216,7 +233,7 @@ export default function CartMenu() {
               : "cart-menu-nav-menu"
           }
         >
-          <ul className="cart-menu-nav-menu-items">
+          <ul className="section_2 cart-menu-nav-menu-items">
             <li className="cart-menu-navbar-toggle">
               <div className="cart-menu-menu-bars">
                 <p>CART</p>

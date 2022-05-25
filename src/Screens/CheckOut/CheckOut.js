@@ -258,7 +258,7 @@ export default function CheckOut() {
     getAddress();
   }, []);
 
-  const addToCart = async (productId, quantity) => {
+  const addToCart = async (productId, quantity, multi_properties) => {
     try {
       const response = await fetch(`/api/v1/gbdleathers/client/customer/cart`, {
         method: "POST",
@@ -268,6 +268,7 @@ export default function CheckOut() {
         body: JSON.stringify({
           product: productId,
           quantity,
+          multi_properties,
         }),
       });
       // console.log("Responce", response.status);
@@ -522,14 +523,18 @@ export default function CheckOut() {
                 <div className="checkout-menu-quantity">
                   <div
                     className="checkout-menu-quantity-btn"
-                    onClick={() => addToCart(cart.product._id, -1)}
+                    onClick={() =>
+                      addToCart(cart.product._id, -1, cart.multi_properties)
+                    }
                   >
                     -
                   </div>
                   <p>{cart.quantity}</p>
                   <div
                     className="checkout-menu-quantity-btn"
-                    onClick={() => addToCart(cart.product._id, 1)}
+                    onClick={() =>
+                      addToCart(cart.product._id, 1, cart.multi_properties)
+                    }
                   >
                     +
                   </div>
@@ -538,7 +543,13 @@ export default function CheckOut() {
                   style={{
                     cursor: "pointer",
                   }}
-                  onClick={() => addToCart(cart.product._id, -cart.quantity)}
+                  onClick={() =>
+                    addToCart(
+                      cart.product._id,
+                      -cart.quantity,
+                      cart.multi_properties
+                    )
+                  }
                 />
               </div>
               <div className="checkout-product-holder-price">
@@ -759,7 +770,7 @@ export default function CheckOut() {
         <div className="checkout-div">
           {CheckoutProduct()}
           <div className="checkout-summary">
-            <div className="checkout-summary-holder">
+            <div className="section checkout-summary-holder">
               <div className="checkout-summary-heading">
                 <p>ORDER SUMMARY</p>
               </div>

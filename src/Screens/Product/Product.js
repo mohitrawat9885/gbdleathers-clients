@@ -9,6 +9,13 @@ import Footer from "../Footer/Footer";
 export default function Product() {
   const [productVariantId, setProductVariantId] = useState();
   const [categoryId, setCategoryId] = useState();
+  // React.useEffect(() => {
+  //   const script = document.createElement("script");
+  //   script.src = "./script.js";
+  //   script.async = true;
+
+  //   document.body.appendChild(script);
+  // }, []);
   return (
     <>
       <Header />

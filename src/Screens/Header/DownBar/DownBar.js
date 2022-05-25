@@ -57,11 +57,7 @@ const DownBar = () => {
         <nav className="downBar">
           <ul>
             {categoryList.map((category, index) => (
-              <Link
-                onClick={refreshPage}
-                to={`/category/${category._id}`}
-                key={index}
-              >
+              <Link to={`/category/${category._id}`} key={index}>
                 <li className="down-text">
                   <p>{category.name.toUpperCase()}</p>
                 </li>

@@ -12,11 +12,21 @@ export default function Menu() {
   const [loading, setLoading] = useState(true);
   const [, setMyData] = useState({});
   const HandleMenu = (toggled) => {
+    let menuOptions = document.querySelectorAll(".section_2");
     if (toggled) {
       document.body.classList.add("fixed-position");
+
+      menuOptions.forEach(function (menu) {
+        menu.classList.remove("section--hidden");
+      });
     } else {
       document.body.classList.remove("fixed-position");
+      menuOptions.forEach(function (menu) {
+        menu.classList.add("section--hidden");
+      });
     }
+
+    // document.querySelector(".section_2").classList.remove("section--hidden");
     setSidebar(toggled);
   };
 
@@ -92,39 +102,39 @@ export default function Menu() {
           <ul className="nav-menu-items" onClick={() => HandleMenu(false)}>
             <li className="navbar-toggle">
               <div className="menu-bars">
-                <ClearIcon style={{ fontSize: 35, cursor: "pointer" }} />
+                <ClearIcon style={{ fontSize: 30, cursor: "pointer" }} />
               </div>
             </li>
 
-            <li className="nav-text">
+            <li className="nav-text section_2">
               <Link to="/">
                 <span>HOME</span>
               </Link>
             </li>
 
-            <li className="nav-text">
+            <li className="nav-text section_2">
               <Link to="/shop">
                 <span>SHOP</span>
               </Link>
             </li>
 
-            <li className="nav-text">
+            <li className="nav-text section_2">
               <Link to="/categorys">
                 <span>CATEGORYS</span>
               </Link>
             </li>
 
-            <li className="nav-text">
+            <li className="nav-text section_2">
               <Link to="/workshops/upcoming">
                 <span>UPCOMING WORKSHOPS</span>
               </Link>
             </li>
-            <li className="nav-text">
+            <li className="nav-text section_2">
               <Link to="/workshops/previous">
                 <span>PREVIOUS WORKSHOPS</span>
               </Link>
             </li>
-            <li className="nav-text">
+            <li className="nav-text section_2">
               <Link to="/workshops/all">
                 <span>ALL WORKSHOPS</span>
               </Link>
@@ -139,13 +149,13 @@ export default function Menu() {
                 <span>OUR SHOP PROFILE</span>
               </Link>
             </li> */}
-            <li className="nav-text">
+            <li className="nav-text section_2">
               <Link to="/contact-us">
                 <span>CONTACT US</span>
               </Link>
             </li>
 
-            <li className="nav-text">
+            <li className="nav-text section_2">
               <MyAccount />
             </li>
           </ul>

@@ -171,6 +171,29 @@ export default function ProductDisplay(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productId]);
 
+  React.useEffect(() => {
+    const allSections = document.querySelectorAll(".section");
+
+    const revealSection = function (entries, observer) {
+      const [entry] = entries;
+
+      if (!entry.isIntersecting) return;
+
+      entry.target.classList.remove("section--hidden");
+      observer.unobserve(entry.target);
+    };
+
+    const sectionObserver = new IntersectionObserver(revealSection, {
+      root: null,
+      threshold: 0.1,
+    });
+
+    allSections.forEach(function (section) {
+      sectionObserver.observe(section);
+      section.classList.add("section--hidden");
+    });
+  }, []);
+
   function AddToCartButton() {
     if (addToCartLoading) {
       return (
@@ -334,7 +357,7 @@ export default function ProductDisplay(props) {
 
   return (
     <>
-      <div className="product-body">
+      <div className="section product-body">
         <div className="product-gallery">
           <ImageGallery items={GetProductImages()} {...properties} />
         </div>
@@ -386,7 +409,9 @@ export default function ProductDisplay(props) {
           </div>
         </div>
       </div>
-      <VariationList />
+      <div className="section">
+        <VariationList />
+      </div>
       {/* 
       <div
         style={{

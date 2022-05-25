@@ -74,7 +74,7 @@
 .nav-text a {
   text-decoration: none;
   color: #3a3939;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 300;
   /* font-weight: 500; */
   width: 90%;
@@ -85,8 +85,8 @@
   padding: 0 5px;
   border-bottom: 1px solid rgb(179, 179, 179);
   font-family: Helvetica, sans-serif !important;
-  /* font-family: -apple-system, BlinkMacSystemFont, "Rajdhani", "Segoe UI", Oxygen,
-    Roboto, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif !important; */
+  font-family: "Segoe UI", Oxygen, Roboto, Ubuntu, Cantarell, "Open Sans",
+    "Helvetica Neue", sans-serif !important;
 }
 
 .nav-text a:hover {
