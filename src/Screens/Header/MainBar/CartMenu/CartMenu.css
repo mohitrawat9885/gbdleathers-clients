@@ -59,6 +59,9 @@
   right: 0;
   transition: 350ms;
 }
+.cart-menu-menu-bars p {
+  font-size: large;
+}
 
 /* @media only screen and (max-width: 568px) {
     

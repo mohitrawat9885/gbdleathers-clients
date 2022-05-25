@@ -105,7 +105,7 @@ export default function ReviewDisplay(props) {
       );
       const res = JSON.parse(await response.text());
       if (res.status === "success") {
-        // alert(res.message);
+        alert.success("Thank you for your review! ");
         setReviewImages(null);
         setRating(null);
         getMyReviews();
@@ -152,29 +152,34 @@ export default function ReviewDisplay(props) {
 
   async function imageHandler(e) {
     setReviewImagesLoading(true);
-    var files = e.target.files;
+    try {
+      var files = e.target.files;
 
-    if (files.length + reviewImages.length > 5) {
-      alert.show("Maximum 5 Images are allowed!");
-      return;
-    }
-    let newImageArray = [];
-    for (let j in reviewImages) {
-      newImageArray.push(reviewImages[j]);
-    }
+      if (files.length + reviewImages.length > 5) {
+        alert.show("Maximum 5 Images are allowed!");
+        return;
+      }
+      let newImageArray = [];
+      for (let j in reviewImages) {
+        newImageArray.push(reviewImages[j]);
+      }
 
-    // console.log(files.length);
-    for (let i = 0; i < files.length; i++) {
-      // console.log(i);
-      let fileObj = {
-        data: URL.createObjectURL(files[i]),
-        file: files[i],
-      };
-      newImageArray.push(fileObj);
+      // console.log(files.length);
+      for (let i = 0; i < files.length; i++) {
+        // console.log(i);
+        let fileObj = {
+          data: URL.createObjectURL(files[i]),
+          file: files[i],
+        };
+        newImageArray.push(fileObj);
+      }
+      // console.log("done loading.. Images");
+      setReviewImages(newImageArray);
+    } catch (err) {
+      alert.show("Please refresh and select again!");
+    } finally {
+      setReviewImagesLoading(false);
     }
-    // console.log("done loading.. Images");
-    setReviewImages(newImageArray);
-    setReviewImagesLoading(false);
   }
 
   React.useEffect(() => {

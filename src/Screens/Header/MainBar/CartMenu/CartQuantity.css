@@ -1,4 +1,3 @@
-
 .cart-menu-quantity {
   /* width: 2rem; */
   height: 1.9rem;
@@ -17,7 +16,7 @@
   font-size: 15px;
   display: block;
   /* border: 1px solid red; */
-  width: 5rem;
+  width: 4rem;
   text-align: center;
 }
 .cart-menu-quantity-btn {

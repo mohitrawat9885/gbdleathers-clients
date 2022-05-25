@@ -35,7 +35,34 @@ export default function CartMenu() {
       });
       const res = JSON.parse(await response.text());
       if (res.status === "success") {
-        setCartList(res.data);
+        let doc = res.data;
+        for (let i = 0; i < doc.length; i++) {
+          if (doc[i].onModel === "Variants") {
+            let product = doc[i].product;
+            // console.log(product);
+            let variant_of = product.variant_of;
+            product.subName = " - " + product.name;
+            product.name = variant_of.name;
+
+            if (!product.category) product.category = variant_of.category;
+            if (!product.front_image)
+              product.front_image =
+                variant_of.front_image || variant_of.images[0] || "";
+            if (!product.back_image)
+              product.back_image =
+                variant_of.back_image || variant_of.images[1] || "";
+            if (!product.price) product.price = variant_of.price;
+            if (!product.stock) product.stock = variant_of.stock;
+            if (!product.summary) product.summary = variant_of.summary;
+            if (!product.description)
+              product.description = variant_of.description;
+            if (!product.images && product.images.length < 1)
+              product.images = variant_of.images;
+
+            doc[i].product = product;
+          }
+        }
+        setCartList(doc);
         console.log(res.data);
       }
     } catch (error) {
@@ -101,6 +128,9 @@ export default function CartMenu() {
 
   useEffect(() => {
     getCartProducts();
+    document.querySelectorAll(".section_2").forEach(function (menu) {
+      menu.classList.add("section--hidden");
+    });
   }, []);
 
   function CartProduct(props) {
@@ -115,7 +145,19 @@ export default function CartMenu() {
           </div>
           <div className="cart-menu-product-detail">
             <div className="cart-menu-product-detail-name">
-              <p>{props.product.name}</p>
+              <p>
+                {props.product.name} {props.product.subName}
+              </p>
+            </div>
+            <div className="cart-menu-product-detail-multi_properties">
+              {props.multi_properties.map((p, i) => (
+                <div>
+                  <p style={{ color: "black" }}>
+                    <b>{p.name}</b>
+                  </p>
+                  <p>: {p.value}</p>
+                </div>
+              ))}
             </div>
             <div className="cart-menu-product-detail-qty-price">
               <div className="cart-menu-product-detail-qty">

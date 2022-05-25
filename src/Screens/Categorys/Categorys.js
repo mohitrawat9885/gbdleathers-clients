@@ -48,7 +48,6 @@ export default function Categorys() {
         <div className="categorys-category-page-heading">
           <span>SHOP CATEGORY WISE</span>
         </div>
-
         <div className="categorys-category-section-2">
           {categoryList.map((category, index) => (
             <div className="categorys-category-holder-2" key={index}>
@@ -56,8 +55,12 @@ export default function Categorys() {
                 to={`/category/${category._id}`}
                 style={{ textDecoration: "none" }}
               >
-                <div className="categorys-category-img-2">
-                  <img src={`${global.image_path}${category.image}`} alt="" />
+                <div className="categorys-category-img-2 img-wrapper">
+                  <img
+                    src={`${global.image_path}${category.image}`}
+                    alt=""
+                    className="hover-zoom"
+                  />
                 </div>
 
                 <div className="categorys-category-name">

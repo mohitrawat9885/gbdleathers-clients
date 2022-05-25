@@ -244,7 +244,34 @@ export default function CheckOut() {
       });
       const res = JSON.parse(await response.text());
       if (res.status === "success") {
-        setCartList(res.data);
+        let doc = res.data;
+        for (let i = 0; i < doc.length; i++) {
+          if (doc[i].onModel === "Variants") {
+            let product = doc[i].product;
+            // console.log(product);
+            let variant_of = product.variant_of;
+            product.subName = " - " + product.name;
+            product.name = variant_of.name;
+
+            if (!product.category) product.category = variant_of.category;
+            if (!product.front_image)
+              product.front_image =
+                variant_of.front_image || variant_of.images[0] || "";
+            if (!product.back_image)
+              product.back_image =
+                variant_of.back_image || variant_of.images[1] || "";
+            if (!product.price) product.price = variant_of.price;
+            if (!product.stock) product.stock = variant_of.stock;
+            if (!product.summary) product.summary = variant_of.summary;
+            if (!product.description)
+              product.description = variant_of.description;
+            if (!product.images && product.images.length < 1)
+              product.images = variant_of.images;
+
+            doc[i].product = product;
+          }
+        }
+        setCartList(doc);
 
         // console.log(res.data);
       }
@@ -516,7 +543,18 @@ export default function CheckOut() {
                 </div>
 
                 <div className="checkout-product-holder-details-1">
-                  <p>{cart.product.name}</p>
+                  <p>
+                    {cart.product.name} {cart.product.subName}
+                  </p>
+                  {/* <div className="checkout-menu-product-detail-multi_properties"> */}
+                  {cart.multi_properties.map((p, i) => (
+                    <div>
+                      <p>
+                        <b>{p.name}</b> : {p.value}
+                      </p>
+                    </div>
+                  ))}
+                  {/* </div> */}
                 </div>
               </div>
               <div className="checkout-product-holder-quantity">

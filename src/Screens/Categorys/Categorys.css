@@ -1,6 +1,7 @@
 .categorys-categoryBody {
   width: 100%;
   display: flex;
+  padding: 1rem;
   flex-direction: column;
   justify-content: center;
 }
@@ -12,13 +13,14 @@
   padding: 1rem;
   margin-top: 1rem;
   margin-bottom: 2.6rem;
+  color: rgb(60, 59, 59);
 }
 .categorys-category-page-heading span {
   text-align: center;
   font-size: 2rem;
   font-weight: bold;
   letter-spacing: 0.1rem;
-  font-family: 'Times New Roman', Times, serif !important;
+  font-family: "Times New Roman", Times, serif !important;
 }
 .categorys-category-section-2 {
   display: grid;
@@ -44,7 +46,7 @@
 .categorys-category-holder-2 {
   width: 100%;
   padding: 0.3rem 0.3rem 0.1rem 0.3rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 3rem;
 }
 
 .categorys-category-img-2 {
@@ -59,9 +61,11 @@
   justify-content: center;
   align-items: center;
 }
-.categorys-category-name span {
+.categorys-category-name p {
+  margin-top: 1.2rem;
   color: rgb(0, 0, 0);
-  font-weight: 900;
+
+  font-size: 1rem;
   letter-spacing: 0.2rem;
   text-align: center;
   padding: 0.4rem 1rem 0.4rem 1rem;

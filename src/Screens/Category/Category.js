@@ -33,6 +33,7 @@ export default function Category() {
         setCategory(res.data);
         setProductList(res.data.products);
         // console.log(res.data);
+        window.scrollTo(0, 0);
         setPageLoading(false);
       }
     } catch (error) {
@@ -43,7 +44,6 @@ export default function Category() {
   };
   useEffect(() => {
     getCategory();
-    window.scrollTo(0, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

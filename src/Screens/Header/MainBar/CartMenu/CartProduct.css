@@ -9,7 +9,7 @@
 }
 .cart-menu-product-img {
   width: 6.8rem;
-  height: 6.6rem;
+  height: 6.8rem;
 }
 .cart-menu-product-detail {
   width: 65%;
@@ -21,7 +21,8 @@
 }
 
 .cart-menu-product-detail-name p {
-  font-size: 20px;
+  font-size: 1.1rem;
+  letter-spacing: 0.1rem;
   /* font-weight: bolder; */
 }
 .cart-menu-product-detail-qty-price {
@@ -41,7 +42,16 @@
 .cart-menu-product-detail-price p {
   margin-left: 0.5rem;
   text-align: end;
-  font-size: 16px;
+  font-size: 15px;
   /* font-weight: bold; */
   font-family: serif !important;
+}
+
+.cart-menu-product-detail-multi_properties div {
+  display: flex;
+}
+.cart-menu-product-detail-multi_properties {
+  color: rgb(80, 78, 78);
+  letter-spacing: 0.1rem;
+  font-size: 0.85rem;
 }

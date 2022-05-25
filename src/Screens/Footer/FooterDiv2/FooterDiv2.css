@@ -1,7 +1,7 @@
 .footer-div-2 {
   width: 100%;
   height: auto;
-  background-color: rgb(32, 32, 32);
+  background-color: #fc5111;
   padding-bottom: 2rem;
   padding-top: 1rem;
   /* margin-bottom: 80vh; */
@@ -55,11 +55,11 @@
 .footer-gotoup-btn {
   position: absolute;
   right: 2rem;
-  color: white;
-  background-color: rgb(32, 32, 32);
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
   /* border: 1px solid white; */
   border-radius: 40px;
 }
-.footer-gotoup-btn:hover {
-  color: rgb(97, 20, 20);
-}
+/* .footer-gotoup-btn:hover {
+  color: rgb(0, 0, 255);
+} */
