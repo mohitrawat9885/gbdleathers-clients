@@ -53,6 +53,7 @@ export default function Footer() {
             <KeyboardArrowUpRoundedIcon
               style={{
                 fontSize: 45,
+                cursor: "pointer",
                 // color: "white",
               }}
             />
