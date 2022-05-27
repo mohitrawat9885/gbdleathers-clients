@@ -14,6 +14,7 @@ import ResetPassword from "./Screens/Authentication/Login/ResetPassword";
 import MyAccount from "./Screens/MyAccount/MyAccount";
 import ContactUs from "./Screens/ContactUs/ContactUs";
 import CheckOut from "./Screens/CheckOut/CheckOut";
+import Success from "./Screens/CheckOut/Success";
 // import Workshop from "./Screens/Workshop/Workshop/Workshop";
 import Workshops from "./Screens/Workshop/Workshops/Workshops";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -191,6 +192,7 @@ function App() {
                     </>
                   }
                 />
+                <Route path="/success" element={<Success />} />
                 <Route
                   path="/workshops/:type"
                   element={

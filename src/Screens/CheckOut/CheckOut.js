@@ -79,15 +79,9 @@ export default function CheckOut() {
       );
       const res = JSON.parse(await response.text());
       if (res.status === "success") {
-        // setTimeout(() => {
-        //   alert.success(res.message);
-        //   setTimeout(() => {
-        //     window.location = res.payment_url;
-        //   }, 2500);
-        //   setCheckoutLoading(false);
-        // }, 2000);
-        alert.success(res.message);
+        // alert.success(res.message);
         setCheckoutLoading(false);
+        window.location.assign(res.payment_url);
       } else {
         setCheckoutLoading(false);
         alert.error(res.message);
