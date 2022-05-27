@@ -7,9 +7,10 @@ import ReactLoading from "react-loading";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 
 import { useAlert } from "react-alert";
-
+import { Loading } from "../../GlobalState";
 export default function CheckOut() {
   const alert = useAlert();
+  const [, setPageLoading] = React.useContext(Loading);
   const [addEditAddress, setAddEditAddress] = useState("product");
 
   const [loadingCart, setLoadingCart] = useState(true);
@@ -78,13 +79,15 @@ export default function CheckOut() {
       );
       const res = JSON.parse(await response.text());
       if (res.status === "success") {
-        setTimeout(() => {
-          alert.success(res.message);
-          setTimeout(() => {
-            window.location = res.payment_url;
-          }, 2500);
-          setCheckoutLoading(false);
-        }, 2000);
+        // setTimeout(() => {
+        //   alert.success(res.message);
+        //   setTimeout(() => {
+        //     window.location = res.payment_url;
+        //   }, 2500);
+        //   setCheckoutLoading(false);
+        // }, 2000);
+        alert.success(res.message);
+        setCheckoutLoading(false);
       } else {
         setCheckoutLoading(false);
         alert.error(res.message);
@@ -236,6 +239,7 @@ export default function CheckOut() {
 
   const getCartProducts = async () => {
     try {
+      setPageLoading(true);
       const response = await fetch(`/api/v1/gbdleathers/client/customer/cart`, {
         method: "GET",
         headers: {
@@ -272,10 +276,11 @@ export default function CheckOut() {
           }
         }
         setCartList(doc);
-
+        setPageLoading(false);
         // console.log(res.data);
       }
     } catch (error) {
+      setPageLoading(false);
       // console.log(error);
       // setProduct({});
     }
@@ -283,10 +288,12 @@ export default function CheckOut() {
   useEffect(() => {
     getCartProducts();
     getAddress();
+    // eslint-disable-next-line
   }, []);
 
   const addToCart = async (productId, quantity, multi_properties) => {
     try {
+      setPageLoading(true);
       const response = await fetch(`/api/v1/gbdleathers/client/customer/cart`, {
         method: "POST",
         headers: {
@@ -301,16 +308,20 @@ export default function CheckOut() {
       // console.log("Responce", response.status);
       if (response.status === 204) {
         getCartProducts();
+        setPageLoading(false);
         return;
       }
       const res = JSON.parse(await response.text());
       if (res.status === "success") {
         getCartProducts();
+        setPageLoading(false);
       } else {
         alert.error(res.message);
+        setPageLoading(false);
       }
     } catch (error) {
       // console.log(error);
+      setPageLoading(false);
     }
   };
 
@@ -548,7 +559,7 @@ export default function CheckOut() {
                   </p>
                   {/* <div className="checkout-menu-product-detail-multi_properties"> */}
                   {cart.multi_properties.map((p, i) => (
-                    <div>
+                    <div key={i}>
                       <p>
                         <b>{p.name}</b> : {p.value}
                       </p>

@@ -44,13 +44,11 @@ export default function Login() {
         alert.success("Welcome! You are now login.");
         setPageLoading(false);
         navigate("/");
-        // console.log(res);
       } else {
         alert.error(res.message);
         setPageLoading(false);
       }
     } catch (error) {
-      // console.log(error);
       setPageLoading(false);
       alert.error("Something went wrong please try again!");
     }
@@ -88,7 +86,7 @@ export default function Login() {
         setPageLoading(false);
       }
     } catch (error) {
-      // console.log(error);
+      
       setPageLoading(false);
 
       alert.show("Something went wrong please try again!");

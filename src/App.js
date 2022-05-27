@@ -26,6 +26,9 @@ import AlertTemplate from "react-alert-template-basic";
 const options = {
   timeout: 5000,
   position: positions.TOP_CENTER,
+  containerStyle: {
+    zIndex: 1000,
+  },
 };
 
 // /api/v1/gbdleathers
@@ -42,11 +45,31 @@ function App() {
 
   React.useEffect(() => {
     window.scroll(0, 0);
-    const script = document.createElement("script");
-    script.src = "./script.js";
-    script.async = true;
+    const allSections = document.querySelectorAll(".section");
 
-    document.body.appendChild(script);
+    const revealSection = function (entries, observer) {
+      const [entry] = entries;
+
+      if (!entry.isIntersecting) return;
+
+      entry.target.classList.remove("section--hidden");
+      observer.unobserve(entry.target);
+    };
+
+    const sectionObserver = new IntersectionObserver(revealSection, {
+      root: null,
+      threshold: 0.1,
+    });
+
+    allSections.forEach(function (section) {
+      sectionObserver.observe(section);
+      section.classList.add("section--hidden");
+    });
+
+    let menuOptions = document.querySelectorAll(".section_2");
+    menuOptions.forEach(function (menu) {
+      menu.classList.add("section--hidden");
+    });
   }, []);
   return (
     <>

@@ -41,20 +41,20 @@ export default function ProductDisplay(props) {
         if (!res.data.front_image)
           res.data.front_image = res.data.images[0] ? res.data.images[0] : "";
         if (!res.data.back_image)
-          res.data.back_image = res.data.images[1] ? res.data.images[1] : "";
+          res.data.back_image = res.data.images[1]
+            ? res.data.images[1]
+            : res.data.images[0];
         let proList = [];
         if (res.data.multi_properties) {
-          let mp = {};
           for (let i in res.data.multi_properties) {
             let obj = {
               name: i,
               values: res.data.multi_properties[i],
             };
-            mp[i] = res.data.multi_properties[i][0];
+
             proList.push(obj);
           }
           // console.log(mp);
-          setMultiproperties(mp);
         }
         res.data.multi_properties = proList;
 
@@ -127,20 +127,18 @@ export default function ProductDisplay(props) {
   };
   const addToCart = async () => {
     try {
-      // setCartMenu((v) => !v)
       let multi_properties = [];
-      // let single_properties = [];
-
-      for (let i in multiProperties) {
+      let m_properties = document.getElementsByClassName(
+        "product-variant-multi_properties"
+      );
+      for (let i = 0; i < m_properties.length; i++) {
         let proObj = {
-          name: i,
-          value: multiProperties[i],
+          name: m_properties[i].name,
+          value: m_properties[i].value,
         };
-        // console.log(multiProperties[i]);
         multi_properties.push(proObj);
       }
-      // console.log(multiProperties);
-      // return;
+
       setAddToCartLoading(true);
       const response = await fetch(`/api/v1/gbdleathers/client/customer/cart`, {
         method: "POST",
@@ -192,6 +190,8 @@ export default function ProductDisplay(props) {
       sectionObserver.observe(section);
       section.classList.add("section--hidden");
     });
+
+    // console.log(m_properties);
   }, []);
 
   function AddToCartButton() {
@@ -214,43 +214,47 @@ export default function ProductDisplay(props) {
   function ShowProperties() {
     if (product.list[product.index]?.multi_properties.length === 0) {
       return <></>;
+    } else {
+      // if (!multiProperties || Object.keys(multiProperties).length === 0) {
+      //   console.log("M propert", product.list[product.index]?.multi_properties);
+      // }
+      return (
+        <>
+          <div className="product-variants-div">
+            {product.list[product.index]?.multi_properties.map(
+              (properti, index) => (
+                <div key={index}>
+                  <label htmlFor={properti.name}>
+                    {properti.name.toUpperCase()}
+                  </label>
+                  <br />
+                  <select
+                    onChange={(e) => {
+                      // console.log("Changed", e.target.name, e.target.value);
+                      setMultiproperties((mp) => {
+                        let newMp = { ...mp };
+                        newMp[e.target.name] = e.target.value;
+                        return newMp;
+                      });
+                    }}
+                    value={multiProperties[properti.name]}
+                    className="product-variant-multi_properties"
+                    name={properti.name}
+                    id={properti.name}
+                  >
+                    {properti?.values?.map((value, i) => (
+                      <option key={i} value={value}>
+                        {value}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )
+            )}
+          </div>
+        </>
+      );
     }
-    return (
-      <>
-        <div className="product-variants-div">
-          {product.list[product.index]?.multi_properties.map(
-            (properti, index) => (
-              <div key={index}>
-                <label htmlFor={properti.name}>
-                  {properti.name.toUpperCase()}
-                </label>
-                <br />
-                <select
-                  onChange={(e) => {
-                    // console.log("Changed", e.target.name, e.target.value);
-                    setMultiproperties((mp) => {
-                      let newMp = { ...mp };
-                      newMp[e.target.name] = e.target.value;
-                      return newMp;
-                    });
-                  }}
-                  value={multiProperties[properti.name]}
-                  className="product-variant-multi_properties"
-                  name={properti.name}
-                  id={properti.name}
-                >
-                  {properti?.values?.map((value, i) => (
-                    <option key={i} value={value}>
-                      {value}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )
-          )}
-        </div>
-      </>
-    );
   }
 
   const properties = {

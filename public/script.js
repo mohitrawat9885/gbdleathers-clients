@@ -50,4 +50,3 @@ let menuOptions = document.querySelectorAll(".section_2");
 menuOptions.forEach(function (menu) {
   menu.classList.add("section--hidden");
 });
-// console.log(menuOptions);

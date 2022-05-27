@@ -10,7 +10,7 @@ import Ripple from "react-ripples";
 import "./CartQuantity.css";
 // import Button from '@mui/material/Button';
 // import CartProduct from './CartProduct/CartProduct';
-import GlobalState from "../../../../GlobalState";
+import GlobalState, { Loading } from "../../../../GlobalState";
 import "./CartProduct.css";
 //import { Turn as Hamburger } from "hamburger-react";
 
@@ -19,6 +19,7 @@ import { useAlert } from "react-alert";
 
 export default function CartMenu() {
   const alert = useAlert();
+  const [, setPageLoading] = React.useContext(Loading);
   const [cartMenu, setCartMenu] = useContext(GlobalState);
 
   const [loading, setLoading] = useState(true);
@@ -62,8 +63,9 @@ export default function CartMenu() {
             doc[i].product = product;
           }
         }
+
         setCartList(doc);
-        console.log(res.data);
+        // console.log(doc);
       }
     } catch (error) {
       // console.log(error);
@@ -72,6 +74,7 @@ export default function CartMenu() {
     setLoading(false);
   };
   const addToCart = async (productId, quantity, multi_properties) => {
+    setPageLoading(true);
     try {
       const response = await fetch(`/api/v1/gbdleathers/client/customer/cart`, {
         method: "POST",
@@ -87,17 +90,21 @@ export default function CartMenu() {
       // console.log('Responce', response.status);
       if (response.status === 204) {
         getCartProducts();
+        setPageLoading(false);
         return;
       }
       const res = JSON.parse(await response.text());
       if (res.status === "success") {
         getCartProducts();
+        setPageLoading(false);
       } else {
         alert.error(res.message);
+        setPageLoading(false);
       }
     } catch (error) {
       alert.error("Something went wrong!");
       // console.log(error);
+      setPageLoading(false);
     }
   };
 
@@ -151,7 +158,7 @@ export default function CartMenu() {
             </div>
             <div className="cart-menu-product-detail-multi_properties">
               {props.multi_properties.map((p, i) => (
-                <div>
+                <div key={i}>
                   <p style={{ color: "black" }}>
                     <b>{p.name}</b>
                   </p>

@@ -400,6 +400,8 @@ export default function MyAccount() {
   };
   useEffect(() => {
     getMe();
+    getOrders();
+    getAddress();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   if (loading) {
@@ -631,7 +633,7 @@ export default function MyAccount() {
   function MyAddresses() {
     if (addressPage === "show") {
       if (!addressListFetched) {
-        getAddress();
+        // getAddress();
         return <p>Loading...</p>;
       }
       return (
@@ -832,15 +834,15 @@ export default function MyAccount() {
       return d + " " + time;
     }
     if (orderLoading) {
-      getOrders();
+      // getOrders();
       return <p>Loading...</p>;
     }
     return (
       <>
         <div className="myaccount-myorders-div">
           {orderList.map((order, index) => (
-            <>
-              <div key={index} className="myaccount-myorders-status">
+            <div key={index}>
+              <div className="myaccount-myorders-status">
                 <p>Order Date: {getDate(order.ordered_at)}</p>
                 <p>Status: {order.status}</p>
               </div>
@@ -862,7 +864,7 @@ export default function MyAccount() {
                 <p>{order.address.phone}</p>
               </div>
               {order.products.map((product, index) => (
-                <div className="myaccount-myorders-products" key={index}>
+                <div key={index} className="myaccount-myorders-products">
                   <div className="myaccount-myorders-product-img">
                     <img src={`/images/${product.image}`} alt="" />
                   </div>
@@ -875,7 +877,7 @@ export default function MyAccount() {
                             color: "gray",
                             fontSize: "small",
                           }}
-                          index={i}
+                          key={i}
                         >
                           {v.name} : {v.value}
                         </p>
@@ -887,7 +889,7 @@ export default function MyAccount() {
                     <p>
                       <b>
                         {order.total_cost.currency}{" "}
-                        {product.price * product.quantity}
+                        {(product.price * product.quantity).toFixed(2)}
                       </b>
                     </p>
                   </div>
@@ -896,7 +898,7 @@ export default function MyAccount() {
                   </div>
                 </div>
               ))}
-            </>
+            </div>
           ))}
         </div>
       </>
