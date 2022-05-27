@@ -193,6 +193,7 @@ function App() {
                   }
                 />
                 <Route path="/success" element={<Success />} />
+                <Route path="/workshop-success" element={<Success />} />
                 <Route
                   path="/workshops/:type"
                   element={

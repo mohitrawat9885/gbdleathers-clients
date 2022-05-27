@@ -130,10 +130,12 @@ export default function WorkshopCalendar() {
         setName("");
         setEmail("");
         setNumber("");
-
-        alert.success("Thanks for Registering in this Workshop.");
+        setPageLoading(false);
+        window.location.assign(res.payment_url);
+        // alert.success("Thanks for Registering in this Workshop.");
       } else {
-        alert.error("Please Register Again!");
+        setPageLoading(false);
+        alert.error(res.message);
       }
       setPageLoading(false);
     } catch (error) {
